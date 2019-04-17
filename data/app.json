@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/pick/pick",
+    "pages/show/show",
+    "pages/try/try",
+    "pages/setTime/setTime",
+    "pages/test/test",
+    "pages/index/index",
+    "pages/lastTitle/lastTitle"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#000",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "white"
+  }
+}

@@ -1,0 +1,39 @@
+/* pages/pick/pick.wxss */
+.goDiscuss{
+  width: 50%;
+  height: 100rpx;
+  display: inline-block;
+  background: rgb(205, 209, 212);
+  text-align: center;
+  line-height: 100rpx;
+}
+.goRanking{
+  width: 50%;
+  height: 100rpx;
+  display: inline-block;
+  background: rgb(205, 209, 212);
+  text-align: center;
+  line-height: 100rpx;
+}
+.Message{
+  border: 1px solid rgb(205, 209, 212);
+  width: 100%;
+  min-height: 100rpx;
+  display: flex;
+  align-items: center;
+}
+
+#messageItem{
+  width: 80%;
+  margin-left: 30rpx;
+  font-size: 30rpx;
+}
+.showNum{
+  font-size: 20rpx;
+  float: right;
+}
+
+.showNum image{
+  width: 20rpx;
+  height: 20rpx;
+}
