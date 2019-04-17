@@ -34,6 +34,28 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    UserData: [
+      {
+        name: "用户1",
+        words: [{ word: "词条1", num: [] }, { word: "词条2", num: [] }],
+        method: [{ content: "具体方法1", num: [], isgood: false }, { content: "具体方法2", num: [], isgood: false}]
+      },
+      {
+        name: "用户2",
+        words: [{ word: "词条1", num: [], isgood: false }, { word: "词条2", num: [], isgood: false }],
+        method: [{ content: "具体方法1", num: [], isgood: false }, { content: "具体方法2", num: [], isgood: false }]
+      },
+      {
+        name: "用户3",
+        words: [{ word: "词条1", num: [], isgood: false }, { word: "词条2", num: [], isgood: false }],
+        method: [{ content: "具体方法1", num: [], isgood: false }, { content: "具体方法2", num: [], isgood: false }]
+      },
+    
+    ],
+    minute:'',
+    second:'',
+    showMessage:[],
+    pickMessage:[]
   }
 })

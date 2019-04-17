@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -12,9 +12,9 @@
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.6.5",
+	"libVersion": "2.6.2",
 	"appid": "wxde63b38b13c15b8b",
-	"projectname": "MindOrder",
+	"projectname": "data",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
