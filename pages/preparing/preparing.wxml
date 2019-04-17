@@ -1,16 +1,16 @@
-<view class="container">
+<view class="container" style='background:url(../../icon/bg1.png) repeat-x;background-size:100% auto;' >
   <view style="width:100%">
     <block>
       <view class='header'>
         <view class="title">房号：{{inputMsg.roomNum}}</view>
         <view class="title">主题：{{inputMsg.text}}</view>
-        <picker bindchange="bindPickerChange" value="{{index}}" range='{{timeRange}}'>
+        <!-- <picker bindchange="bindPickerChange" value="{{index}}" range='{{timeRange}}'>
           <view wx:if="{{!join}}">请输入前期个人准备时间：{{timeRange[index]}}  分钟</view>
-        </picker>
+        </picker> -->
       </view>
       <view class='main' style="width:100%;">
         <!-- <button class="invite" open-type='share'>邀请加入</button> -->
-        <view class="wrap">
+        <view class="wrap"> 
           <swiper style="height:300px" current="{{currentSwiper}}" bindchange="swiperChange">
             <block wx:for="{{userInfoSwiper}}" wx:key="" wx:for-index="outerIndex" wx:for-item="outerItem">
               <swiper-item class='peopleList' bindtap='bindDelete'>

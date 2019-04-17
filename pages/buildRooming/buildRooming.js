@@ -1,27 +1,23 @@
 //获取应用实例
 const app = getApp()
 const request = require('../../requests/request');
-Component({
-
+Page({
   data: {
     roomId: 0,
     // redBorder:false,
     inputValue: {},
-   
-
     //canIUse: wx.canIUse('button.open-type.getUserInfo'),
     /*     code: '',
         encryptedData: '',
         iv: '' */
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     let that = this;
     that.setData({
-      roomId: getRandomInt(100000, 999999)
+      roomId: that.getRandomInt(100000, 999999)
     })
 
     /* 初始化，载入现存的用户数据
@@ -52,8 +48,6 @@ Component({
          }
        })
      } */
-
-
   },
 
   goToBuild: function () {
@@ -89,27 +83,19 @@ Component({
       ()=>{
         wx.hideLoading();
       }
-    )
-
-  
-   
-    
-    
+    ) 
   },
-
+  getRandomInt:function(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+    //不含最大值，含最小值
+  },
   /*   formReset() {
       console.log('form发生了reset事件')
     } */
-}),
-
+})
 //获取表单数据以及房主个人信息发送到服务器储存
 //表单必须有值输入
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-
-  //不含最大值，含最小值
-}
 

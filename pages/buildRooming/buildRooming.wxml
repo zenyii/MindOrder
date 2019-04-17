@@ -2,7 +2,6 @@
   <view>
     <block>
       <view class='header'>
-      
       </view>
       <view class='main'>
         <form bindsubmit='formSubmit' bindreset="formReset" action='' method='post'>

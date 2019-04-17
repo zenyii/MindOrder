@@ -14,7 +14,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.6.5",
 	"appid": "wx8d5d22897bfc549c",
-	"projectname": "%E8%84%91%E6%9A%B4",
+	"projectname": "MindOrder",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
