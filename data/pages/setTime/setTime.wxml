@@ -1,6 +1,0 @@
-<!--pages/setTime/setTime.wxml-->
-<label>分钟:</label>
-<picker bindchange='setMinutes'value='{{index2}}' range='{{minutes}}'>{{index2}}</picker>
-<label>秒：</label>
-<picker bindchange='setSeconds'value='{{index3}}' range='{{seconds}}'>{{index3}}</picker>
-<button bindtap='settime'>确定</button>
