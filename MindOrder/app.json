@@ -6,12 +6,36 @@
     "pages/setTime/setTime",
     "pages/test/test",
     "pages/index2/index2",
-    "pages/lastTitle/lastTitle"
+    "pages/lastTitle/lastTitle",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/buildRooming/buildRooming",
+    "pages/preparing/preparing",
+    "pages/inputRoomId/inputRoomId"
   ],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#000",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "white"
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#02063f",
+    "navigationBarTitleText": "头脑智序",
+    "navigationBarTextStyle":"white"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#ffffff",
+    "borderStyle":"black",
+    "selectedColor": "#4880ff",
+    "list": [{
+      "selectedIconPath": "icon/indexChecked.png",
+      "iconPath": "icon/index.png",
+      "pagePath": "pages/index/index",
+      "text": "首页"
+    },  
+    {
+      "selectedIconPath": "icon/mine.png",
+      "iconPath": "icon/mineChecked.png",
+      "pagePath": "pages/index/index",
+      "text": "我的"
+    }]
   }
 }
+

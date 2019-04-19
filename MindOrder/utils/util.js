@@ -1,3 +1,4 @@
+const promise = require('./es6-promise')
 const formatTime = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -15,5 +16,7 @@ const formatNumber = n => {
 }
 
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  promise:promise
+
 }
