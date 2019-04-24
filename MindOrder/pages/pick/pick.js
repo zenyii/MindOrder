@@ -8,12 +8,12 @@ Page({
    */
   data: {
   showMessage:[
-    { word: "词条1", num: Array(0), isgood: false, name: "用户2", backColor: "rgb(255,210,210)" },
-    { word: "词条1", num: Array(0), name: "用户1", backColor: "rgb(255,210,210)" },
-    { word: "词条1", num: Array(0), isgood: false, name: "用户3", backColor: "rgb(255,228,108)" },
-    { word: "词条2", num: Array(0), name: "用户1", backColor: "rgb(189,218,255)" },
-    { word: "词条2", num: Array(0), isgood: false, name: "用户3", backColor: "rgb(202,230,241)" },
-     { word: "词条2", num: Array(0), isgood: false, name: "用户2", backColor: "rgb(255,228,108)" }
+    { word: "词条1", num: Array(0), isgood: false, openId: 2, backColor: "rgb(255,210,210)" },
+    { word: "词条1", num: Array(0), openId: 1, backColor: "rgb(255,210,210)" },
+    { word: "词条1", num: Array(0), isgood: false, openId: 3, backColor: "rgb(255,228,108)" },
+    { word: "词条2", num: Array(0), openId: 1, backColor: "rgb(189,218,255)" },
+    { word: "词条2", num: Array(0), isgood: false, openId: 3, backColor: "rgb(202,230,241)" },
+    { word: "词条2", num: Array(0), isgood: false, openId: 2, backColor: "rgb(255,228,108)" }
   ],
     //showMessage:[],
     pickMessage:[],
@@ -24,9 +24,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //this.setData({
-     // showMessage : app.globalData.showMessage
-    //})
+    this.setData({
+      showMessage : app.globalData.showMessage
+    })
   },
 
   /**

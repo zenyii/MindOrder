@@ -149,7 +149,7 @@ Page({
 
    //将新建对象存入UserData数组中
     var newUser = {};
-    newUser.name = this.data.userInfo.nickName;
+    newUser.openId = app.globalData.openId;
 
     newUser.words = new Array();
       var obj = {
@@ -162,15 +162,15 @@ Page({
       this.data.value=[];
       newUser.words.push(obj);
       var checkNum = 0;
-      //若有name属性重复的，则只插入词条数据
+      //若有openId属性重复的，则只插入词条数据
       for (var j = 0; j < app.globalData.UserData.length; j++) {
-        if (newUser.name == app.globalData.UserData[j].name) {
+        if (newUser.openId == app.globalData.UserData[j].openId) {
           app.globalData.UserData[j].words.push(obj);
           break;
         }
         checkNum++;
       }
-      //若无name属性重复，则插入新对象
+      //若无openId属性重复，则插入新对象
       if (checkNum == app.globalData.UserData.length){
         app.globalData.UserData.push(newUser);
       }

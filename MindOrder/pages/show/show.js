@@ -48,10 +48,10 @@ Page({
     })
     var userData = this.data.userData;
 
-    //将userData中的name属性插入词条数据中，方面后续显示
+    //将userData中的openId属性插入词条数据中，方面后续显示
     for(var i = 0; i<userData.length;i++){
       for(var j = 0;j<userData[i].words.length;j++){
-        userData[i].words[j].name = userData[i].name;
+        userData[i].words[j].openId = userData[i].openId;
         this.data.allMessage.push(userData[i].words[j]);
       }
     }
@@ -72,20 +72,19 @@ Page({
       showMessage:this.data.showMessage
     })
 
-    console.log(this.data.showMessage);
-
-
+    //console.log(this.data.showMessage);
   },
 
   like:function(e){
     var count=0;
     var id = e.currentTarget.id;
-    var nickName = this.data.userInfo.nickName;
-    var length = this.data.showMessage[id].num.length
-    //将点赞过的人的昵称存入num数组中，并处理点赞事件
+    var openId = app.globalData.openId;
+    var length = this.data.showMessage[id].num.length;
+    //console.log(e);
+    /*//将点赞过的人的昵称存入num数组中，并处理点赞事件
     if(length){
       for(var i = 0;i<length;i++){
-        if (this.data.showMessage[id].num[i]==nickName){
+        if (this.data.showMessage[id].num[i] == openId){
           this.data.showMessage[id].num.splice(i,1);
           this.data.showMessage[id].isgood=false;
           break;
@@ -93,12 +92,12 @@ Page({
         count++;
       }
       if(count==length){
-        this.data.showMessage[id].num.push(nickName);
+        this.data.showMessage[id].num.push(openId);
         this.data.showMessage[id].isgood=true;
       }
     }
     else{
-      this.data.showMessage[id].num.push(nickName);
+      this.data.showMessage[id].num.push(openId);
       this.data.showMessage[id].isgood = true;
     }
 
@@ -108,21 +107,32 @@ Page({
     })
 
     app.globalData.showMessage = this.data.showMessage;
-    console.log(this.data.showMessage);
-    /*var that = this;
+    //console.log(this.data.showMessage);*/
+    var that = this;
     wx.request({
-      url: "https://www.fl123.xyz/php/info.php",
+      url: 'https://fl123.xyz/api/xcx/support.php',
       data: {
-
+        roomNum: 556677,
+        userId: 1123,
+        author: 456789,
+        text: "你说什么",
+        state: 1
       },
+      method: 'POST',
       header: {
-        "centent-type": "application/json;charset=UTF-8;"
+        'content-type': "application/x-www-form-urlencoded"
       },
-      method: 'GET',
-      success:function(res){
-        console.log(res);
-      }
-    })*/
+      success: function (res) {
+        //console.log("请求成功");
+        //var data = JSON.parse(res.data);
+        //self.setData({goodslist:res.data});
+        console.log(res.data);
+        that.data.showMessage[id].isgood = res.data;
+        that.setData({
+          showMessage: that.data.showMessage
+        })
+      },
+    })
   },
   change(){
     wx.navigateTo({
