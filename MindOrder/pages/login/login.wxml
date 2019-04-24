@@ -1,0 +1,2 @@
+<!--pages/login.wxml-->
+<button open-type='getUserInfo' bindgetuserinfo='handleLogin'>立即授权</button>

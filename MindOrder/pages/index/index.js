@@ -23,7 +23,7 @@ Component({
 
   },
   methods:{
-    getUserInfo() {
+   /*  getUserInfo() {
       let that = this;
       return new utils.promise((resolve, reject) => {
         app.getUserInfo().then(e => {
@@ -34,29 +34,36 @@ Component({
           console.log('用户信息获取失败！')
           reject(e)
         })
-      })
-    },
+      }) 
+    },*/
     buildRoom() {
       let that = this;
-      that.getUserInfo().then(e => {
+      wx.navigateTo({
+        url: '../buildRooming/buildRooming'
+      })
+     /*  that.getUserInfo().then(e => {
         wx.navigateTo({
           url: '../buildRooming/buildRooming'
         })
       },e=>{
   
-      })
+      }) */
     },
     joinRoom() {
       let that = this;
-      that.getUserInfo().then(e => {
+      wx.navigateTo({
+        url: '../inputRoomId/inputRoomId'
+      })
+      /* that.getUserInfo().then(e => {
         wx.navigateTo({
           url: '../inputRoomId/inputRoomId'
         })
       },e=>{
         
-      })
-    }
-  },
+      }) 
+    }*/
+  }
+},
  
 
 })

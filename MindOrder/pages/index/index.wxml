@@ -2,6 +2,6 @@
     <image src="../../icon/logo.png" />
 </view>
 <view class="main">
-    <button class="join" open-type="getUserInfo" bindtap='joinRoom'>加入房间</button>
-    <button class="brain" open-type="getUserInfo" bindtap='buildRoom'>头脑风暴</button>
+    <button class="join" bindtap='joinRoom'>加入房间</button>
+    <button class="brain" bindtap='buildRoom'>头脑风暴</button>
 </view>

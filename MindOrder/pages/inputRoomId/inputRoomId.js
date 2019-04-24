@@ -3,9 +3,6 @@ const app = getApp()
 var wsOpen = false;
 const request = require('../../requests/request');
 Page({
-  /**
-   * 页面的初始数据
-   */
   data: {
     join:1,
     inputValue:{
@@ -13,7 +10,6 @@ Page({
     userInfo: {},
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -29,8 +25,9 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
+    
       /* 获取用户信息 */
-      request.request('https://fl123.xyz/api/xcx/createRoom.php',inputValue,'POST')//根据房号搜寻房间信息
+      request.request('https://fl123.xyz/api/xcx/createRoom.php',inputValue,'POST','application/x-www-form-urlencoded')//根据房号搜寻房间信息
       .then(e=>{
         that.setData({
           inputValue: inputValue
@@ -49,11 +46,6 @@ Page({
         wx.hideLoading();
       }
     )
-
-  
-   
-    
-    
   },
   /* 获取用户信息 */
   
@@ -63,7 +55,6 @@ Page({
       url: '../preparing/preparing?roomId='+this.data.inputValue.roomId+'&join='+this.data.join//传入验证码
     })
   },
-
   /**
    * 用户点击右上角分享
    */

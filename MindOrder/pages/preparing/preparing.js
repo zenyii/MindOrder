@@ -125,6 +125,7 @@ Page({//
     console.log(e, 'e');
     let inputMsg = that.data.inputMsg;
     inputMsg.roomNum = e.roomNum;
+    app.globalData.roomNum = e.roomNum;
     inputMsg.text = e.text;
     //console.log(e.roomID);
     //wx.request()获取inputMsg和userInfo，获取主题和人数，（loading等待）

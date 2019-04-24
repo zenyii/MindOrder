@@ -2,10 +2,9 @@
    margin: 0;
    padding: 0;
    box-sizing: border-box;
-  
  }
 
- .title{
+ .title {
    font-size: 16px;
  }
 
@@ -15,16 +14,20 @@
 
  image {
    display: inline-block;
-   width: 90px;
-   height: 90px;
+   width: 60px;
+   height: 60px;
+   border-radius: 50%;
  }
 
  .peopleList {
    display: flex;
    flex-direction: row;
-   justify-content: flex-start;
+   justify-content: space-around;
    flex-wrap: wrap;
  }
+ /* .peopleItem{
+   margin: 10px;
+ } */
 
  .imgPart {
    position: relative;
@@ -80,31 +83,144 @@
    text-align: center;
    font-size: 12px;
  }
+
  button::after {
-  border: none;
-}
-.wrap{
+   border: none;
+ }
+
+ /* .wrap{
   height: auto;
   position: relative;
-}
-/*用来包裹所有的小圆点  */
-.dots{  
-  height: 36rpx; 
+} */
+.main{
+  width: 100%;
   display: flex;
-  flex-direction: row;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto;
-  bottom: 20rpx;
-}  
-/*未选中时的小圆点样式 */
-.dot{  
-  width: 50rpx;  
-  height: 26rpx;   
-  background-color: lightgray;
-}  
-/*选中以后的小圆点样式  */
-.active{  
-  background-color: #4880ff;
+  justify-content: center;
+  align-items: center;
 }
+
+ .swiperOuter {
+   width: 90%;
+   position: relative;
+   background: white;
+   border-radius: 4px;
+ }
+
+ #chevron {
+   position: relative;
+   text-align: center;
+   background: lightblue;
+   height: 40px;
+   width: 100%;
+   border-radius: 5% 5% 0 0;
+   top: -6px;
+ }
+
+ .circle {
+   width: 40px;
+   height: 40px;
+   border-radius: 50%;
+   background: white;
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   margin: auto;
+   z-index: 1;
+ }
+
+ #chevron::before {
+   content: '';
+   width: 50%;
+   height: 20px;
+   position: absolute;
+   top: 70%;
+   left: 0;
+   background: lightblue;
+   -webkit-transform: skew(0deg, 6deg);
+   -moz-transform: skew(0deg, 6deg);
+   -ms-transform: skew(0deg, 6deg);
+   -o-transform: skew(0deg, 6deg);
+   transform: skew(0deg, 6deg);
+   box-shadow: inset 0 -5px 4px -4px gray;
+ }
+
+ #chevron::after {
+   content: '';
+   width: 50%;
+   height: 20px;
+   position: absolute;
+   top: 70%;
+   right: 0;
+   background: lightblue;
+   -webkit-transform: skew(0deg, -6deg);
+   -moz-transform: skew(0deg, -6deg);
+   -ms-transform: skew(0deg, -6deg);
+   -o-transform: skew(0deg, -6deg);
+   transform: skew(0deg, -6deg);
+   box-shadow: inset 0 -5px 4px -4px gray;
+ }
+
+ .outer {
+   width: 100%;
+   height: 4px;
+   background: blue;
+   border-radius: 4px 4px 0 0;
+   position: relative;
+   top: -4px
+ }
+
+ .outerr {
+   width: 100%;
+   height: 4px;
+   background: lightgreen;
+   border-radius: 4px 4px 0 0;
+   position: relative;
+   top: -2px
+ }
+
+ .outerrr {
+   width: 100%;
+   height: 4px;
+   background: yellow;
+   border-radius: 4px 4px 0 0;
+   position: relative;
+ }
+
+ .contain {
+   width: 100%;
+   /*  height: 150px; */
+   border: 1px solid black;
+   position: relative;
+   bottom: 0px;
+   padding: 20px 10px;
+   box-sizing: border-box;
+ }
+
+ /*用来包裹所有的小圆点  */
+
+ .dots {
+   height: 36rpx;
+   display: flex;
+   flex-direction: row;
+   position: absolute;
+   left: 0;
+   right: 0;
+   margin: auto;
+   bottom: 20rpx;
+ }
+
+ /*未选中时的小圆点样式 */
+
+ .dot {
+   width: 50rpx;
+   height: 26rpx;
+   background-color: lightgray;
+ }
+
+ /*选中以后的小圆点样式  */
+
+ .active {
+   background-color: #4880ff;
+ }

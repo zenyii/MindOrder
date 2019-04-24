@@ -12,15 +12,9 @@
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-<<<<<<< HEAD
-	"libVersion": "2.6.2",
-	"appid": "wxde63b38b13c15b8b",
-	"projectname": "data",
-=======
-	"libVersion": "2.6.5",
+	"libVersion": "2.6.6",
 	"appid": "wx8d5d22897bfc549c",
-	"projectname": "MindOrder",
->>>>>>> Lee
+	"projectname": "miniprogram-test-1",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

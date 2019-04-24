@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/preparing/preparing",
+    "pages/index/index",
     "pages/pick/pick",
     "pages/show/show",
     "pages/try/try",
@@ -7,35 +9,37 @@
     "pages/test/test",
     "pages/index2/index2",
     "pages/lastTitle/lastTitle",
-    "pages/index/index",
     "pages/logs/logs",
     "pages/buildRooming/buildRooming",
-    "pages/preparing/preparing",
-    "pages/inputRoomId/inputRoomId"
+ 
+    "pages/inputRoomId/inputRoomId",
+    "pages/login/login"
+
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#02063f",
     "navigationBarTitleText": "头脑智序",
-    "navigationBarTextStyle":"white"
+    "navigationBarTextStyle": "white"
   },
   "tabBar": {
     "custom": true,
     "color": "#ffffff",
-    "borderStyle":"black",
+    "borderStyle": "black",
     "selectedColor": "#4880ff",
-    "list": [{
-      "selectedIconPath": "icon/indexChecked.png",
-      "iconPath": "icon/index.png",
-      "pagePath": "pages/index/index",
-      "text": "首页"
-    },  
-    {
-      "selectedIconPath": "icon/mine.png",
-      "iconPath": "icon/mineChecked.png",
-      "pagePath": "pages/index/index",
-      "text": "我的"
-    }]
+    "list": [
+      {
+        "selectedIconPath": "icon/indexChecked.png",
+        "iconPath": "icon/index.png",
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "icon/mine.png",
+        "iconPath": "icon/mineChecked.png",
+        "pagePath": "pages/index/index",
+        "text": "我的"
+      }
+    ]
   }
 }
-

@@ -1,46 +1,54 @@
-<view class="container" style='background:url(../../icon/bg1.png) repeat-x;background-size:100% auto;' >
+<view class="container" style='background:url(../../icon/bg1.png) repeat-x;background-size:100% auto;'>
   <view style="width:100%">
     <block>
-      <view class='header'>
+      <!-- <view class='header'>
         <view class="title">房号：{{inputMsg.roomNum}}</view>
         <view class="title">主题：{{inputMsg.text}}</view>
-        <!-- <picker bindchange="bindPickerChange" value="{{index}}" range='{{timeRange}}'>
+        <picker bindchange="bindPickerChange" value="{{index}}" range='{{timeRange}}'>
           <view wx:if="{{!join}}">请输入前期个人准备时间：{{timeRange[index]}}  分钟</view>
-        </picker> -->
-      </view>
-      <view class='main' style="width:100%;">
+        </picker>
+      </view> -->
+      <view class='main'>
         <!-- <button class="invite" open-type='share'>邀请加入</button> -->
-        <view class="wrap"> 
-          <swiper style="height:300px" current="{{currentSwiper}}" bindchange="swiperChange">
-            <block wx:for="{{userInfoSwiper}}" wx:key="" wx:for-index="outerIndex" wx:for-item="outerItem">
-              <swiper-item class='peopleList' bindtap='bindDelete'>
-                <block wx:for="{{outerItem}}" wx:key="" wx:for-index="innerIndex" wx:for-item="innerItem">
-                  <view class="peopleItem" id="{{innerIndex}}">
-                    <view class="imgPart">
-                      <image src='{{innerItem.avatarUrl}}' class="headImg {{ innerIndex === 0 ? 'houseHolder' :''}}" />
-                      <view wx:if="{{innerItem.ready}}" class="map">准备中</view>
-                      <view wx:if="{{!join}}" class="{{ innerIndex!== 0 ? 'delete': 'hidden'}}" id="delete{{innerIndex}}">
-                        x
+        <view class="swiperOuter">
+          <view class="outerrr"></view>
+          <view class="outerr"></view>
+          <view class="outer"></view>
+          <view id="chevron">
+            <view class="circle"></view>
+          </view>
+          <view class="contain">
+            <swiper style="height:180px" current="{{currentSwiper}}" bindchange="swiperChange">
+              <block wx:for="{{userInfoSwiper}}" wx:key="" wx:for-index="outerIndex" wx:for-item="outerItem">
+                <swiper-item class='peopleList' bindtap='bindDelete'>
+                  <block wx:for="{{outerItem}}" wx:key="" wx:for-index="innerIndex" wx:for-item="innerItem">
+                    <view class="peopleItem" id="{{innerIndex}}">
+                      <view class="imgPart">
+                        <image src='{{innerItem.avatarUrl}}' class="headImg {{ innerIndex ===0 && outerIndex === 0 ? 'houseHolder' :''}}" />
+                        <view wx:if="{{innerItem.ready}}" class="map">准备中</view>
+                        <view wx:if="{{!join}}" class="{{ outerIndex === 0 ? (innerIndex === 0 ? 'hidden' : 'delete' ): 'delete'}}" id="delete{{innerIndex}}">
+                          x
+                        </view>
                       </view>
+                      <!-- <view class="nickName">
+                        <span class="number">{{innerIndex+1}}</span>
+                        {{innerItem.nickName}}
+                      </view> -->
                     </view>
-                    <view class="nickName">
-                      <span class="number">{{innerIndex+1}}</span>
-                      {{innerItem.nickName}}
-                    </view>
-                  </view>
-                </block>
-                <button wx:if="{{outerIndex===userInfoSwiper.length-1}}" class="invite" open-type='share' style="padding:0;margin:0 5px;background:url('../../icon/join.png');width:100px;height:100px;background-size:100%"></button>
-              </swiper-item>
-            </block>
-          </swiper>
-          <view class="dots" style="width:{{dotsWidth}}rpx">
-            <block wx:for="{{userInfoSwiper}}" wx:key="">
-              <view class="dot{{index == currentSwiper ? ' active' : ''}}"></view>
-            </block>
+                  </block>
+                  <button wx:if="{{outerIndex===userInfoSwiper.length-1}}" class="invite" open-type='share' style="padding:0;margin:0 5px;background:url('../../icon/join.png');width:100px;height:100px;background-size:100%"></button>
+                </swiper-item>
+              </block>
+            </swiper>
+            <view class="dots" style="width:{{dotsWidth}}rpx">
+              <block wx:for="{{userInfoSwiper}}" wx:key="">
+                <view class="dot{{index == currentSwiper ? ' active' : ''}}"></view>
+              </block>
+            </view>
           </view>
         </view>
-        <button bindtap='bindReady'>开始</button>
       </view>
     </block>
+    <button bindtap='bindReady'>开始</button>
   </view>
 </view>
