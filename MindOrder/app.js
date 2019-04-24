@@ -9,23 +9,23 @@ App({
     //userInfo: {},
     hasUserInfo: false,
     userInfo: null,
+    openId:1123,
     UserData: [
       {
-        name: "用户1",
+        openId:1,
         words: [{ word: "词条1", num: [] }, { word: "词条2", num: [] }],
         method: [{ content: "具体方法1", num: [], isgood: false }, { content: "具体方法2", num: [], isgood: false }]
       },
       {
-        name: "用户2",
+        openId:2,
         words: [{ word: "词条1", num: [], isgood: false }, { word: "词条2", num: [], isgood: false }],
         method: [{ content: "具体方法1", num: [], isgood: false }, { content: "具体方法2", num: [], isgood: false }]
       },
       {
-        name: "用户3",
+        openId:3,
         words: [{ word: "词条1", num: [], isgood: false }, { word: "词条2", num: [], isgood: false }],
         method: [{ content: "具体方法1", num: [], isgood: false }, { content: "具体方法2", num: [], isgood: false }]
       },
-
     ],
     minute: '',
     second: '',
