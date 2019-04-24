@@ -1,8 +1,8 @@
 {
   "pages": [
-    "pages/pick/pick",
-    "pages/show/show",
+        "pages/show/show",
     "pages/try/try",
+    "pages/pick/pick",
     "pages/setTime/setTime",
     "pages/test/test",
     "pages/index2/index2",
