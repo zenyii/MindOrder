@@ -34,9 +34,9 @@ export function countDown(that){
     wx.showModal({
       title: '',
       content: '个人头脑写作环节已经结束，点击"确定"前往点赞区',
-      showCancel:false,
-      success:function(res){
-        if(res.confirm){
+      showCancel: false,
+      success: function (res) {
+        if (res.confirm) {
           wx.navigateTo({
             url: '../show/show',
           })
