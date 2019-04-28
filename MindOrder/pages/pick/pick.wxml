@@ -4,7 +4,8 @@
 <view class='ranking'>
   <view class='Message' wx:for="{{showMessage}}" wx:for-index="index" wx:key="item">
   <text id='messageItem'>{{item.word}}</text>
-  <view class='showNum'><image src='../../images/gooded.png'></image>{{item.num.length}} </view>
+  <view class='showNum'><image id='good' src='../../images/gooded.png'></image>{{item.num.length}} 
+  <image id='comment' src='../../images/comment.png'></image> 0</view>
   </view>
 </view>
 
