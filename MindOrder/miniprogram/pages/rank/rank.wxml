@@ -1,0 +1,12 @@
+<!--pages/pick/pick.wxml-->
+<view class="{{!isRank ? 'goDiscuss' : 'ungoDiscuss'}}" bindtap='goDiscussing'>讨论区</view><view class="{{isRank ? 'goRanking' : 'ungoRanking'}}" bindtap='goRanking'>排行榜</view>
+
+<view wx:if="{{isRank}}" class='ranking'>
+  <view class='Message' wx:for="{{showMessage}}" wx:for-index="index" wx:key="item">
+  <text id='messageItem'>{{item.word}}</text>
+  <view class='showNum'><image id='good' src='../../icon/gooded.png'></image>{{item.num.length}} 
+  <image id='comment' src='../../icon/comment.png'></image> 0</view>
+  </view>
+</view>
+
+<button bindtap='insurelast'>确定</button>

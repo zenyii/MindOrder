@@ -1,5 +1,0 @@
-<!--pages/lastTitle/lastTitle.wxml-->
-<label>最终选词：</label>
-<view wx:for="{{pickMessage}}" wx:key="item">
-{{item}}
-</view>
