@@ -31,9 +31,16 @@
 .showNum{
   font-size: 20rpx;
   float: right;
+  width: 20%;
 }
 
-.showNum image{
+#good{
   width: 20rpx;
   height: 20rpx;
+}
+
+#comment{
+  width: 30rpx;
+  height: 20rpx;
+  margin-left: 15rpx;
 }

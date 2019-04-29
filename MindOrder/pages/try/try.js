@@ -164,6 +164,23 @@ Page({
       var checkNum = 0;
       //若有openId属性重复的，则只插入词条数据
       for (var j = 0; j < app.globalData.UserData.length; j++) {
+        var that = this;
+        wx.request({
+          url: 'https://fl123.xyz/api/xcx/addContent.php',
+          data: {
+            id: app.globalData.openId,
+            roomNum:app.globalData.roomNum,
+            text: obj.word,
+            state:1
+          },
+          method: 'POST',
+          header: {
+            'content-type': "application/x-www-form-urlencoded"
+          },
+          success: function (res) {
+            console.log(res.data);
+          },
+        })
         if (newUser.openId == app.globalData.UserData[j].openId) {
           app.globalData.UserData[j].words.push(obj);
           break;
@@ -284,12 +301,14 @@ Page({
    */
   onReady: function() {
     countDown(this);
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+   
   },
 
   /**

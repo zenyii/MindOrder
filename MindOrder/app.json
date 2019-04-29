@@ -1,11 +1,11 @@
 {
   "pages": [
-      "pages/index/index",
-    "pages/preparing/preparing",
+    "pages/setTime/setTime",
     "pages/pick/pick",
     "pages/show/show",
+    "pages/preparing/preparing",
+    "pages/index/index",
     "pages/try/try",
-    "pages/setTime/setTime",
     "pages/test/test",
     "pages/index2/index2",
     "pages/lastTitle/lastTitle",

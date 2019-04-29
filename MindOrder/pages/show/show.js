@@ -80,8 +80,9 @@ Page({
     var id = e.currentTarget.id;
     var openId = app.globalData.openId;
     var length = this.data.showMessage[id].num.length;
+    var roomNumber = app.globalData.roomNum;
     //console.log(e);
-    /*//将点赞过的人的昵称存入num数组中，并处理点赞事件
+    //将点赞过的人的昵称存入num数组中，并处理点赞事件
     if(length){
       for(var i = 0;i<length;i++){
         if (this.data.showMessage[id].num[i] == openId){
@@ -107,15 +108,16 @@ Page({
     })
 
     app.globalData.showMessage = this.data.showMessage;
-    //console.log(this.data.showMessage);*/
+    //console.log(this.data.showMessage);
+    //用户点赞后请求点赞结果
     var that = this;
     wx.request({
       url: 'https://fl123.xyz/api/xcx/support.php',
       data: {
-        roomNum: 556677,
-        userId: 1123,
-        author: 456789,
-        text: "你说什么",
+        roomNum: roomNumber,
+        userId: openId,
+        author: that.data.showMessage[id].openId,
+        text: that.data.showMessage[id].word,
         state: 1
       },
       method: 'POST',
