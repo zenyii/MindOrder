@@ -2,6 +2,7 @@
    margin: 0;
    padding: 0;
    box-sizing: border-box;
+   background: #ccc;
  }
 
  .title {
@@ -14,23 +15,26 @@
 
  image {
    display: inline-block;
-   width: 60px;
-   height: 60px;
+   width: 50px;
+   height: 50px;
    border-radius: 50%;
  }
 
  .peopleList {
    display: flex;
    flex-direction: row;
-   justify-content: space-around;
    flex-wrap: wrap;
  }
- /* .peopleItem{
-   margin: 10px;
- } */
+ .peopleItem{
+  width:25%;
+  height: 70px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+ }
 
  .imgPart {
-   position: relative;
+   position: absolute;
  }
 
  .headImg {
@@ -49,29 +53,23 @@
    line-height: 100px;
  }
 
- .houseHolder::before {
-   content: "房";
+ .houseHolder {
+   width: 16px;
+   height: 16px;
    position: absolute;
-   top: 0;
-   left: 0;
-   display: block;
-   background-color: aliceblue;
-   border-radius: 50%;
+   top: -2px;
+   left: 5px;
+   display: inline-block;
+   z-index: 1;
  }
 
  .delete {
    position: absolute;
+   right: -7px;
    top: 0;
-   right: 0;
-   width: 20px;
-   height: 20px;
-   text-align: center;
-   background-color: white;
-   border-radius: 50%;
-   padding: 0;
-   margin: 0;
-   line-height: 20px;
-   padding-bottom: 2px;
+   width: 12px;
+   height: 12px;
+   box-sizing: border-box;
  }
 
  .number {
@@ -103,7 +101,9 @@
    width: 90%;
    position: relative;
    background: white;
-   border-radius: 4px;
+   border-radius: 2%;
+   box-shadow: 1px 2px 8px gray;
+   margin-bottom: 10px;
  }
 
  #chevron {
@@ -122,7 +122,7 @@
    border-radius: 50%;
    background: white;
    position: absolute;
-   top: 0;
+   top: 15px;
    bottom: 0;
    left: 0;
    right: 0;
@@ -132,7 +132,7 @@
 
  #chevron::before {
    content: '';
-   width: 50%;
+   width: 51%;
    height: 20px;
    position: absolute;
    top: 70%;
@@ -164,58 +164,57 @@
 
  .outer {
    width: 100%;
-   height: 4px;
+   height: 5px;
    background: blue;
-   border-radius: 4px 4px 0 0;
+   border-radius: 5px 5px 0 0;
    position: relative;
    top: -4px
  }
 
  .outerr {
    width: 100%;
-   height: 4px;
+   height: 5px;
    background: lightgreen;
-   border-radius: 4px 4px 0 0;
+   border-radius: 5px 5px 0 0;
    position: relative;
    top: -2px
  }
 
  .outerrr {
    width: 100%;
-   height: 4px;
+   height: 5px;
    background: yellow;
-   border-radius: 4px 4px 0 0;
+   border-radius: 5px 5px 0 0;
    position: relative;
  }
 
  .contain {
    width: 100%;
    /*  height: 150px; */
-   border: 1px solid black;
    position: relative;
    bottom: 0px;
-   padding: 20px 10px;
+   padding: 25px 20px;
    box-sizing: border-box;
  }
 
  /*用来包裹所有的小圆点  */
 
  .dots {
-   height: 36rpx;
+   height: 10rpx;
    display: flex;
    flex-direction: row;
    position: absolute;
    left: 0;
    right: 0;
    margin: auto;
-   bottom: 20rpx;
+   bottom: 40rpx;
  }
 
  /*未选中时的小圆点样式 */
 
  .dot {
    width: 50rpx;
-   height: 26rpx;
+   height: 10rpx;
    background-color: lightgray;
  }
 

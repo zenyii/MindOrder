@@ -49,7 +49,7 @@ Page({
        })
      } */
   },
-
+//获取房主的openid然后随链接传参给preparing，赋值在全局上！！！！！
   goToBuild: function () {
     wx.navigateTo({
       //传入房间验证码,
@@ -58,7 +58,6 @@ Page({
     console.log('goto')
   },
   formSubmit: function (values) {//
-
     let that = this;
     let inputValue = values.detail.value;
     inputValue.userIdArr=[app.globalData.userId];
@@ -71,9 +70,9 @@ Page({
       that.setData({
         inputValue: inputValue
       })
-      console.log('form发生了submit事件，携带数据为：', that.data.inputValue)
+      console.log('form发生了submit事件，携带数据为：', that.data.inputValue);
     },e=>{
-      console.log('发送表单失败！'+e)
+      console.log('发送表单失败！'+e);
     })
     .then(e=>{
       that.goToBuild();

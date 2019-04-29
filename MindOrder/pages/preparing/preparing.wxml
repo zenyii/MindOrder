@@ -18,17 +18,19 @@
             <view class="circle"></view>
           </view>
           <view class="contain">
-            <swiper style="height:180px" current="{{currentSwiper}}" bindchange="swiperChange">
+            <swiper style="height:160px" current="{{currentSwiper}}" bindchange="swiperChange">
               <block wx:for="{{userInfoSwiper}}" wx:key="" wx:for-index="outerIndex" wx:for-item="outerItem">
                 <swiper-item class='peopleList' bindtap='bindDelete'>
                   <block wx:for="{{outerItem}}" wx:key="" wx:for-index="innerIndex" wx:for-item="innerItem">
                     <view class="peopleItem" id="{{innerIndex}}">
+                      <view wx:if="{{ innerIndex ===0 && outerIndex === 0 }}" class="houseHolder" style='background:url(../../icon/roomowner.png)'></view>
                       <view class="imgPart">
-                        <image src='{{innerItem.avatarUrl}}' class="headImg {{ innerIndex ===0 && outerIndex === 0 ? 'houseHolder' :''}}" />
+                        <image src='{{innerItem.avatarUrl}}' class="headImg" />
                         <view wx:if="{{innerItem.ready}}" class="map">准备中</view>
-                        <view wx:if="{{!join}}" class="{{ outerIndex === 0 ? (innerIndex === 0 ? 'hidden' : 'delete' ): 'delete'}}" id="delete{{innerIndex}}">
-                          x
-                        </view>
+                        
+                          <image  wx:if="{{!join}}" class="{{ outerIndex === 0 ? (innerIndex === 0 ? 'hidden' : 'delete' ): 'delete'}}"
+                           id="delete{{outerIndex*8+innerIndex}}" src="../../images/delete.png"  />
+                        
                       </view>
                       <!-- <view class="nickName">
                         <span class="number">{{innerIndex+1}}</span>
@@ -36,7 +38,7 @@
                       </view> -->
                     </view>
                   </block>
-                  <button wx:if="{{outerIndex===userInfoSwiper.length-1}}" class="invite" open-type='share' style="padding:0;margin:0 5px;background:url('../../icon/join.png');width:100px;height:100px;background-size:100%"></button>
+                  <button wx:if="{{outerIndex===userInfoSwiper.length-1}}" class="invite" open-type='share' style="padding:0;margin-left:5%;background:url('../../icon/join.png');width:50px;height:50px;background-size:100%"></button>
                 </swiper-item>
               </block>
             </swiper>

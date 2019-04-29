@@ -1,22 +1,19 @@
 //index.js
 //获取应用实例
-const app = getApp()//返回询问是否退出！，删除的那个用户要强制退出房间
+const app = getApp();//返回询问是否退出！，删除的那个用户要强制退出房间
 Page({//
   data: {
-    timeRange:[],
-    index:0,
+    timeRange: [],
+    index: 0,
     join: false,
-    allSet:false,
+    allSet: false,
     inputMsg: {//保存上一页面传来的房间信息
       roomNum: 0,
       text: '',
 
     },
-    dotsWidth:0,
-    currentSwiper:0,
-    /*  temUserData:{
-       avatarUrl:'../../images/1.jpg'
-     }, */
+    dotsWidth: 0,
+    currentSwiper: 0,
     userInfo: [{
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
       city: "Meizhou",
@@ -25,7 +22,8 @@ Page({//
       language: "zh_HK",
       nickName: "李me薇",
       province: "Guangdong",
-      ready: false
+      ready: false,
+      index: 0
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
@@ -35,6 +33,7 @@ Page({//
       language: "zh_HK",
       nickName: "李meme薇",
       province: "Guangdong",
+      index: 1
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
@@ -44,6 +43,7 @@ Page({//
       language: "zh_HK",
       nickName: "李薇",
       province: "Guangdong",
+      index: 2
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
@@ -53,6 +53,7 @@ Page({//
       language: "zh_HK",
       nickName: "李薇",
       province: "Guangdong",
+      index: 3
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
@@ -62,6 +63,7 @@ Page({//
       language: "zh_HK",
       nickName: "李薇",
       province: "Guangdong",
+      index: 4
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
@@ -71,6 +73,7 @@ Page({//
       language: "zh_HK",
       nickName: "李薇",
       province: "Guangdong",
+      index: 5
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
@@ -80,6 +83,7 @@ Page({//
       language: "zh_HK",
       nickName: "李薇",
       province: "Guangdong",
+      index: 6
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
@@ -89,6 +93,7 @@ Page({//
       language: "zh_HK",
       nickName: "李薇",
       province: "Guangdong",
+      index: 7
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
@@ -98,6 +103,7 @@ Page({//
       language: "zh_HK",
       nickName: "李薇",
       province: "Guangdong",
+      index: 8
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
@@ -107,20 +113,52 @@ Page({//
       language: "zh_HK",
       nickName: "李薇",
       province: "Guangdong",
+      index: 9
+    },
+    {
+      avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
+      city: "Meizhou",
+      country: "China",
+      gender: 2,
+      language: "zh_HK",
+      nickName: "李薇",
+      province: "Guangdong",
+      index: 10
+    },
+    {
+      avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
+      city: "Meizhou",
+      country: "China",
+      gender: 2,
+      language: "zh_HK",
+      nickName: "李薇",
+      province: "Guangdong",
+      index: 11
+    },
+    {
+      avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
+      city: "Meizhou",
+      country: "China",
+      gender: 2,
+      language: "zh_HK",
+      nickName: "李薇",
+      province: "Guangdong",
+      index: 12
     }],
-    userInfoSwiper:[]
+    userInfoSwiper: []
 
   },
   //事件处理函数
 
   onLoad: function (e) {
     let that = this;
-    let timeRange=[];
-    Array.from({length:13},(v,i)=>{
-      timeRange.push(i*5);
+    let timeRange = [];
+    Array.from({ length: 13 }, (v, i) => {
+      timeRange.push(i * 5);
     })
+
     // console.log(e.roomId,'roomId');//通过传入的验证码，request，搜寻对应数据项
-   
+
     /* let userInfo = that.data.userInfo;*/
     console.log(e, 'e');
     let inputMsg = that.data.inputMsg;
@@ -137,7 +175,7 @@ Page({//
       // userInfo:userInfo,
       join: Number(e.join),
       inputMsg: inputMsg,
-      timeRange:timeRange,
+      timeRange: timeRange,
 
     });
     console.log(this.data.inputMsg, 'inputMsg')
@@ -146,27 +184,30 @@ Page({//
       // 要求小程序返回分享目标信息
       withShareTicket: true
     });
-
-    /* 获取用户数据并分配 */
-    //先request用户数据亚茹userInfo中
-    let userInfoSwiper =that.assignUser(that.data.userInfo);
-    let length = userInfoSwiper.length;
-    that.setData({
-      userInfoSwiper:userInfoSwiper,
-      dotsWidth:length*50
-    })
-
+    that.resetSwiper();
   },
   swiperChange: function (e) {
     this.setData({
       currentSwiper: e.detail.current
     })
   },
-//判断用户数量
-  assignUser:function(a){
-    let userInfoSwiper=[];
-    while(a.length>=8){
-      userInfoSwiper.push(a.splice(0,8))
+  resetSwiper: function () {
+    /* 获取用户数据并分配 */
+    //先request用户数据亚茹userInfo中
+    let that = this;
+    let userInfoTem = that.data.userInfo.slice();
+    let userInfoSwiper = that.assignUser(userInfoTem);
+    let length = userInfoSwiper.length;
+    that.setData({
+      userInfoSwiper: userInfoSwiper,
+      dotsWidth: length * 50
+    })
+  },
+  //判断用户数量
+  assignUser: function (a) {
+    let userInfoSwiper = [];
+    while (a.length >= 8) {
+      userInfoSwiper.push(a.splice(0, 8))
     };
     userInfoSwiper.push(a);
     return userInfoSwiper
@@ -194,20 +235,21 @@ Page({//
   },
   bindDelete: function (e) {
     let that = this;
+    let id = e.target.id;
     console.log(e);
-    /* if (e._relatedInfo.anchorTargetText === "x") {
-      let id = e.target.id;
-      console.log(id, 'id');
+    console.log(id, 'id');
+    if (id.indexOf('delete') !== -1) {
       let index = id[id.length - 1];
       console.log(index, 'index');
       let userInfo = that.data.userInfo;
-      let temUserData = this.data.temUserData;
-      userInfo.splice(index, 1);
-      console.log(userInfo, 'userinfo')
+      let deleted = userInfo.splice(index, 1);
+      console.log(deleted, 'deleted')
       that.setData({
         userInfo: userInfo
       })
-    } */
+      //console.log(this.data.userInfo, 'userinfo')
+    }
+    this.resetSwiper();
 
   },
   bindReady: function () {
@@ -218,14 +260,14 @@ Page({//
       that.setData({
         [readyData]: !ready,
       })
-    }else{
-      if(that.data.allSet){//请求后台数据，如果所有成员准备完毕,并发送时间
+    } else {
+      if (that.data.allSet) {//请求后台数据，如果所有成员准备完毕,并发送时间
 
-      }else{
+      } else {
         wx.showModal({
           title: '提示',
           content: '还有人没有准备好哦！别急^u^',
-          showCancel:false,
+          showCancel: false,
           success(res) {
             if (res.confirm) {
               console.log('用户点击确定')
