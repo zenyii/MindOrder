@@ -2,27 +2,31 @@
 //获取应用实例
 const app = getApp();
 const utils = require('../../utils/util');
-Component({
-  pageLifetimes: {
-    show() {
-      if (typeof this.getTabBar === 'function' &&
-        this.getTabBar()) {
-        this.getTabBar().setData({
-          selected: 0
-        })
-      }
-    }
-  },
+Page({
   data: {
     userInfo: {},
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    selected: 0,
+    color: "#000000",
+    selectedColor: "#4880ff",
+    list: [{
+      iconPath: "../../icon/index.png",
+      selectedIconPath: "../../icon/indexChecked.png",
+      text: "首页"
+    }, {
+      iconPath: "../../icon/build.png",
+      selectedIconPath: "../../icon/build.png",
+    }, {
+      iconPath: "../../icon/mine.png",
+      selectedIconPath: "../../icon/mineChecked.png",
+      text: "我的"
+    }]
   },
   //事件处理函数
 
   onLoad: function () {
 
   },
-  methods:{
    /*  getUserInfo() {
       let that = this;
       return new utils.promise((resolve, reject) => {
@@ -36,7 +40,7 @@ Component({
         })
       }) 
     },*/
-    buildRoom() {
+    buildRoom:function() {
       let that = this;
       wx.navigateTo({
         url: '../buildRooming/buildRooming'
@@ -49,7 +53,7 @@ Component({
   
       }) */
     },
-    joinRoom() {
+    joinRoom:function() {
       let that = this;
       wx.navigateTo({
         url: '../inputRoomId/inputRoomId'
@@ -62,9 +66,18 @@ Component({
         
       }) 
     }*/
+  },
+  switchTab:function(e) {
+    console.log(e,'switch')
+    const data = e.currentTarget.dataset
+    const url = data.path
+    this.setData({
+      selected: data.index
+    })
+    data.index === 1 ? wx.navigateTo({url:'/pages/buildRooming/buildRooming'}) :''
   }
-},
+})
  
 
-})
+
 
