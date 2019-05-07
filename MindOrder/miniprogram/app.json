@@ -1,6 +1,6 @@
 {
   "pages": [
-        "pages/setTime/setTime",
+    "pages/setTime/setTime",
     "pages/homePage/homePage",
     "pages/index/index",
     "pages/userConsole/userConsole",
@@ -46,5 +46,6 @@
         "text": "我的"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
