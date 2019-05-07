@@ -1,0 +1,103 @@
+
+.roomId{
+    padding: 2px;
+    box-sizing: border-box;
+    position: relative;
+    width: 60vw;
+    height: 4vh;
+    left: 20%;
+  }
+  #roomId{
+    width: 100%;
+    height: 100%;
+    padding:0 5px;
+    font-size: 16px;
+  }
+  .roomId::before{
+    content: '房 号 :';
+    position: absolute;
+    display: inline-block;
+    top: 2px;
+    left: -45px;
+    font-size: 15px;
+    line-height: 4vh;
+  }
+  .title{
+      height: 41px;
+      position: relative;
+      left: 65px;
+      line-height: 41px;
+  }
+  .title::before{
+      content: '主 题 :';
+      position: absolute;
+      display: inline-block;
+      top: 0;
+      left: -45px;
+      font-size: 15px;
+      line-height: 41px;
+  }
+  button,#roomId{
+    letter-spacing: 2px;
+  }
+  button::after {
+    border: none;
+  }
+  .main{
+      margin: 5px 0;
+      width: 100%;
+      height: 96vh;
+      display: flex;
+      justify-content: center;
+
+  }
+  .bgWhite{
+      width: 95%;
+      height: 100%;
+      background:white;
+      border-radius: 5px 5px 0 0;
+      border:1px solid black;
+  }
+  .btn-area{
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin: 0 auto;
+}
+  .buildRoom,.invitePeople,.generCode{
+    width: 60vw;
+    height:45px;
+    line-height: 45px;
+    margin: 10px auto;
+    color: white;
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+  .buildRoom{
+    background-color: #4880ff;
+    box-shadow: 1px 1px 13px 1px #4880ff;
+  }
+  .invitePeople{
+    background-color: #02063F;
+    box-shadow: 1px 1px 13px 1px #02063F;
+  }
+  .generCode{
+    background-color: #0FCCA6;
+    box-shadow: 1px 1px 13px 1px #0fcca6;
+  }
+  button,#roomId{
+    letter-spacing: 2px;
+  }
+  button::after {
+    border: none;
+  }
+  .hr{
+      width: 90%;
+      height: 1px;
+      background:#ccc;
+      margin: 0 auto;
+      transform: scaleY(0.5);
+  }

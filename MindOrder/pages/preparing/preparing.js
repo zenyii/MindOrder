@@ -5,144 +5,112 @@ Page({//
   data: {
     timeRange: [],
     index: 0,
-    join: false,
+    join: 1,
     allSet: false,
     inputMsg: {//保存上一页面传来的房间信息
       roomNum: 0,
       text: '',
 
     },
+    buttonText:'准备',
     dotsWidth: 0,
     currentSwiper: 0,
     userInfo: [{
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-      city: "Meizhou",
-      country: "China",
-      gender: 2,
-      language: "zh_HK",
       nickName: "李me薇",
-      province: "Guangdong",
+      openId:'oGw5W49WSt-HbdVgfbSxykI8SC0',
       ready: false,
       index: 0
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-      city: "Meizhou",
-      country: "China",
-      gender: 2,
-      language: "zh_HK",
+     
       nickName: "李meme薇",
-      province: "Guangdong",
+      ready: false,
+      openId:'oGw5W49StN-HbdVgfbSxykI8SC0',
       index: 1
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-      city: "Meizhou",
-      country: "China",
-      gender: 2,
-      language: "zh_HK",
       nickName: "李薇",
-      province: "Guangdong",
+      openId:'oGwW49WStN-HbdVgfbSxykI8SC0',
+      ready: false,
       index: 2
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-      city: "Meizhou",
-      country: "China",
-      gender: 2,
-      language: "zh_HK",
       nickName: "李薇",
-      province: "Guangdong",
+      openId:'oGw5W4WStN-HbdVgfbSxykI8SC0',
+      ready: false,
       index: 3
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-      city: "Meizhou",
-      country: "China",
-      gender: 2,
-      language: "zh_HK",
       nickName: "李薇",
-      province: "Guangdong",
+      openId:'oGw5W49WStN-HbdVgfbSxykI8SC0',
+      ready: false,
       index: 4
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-      city: "Meizhou",
-      country: "China",
-      gender: 2,
-      language: "zh_HK",
+    
       nickName: "李薇",
-      province: "Guangdong",
+      openId:'oGw5W49WStN-HbVgfbSxykI8SC0',
+      ready: false,
       index: 5
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-      city: "Meizhou",
-      country: "China",
-      gender: 2,
-      language: "zh_HK",
       nickName: "李薇",
-      province: "Guangdong",
+      openId:'oGw5W49WStN-HdVgfbSxykI8SC0',
+      ready: false,
       index: 6
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-      city: "Meizhou",
-      country: "China",
-      gender: 2,
-      language: "zh_HK",
+    
       nickName: "李薇",
-      province: "Guangdong",
+      openId:'oGw5W49WStN-HbVgfbSxykI8SC0',
+      ready: false,
       index: 7
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-      city: "Meizhou",
-      country: "China",
-      gender: 2,
-      language: "zh_HK",
+  
       nickName: "李薇",
-      province: "Guangdong",
+      openId:'oGw5W49WStN-HbdVgbSxykI8SC0',
+      ready: false,
       index: 8
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-      city: "Meizhou",
-      country: "China",
-      gender: 2,
-      language: "zh_HK",
+  
       nickName: "李薇",
-      province: "Guangdong",
+      openId:'oGw5W49WSt-HbdVgfbSxykI8SC0',
+      ready: false,
       index: 9
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-      city: "Meizhou",
-      country: "China",
-      gender: 2,
-      language: "zh_HK",
+    
       nickName: "李薇",
-      province: "Guangdong",
+      openId:'oGw5W49WStN-HbdVgfbxykI8SC0',
+      ready: false,
       index: 10
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-      city: "Meizhou",
-      country: "China",
-      gender: 2,
-      language: "zh_HK",
       nickName: "李薇",
-      province: "Guangdong",
+      openId:'oGw5W49WStN-HbdfbSxykI8SC0',
+      ready: false,
       index: 11
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-      city: "Meizhou",
-      country: "China",
-      gender: 2,
-      language: "zh_HK",
+    
       nickName: "李薇",
-      province: "Guangdong",
+      openId:'oGw5W49WStN-HbdVgfbSxykI80',
+      ready: false,
       index: 12
     }],
     userInfoSwiper: []
@@ -176,7 +144,6 @@ Page({//
       join: Number(e.join),
       inputMsg: inputMsg,
       timeRange: timeRange,
-
     });
     console.log(this.data.inputMsg, 'inputMsg')
     wx.hideShareMenu();
@@ -252,13 +219,15 @@ Page({//
     this.resetSwiper();
 
   },
-  bindReady: function () {
+  bindReady: function () {//发送[openId,ready],返回的数据更改相应的ready
     let that = this;
     if (that.data.join) {
-      let readyData = 'userInfo[2].ready'
+      let readyData = 'userInfo[2].ready';
       let ready = that.data.userInfo[2].ready;
+      let text = !ready?'取消准备':'准备';
       that.setData({
         [readyData]: !ready,
+        buttonText:text
       })
     } else {
       if (that.data.allSet) {//请求后台数据，如果所有成员准备完毕,并发送时间
@@ -276,6 +245,7 @@ Page({//
         })
       }
     }
+    that.resetSwiper();
   },
   bindPickerChange(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)

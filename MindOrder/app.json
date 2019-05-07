@@ -1,19 +1,21 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/setTime/setTime",
+    "pages/invite/invite",
+    "pages/buildRooming/buildRooming",
+    "pages/index/index",
+    "pages/preparing/preparing",
+    
     "pages/pick/pick",
     "pages/show/show",
-    "pages/preparing/preparing",
     "pages/try/try",
     "pages/test/test",
     "pages/index2/index2",
     "pages/lastTitle/lastTitle",
     "pages/logs/logs",
-    "pages/buildRooming/buildRooming",
     "pages/inputRoomId/inputRoomId",
-    "pages/login/login",
-    "pages/mine/mine"
+    "pages/login/login"
+
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -29,16 +31,17 @@
     "list": [
       {
         "selectedIconPath": "icon/indexChecked.png",
-        "iconPath":"icon/index.png",
+        "iconPath": "icon/index.png",
         "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
         "selectedIconPath": "icon/mineChecked.png",
         "iconPath": "icon/mine.png",
-        "pagePath": "pages/mine/mine",
+        "pagePath": "pages/index/index",
         "text": "我的"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

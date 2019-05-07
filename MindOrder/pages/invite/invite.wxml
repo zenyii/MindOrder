@@ -1,0 +1,16 @@
+<view>
+    <view class='roomId'>
+        <input name='roomNum' type="number" id="roomId" value="123456" readonly />
+    </view>
+    <view class="main">
+        <view class="bgWhite">
+            <view class="title">XXXXXXXXX</view>
+            <view class="hr"></view>
+            <view class="btn-area">
+                <button class="invitePeople">邀请讨论</button>
+                <button class="generCode">生成小程序码</button>
+                <button class="buildRoom">进入</button>
+            </view>
+        </view>
+    </view>
+</view>
