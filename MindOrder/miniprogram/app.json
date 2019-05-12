@@ -1,17 +1,13 @@
 {
   "pages": [
-<<<<<<< HEAD:MindOrder/app.json
-    "pages/setTime/setTime",
+    "pages/index1/index1",
+    "pages/index/index",
+
     "pages/invite/invite",
     "pages/buildRooming/buildRooming",
-    "pages/index/index",
     "pages/preparing/preparing",
-    
-    "pages/pick/pick",
-=======
-        "pages/setTime/setTime",
+    "pages/setTime/setTime",
     "pages/homePage/homePage",
-    "pages/index/index",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",
@@ -19,15 +15,14 @@
     "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib",
     "pages/rank/rank",
->>>>>>> f6adb67aa94ce0308ebaa081cb0f8054cb86844e:MindOrder/miniprogram/app.json
     "pages/show/show",
     "pages/try/try",
     "pages/test/test",
     "pages/index2/index2",
     "pages/logs/logs",
     "pages/inputRoomId/inputRoomId",
-    "pages/login/login"
-
+    "pages/login/login",
+    "pages/mine/mine"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -44,21 +39,16 @@
       {
         "selectedIconPath": "icon/indexChecked.png",
         "iconPath": "icon/index.png",
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/index1/index1",
         "text": "首页"
       },
       {
         "selectedIconPath": "icon/mineChecked.png",
         "iconPath": "icon/mine.png",
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/mine/mine",
         "text": "我的"
       }
     ]
-<<<<<<< HEAD:MindOrder/app.json
   },
   "sitemapLocation": "sitemap.json"
 }
-=======
-  }
-}
->>>>>>> f6adb67aa94ce0308ebaa081cb0f8054cb86844e:MindOrder/miniprogram/app.json
