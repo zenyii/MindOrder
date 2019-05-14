@@ -31,22 +31,22 @@ Page({
       .then(r => {
         //返回自定义登录态
         console.log(r, '添加用户数据成功');
-         wx.setStorageSync('userInfo',userInfo);
-         app.globalData.userInfo = userInfo;
+        wx.setStorageSync('userInfo', userInfo);//本地缓存用户信息
+        app.globalData.userInfo = userInfo;//全局储存用户信息
         wx.hideLoading();
         that.setData({
           loading: false
         });
-        
+
         if (that.data.redirect_url) {
           //console.log('重定向！')
           wx.reLaunch({
             url: that.data.redirect_url
           })
         } else {
-          //console.log('没有来源，默认index')
+          //console.log('没有来源，默认index1')
           wx.reLaunch({
-            url: 'pages/index/index'///!!!!
+            url: 'pages/index1/index1'///!!!!
           })
         }
       }, r => {
@@ -60,7 +60,7 @@ Page({
     this.setData({
       redirect_url: decodeURIComponent(options.redirect_url)
     })
-    wx.login({
+    wx.login({//登录并获取code
       success: function (res) {
         if (res.code) {
           that.setData({
@@ -71,52 +71,4 @@ Page({
     })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

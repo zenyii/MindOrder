@@ -1,3 +1,8 @@
+page {
+  margin: 0;
+  padding: 0;
+  background-color: #ccc;
+}
 
 .roomId{
     padding: 2px;
@@ -14,7 +19,7 @@
     font-size: 16px;
   }
   .roomId::before{
-    content: '房 号 :';
+    content: '房 号 : ';
     position: absolute;
     display: inline-block;
     top: 2px;
@@ -27,13 +32,15 @@
       position: relative;
       left: 65px;
       line-height: 41px;
+      padding:0 5px;
+      font-size: 16px;
   }
   .title::before{
-      content: '主 题 :';
+      content: '主 题 : ';
       position: absolute;
       display: inline-block;
       top: 0;
-      left: -45px;
+      left: -47px;
       font-size: 15px;
       line-height: 41px;
   }
@@ -56,7 +63,6 @@
       height: 100%;
       background:white;
       border-radius: 5px 5px 0 0;
-      border:1px solid black;
   }
   .btn-area{
     width: 100%;

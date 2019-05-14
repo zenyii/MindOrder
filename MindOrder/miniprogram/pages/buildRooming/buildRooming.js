@@ -4,92 +4,82 @@ const request = require('../../requests/request');
 Page({
   data: {
     roomId: 0,
-    // redBorder:false,
     inputValue: {},
-    //canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    /*     code: '',
-        encryptedData: '',
-        iv: '' */
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     let that = this;
+    /* 随机roomid */
     that.setData({
       roomId: that.getRandomInt(100000, 999999)
     })
 
-    /* 初始化，载入现存的用户数据
-      if (app.globalData.userInfo) {
-       console.log(1)
-       this.setData({
-         userInfo: app.globalData.userInfo,
-       })
-     } else if (this.data.canIUse) {
-       console.log(2)
-       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-       // 所以此处加入 callback 以防止这种情况
-       app.userInfoReadyCallback = res => {
-         this.setData({
-           userInfo: res.userInfo,
+  },
  
-         })
-       }
-     } else {
-       console.log(3)
-       // 在没有 open-type=getUserInfo 版本的兼容处理
-       wx.getUserInfo({
-         success: res => {
-           app.globalData.userInfo = res.userInfo
-           this.setData({
-             userInfo: res.userInfo,
-           })
-         }
-       })
-     } */
-  },
-//获取房主的openid然后随链接传参给preparing，赋值在全局上！！！！！
   goToBuild: function () {
+    /* 跳转到invite页面 */
     wx.navigateTo({
-      //传入房间验证码,
-      url:`../preparing/preparing?roomNum=${this.data.inputValue.roomNum}&join=0&text=${this.data.inputValue.text}`
+      //传入roomid,主题
+      url: `../invite/invite?roomNum=${this.data.inputValue.roomNum}&text=${this.data.inputValue.text}`
     })
-    console.log('goto')
+    //console.log('goto')
   },
+
+  /* button开启房间 */
   formSubmit: function (values) {//
     let that = this;
-    let inputValue = values.detail.value;
-    inputValue.userIdArr=[app.globalData.userId];
+    let inputValue = values.detail.value;//获取表单信息
+    //inputValue.userIdArr = [app.globalData.selfOpenid];//获取用户自己的openid
+    app.globalData.roomMaster=app.globalData.selfOpenid;//设置房主openid
+    app.globalData.roomNum = this.data.roomId;//全局保存房间号
     wx.showLoading({
       title: '加载中',
     })
-      /* 获取用户信息 */
-      request.request('https://fl123.xyz/api/xcx/createRoom.php',inputValue,'POST')
-    .then(e=>{
-      that.setData({
-        inputValue: inputValue
+    /* 发送表单数据 */
+    request.request('https://fl123.xyz/api/xcx/createRoom.php', inputValue, 'POST')
+      .then(e => {
+        that.setData({
+          inputValue: inputValue
+        })
+        console.log('form发生了submit事件，携带数据为：', that.data.inputValue);
+      }, e => {
+        console.log('发送表单失败！' + e);
       })
-      console.log('form发生了submit事件，携带数据为：', that.data.inputValue);
-    },e=>{
-      console.log('发送表单失败！'+e);
-    })
-    .then(e=>{
-      that.goToBuild();
-    },e=>{
+      .then(e => {//数据发送到服务器并反馈成功后页面跳转
+        that.goToBuild();
+      }, e => {
 
-    }).finally(
-      ()=>{
-        wx.hideLoading();
-      }
-    ) 
+      }).finally(
+        () => {
+          wx.hideLoading();
+        }
+      )
   },
-  getRandomInt:function(min, max) {
+  
+  /* 随机数 */
+  getRandomInt: function (min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
     //不含最大值，含最小值
   },
+
+  /* 返回到首页不刷新 */
+  onUnload: function () {
+    /* let pages = getCurrentPages();
+    let prevPage = pages[ pages.length - 2 ];
+    prevPage.setData({  // 将我们想要传递的参数在这里直接setData。上个页面就会执行这里的操作。
+      selected:0
+  });
+    wx.navigateBack({
+      delta:2 // 返回上一级页面
+    }) */
+    /* wx.redirectTo({
+      url:'../index1/index1?selected=0'
+    }) */
+  }
   /*   formReset() {
       console.log('form发生了reset事件')
     } */

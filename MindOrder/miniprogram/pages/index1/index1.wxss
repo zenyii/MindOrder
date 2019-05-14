@@ -25,7 +25,7 @@ page {
     align-items: center;
 }
 
-.join, .brain {
+ .brain {
     width: 60vw;
     height: 45px;
     line-height: 45px;
@@ -39,10 +39,6 @@ button::after {
     border: none;
 }
 
-.join {
-    background-color: #4880ff;
-    box-shadow: 1px 1px 13px 1px #4880ff;
-}
 
 .brain {
     background-color: #0fcca6;
@@ -102,11 +98,9 @@ button::after {
     height: 38px;
     position: absolute;
     /* transform: rotate(45deg); */
-   
     /* border-style: solid;
     border-width: 20px;
     border-color: transparent transparent transparent transparent; */
-   
     z-index: -1;
   
   }

@@ -24,7 +24,11 @@ Page({
   },
   //事件处理函数
 
-  onLoad: function () {
+  onLoad: function (e) {
+    console.log(e.selected);
+    this.setData({
+      selected: e.selected ? e.selected : 0
+    })
 
   },
    /*  getUserInfo() {
@@ -40,6 +44,13 @@ Page({
         })
       }) 
     },*/
+
+    /* changeData: function (){
+      this.setData({
+        selected:0
+      })
+      console.log(this.data.selected,'selected')
+    }, */
     buildRoom:function() {
       let that = this;
       wx.navigateTo({
@@ -58,6 +69,7 @@ Page({
       wx.navigateTo({
         url: '../inputRoomId/inputRoomId'
       })
+      
       /* that.getUserInfo().then(e => {
         wx.navigateTo({
           url: '../inputRoomId/inputRoomId'
@@ -71,10 +83,19 @@ Page({
     console.log(e,'switch')
     const data = e.currentTarget.dataset
     const url = data.path
-    this.setData({
-      selected: data.index
-    })
-    data.index === 1 ? wx.navigateTo({url:'/pages/buildRooming/buildRooming'}) :''
+    if(data.index === 1){
+      wx.navigateTo({url:'/pages/buildRooming/buildRooming'});
+      this.setData({
+        selected:0
+      })
+    }else{
+      this.setData({
+        selected: data.index
+      })
+    }
+    /* this.setData({
+      selected:0
+    }) */
   }
 })
  

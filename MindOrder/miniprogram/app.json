@@ -1,12 +1,12 @@
 {
   "pages": [
     "pages/index1/index1",
-    "pages/index/index",
-
-    "pages/invite/invite",
-    "pages/buildRooming/buildRooming",
-    "pages/preparing/preparing",
+    "pages/setTimer/setTimer",
     "pages/setTime/setTime",
+    "pages/invite/invite",
+    "pages/preparing/preparing",
+    "pages/buildRooming/buildRooming",
+    "pages/index/index",
     "pages/homePage/homePage",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
@@ -20,9 +20,9 @@
     "pages/test/test",
     "pages/index2/index2",
     "pages/logs/logs",
-    "pages/inputRoomId/inputRoomId",
     "pages/login/login",
     "pages/mine/mine"
+
   ],
   "window": {
     "backgroundTextStyle": "light",

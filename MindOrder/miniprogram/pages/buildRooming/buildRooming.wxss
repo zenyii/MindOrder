@@ -12,7 +12,7 @@ input{
   border:1px soild red;
 }
 .header {
-  width: 100%;
+  width: 100vw;
   height: 20vh;
   text-align: center;
   background-size: 100% 100%;

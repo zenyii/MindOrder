@@ -1,9 +1,8 @@
-<view class="index" wx:if="{{selected===0}}">
+<view class="index" wx:if="{{selected!==2}}">
     <view class='header' style="background-image:url(../../icon/bg1.png) ;">
         <image src="../../icon/logo.png" />
     </view>
     <view class="main">
-        <button class="join" bindtap='joinRoom'>加入房间</button>
         <button class="brain" bindtap='buildRoom'>头脑风暴</button>
     </view>
 

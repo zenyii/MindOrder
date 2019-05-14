@@ -6,115 +6,112 @@ Page({//
     timeRange: [],
     index: 0,
     join: 1,
-    allSet: false,
+    allSet: true,
     inputMsg: {//保存上一页面传来的房间信息
       roomNum: 0,
       text: '',
-
     },
-    buttonText:'准备',
+    buttonText: '',
     dotsWidth: 0,
     currentSwiper: 0,
     userInfo: [{
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
       nickName: "李me薇",
-      openId:'oGw5W49WSt-HbdVgfbSxykI8SC0',
+      openId: 'oGw5W49WSt-HbdVgfbSxykI8SC0',
       ready: false,
       index: 0
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-     
       nickName: "李meme薇",
       ready: false,
-      openId:'oGw5W49StN-HbdVgfbSxykI8SC0',
+      openId: 'oGw5W49StN-HbdVgfbSxykI8SC0',
       index: 1
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
       nickName: "李薇",
-      openId:'oGwW49WStN-HbdVgfbSxykI8SC0',
+      openId: 'oGwW49WStN-HbdVgfbSxykI8SC0',
       ready: false,
       index: 2
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
       nickName: "李薇",
-      openId:'oGw5W4WStN-HbdVgfbSxykI8SC0',
+      openId: 'oGw5W4WStN-HbdVgfbSxykI8SC0',
       ready: false,
       index: 3
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
       nickName: "李薇",
-      openId:'oGw5W49WStN-HbdVgfbSxykI8SC0',
+      openId: 'oGw5W49WStN-HbdVgfbSxykI8SC0',
       ready: false,
       index: 4
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-    
+
       nickName: "李薇",
-      openId:'oGw5W49WStN-HbVgfbSxykI8SC0',
+      openId: 'oGw5W49WStN-HbVgfbSxykI8SC0',
       ready: false,
       index: 5
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
       nickName: "李薇",
-      openId:'oGw5W49WStN-HdVgfbSxykI8SC0',
+      openId: 'oGw5W49WStN-HdVgfbSxykI8SC0',
       ready: false,
       index: 6
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-    
+
       nickName: "李薇",
-      openId:'oGw5W49WStN-HbVgfbSxykI8SC0',
+      openId: 'oGw5W49WStN-HbVgfbSxykI8SC0',
       ready: false,
       index: 7
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-  
+
       nickName: "李薇",
-      openId:'oGw5W49WStN-HbdVgbSxykI8SC0',
+      openId: 'oGw5W49WStN-HbdVgbSxykI8SC0',
       ready: false,
       index: 8
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-  
+
       nickName: "李薇",
-      openId:'oGw5W49WSt-HbdVgfbSxykI8SC0',
+      openId: 'oGw5W49WSt-HbdVgfbSxykI8SC0',
       ready: false,
       index: 9
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-    
+
       nickName: "李薇",
-      openId:'oGw5W49WStN-HbdVgfbxykI8SC0',
+      openId: 'oGw5W49WStN-HbdVgfbxykI8SC0',
       ready: false,
       index: 10
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
       nickName: "李薇",
-      openId:'oGw5W49WStN-HbdfbSxykI8SC0',
+      openId: 'oGw5W49WStN-HbdfbSxykI8SC0',
       ready: false,
       index: 11
     },
     {
       avatarUrl: "https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-    
+
       nickName: "李薇",
-      openId:'oGw5W49WStN-HbdVgfbSxykI80',
+      openId: 'oGw5W49WStN-HbdVgfbSxykI80',
       ready: false,
       index: 12
     }],
     userInfoSwiper: []
-
   },
   //事件处理函数
 
@@ -124,40 +121,35 @@ Page({//
     Array.from({ length: 13 }, (v, i) => {
       timeRange.push(i * 5);
     })
-
-    // console.log(e.roomId,'roomId');//通过传入的验证码，request，搜寻对应数据项
-
-    /* let userInfo = that.data.userInfo;*/
     console.log(e, 'e');
+
+    /* 获取房号和主题 */
     let inputMsg = that.data.inputMsg;
     inputMsg.roomNum = e.roomNum;
-    app.globalData.roomNum = e.roomNum;
     inputMsg.text = e.text;
-    //console.log(e.roomID);
-    //wx.request()获取inputMsg和userInfo，获取主题和人数，（loading等待）
-    /* 填充人数 */
-    /* while(userInfo.length !== inputMsg.count){
-        userInfo.push(that.data.temUserData);
-      } */
+
+    let buttonText = Number(e.join) === 0 ?'开始讨论':'准备';
     that.setData({
-      // userInfo:userInfo,
       join: Number(e.join),
+      buttonText:buttonText,
       inputMsg: inputMsg,
       timeRange: timeRange,
     });
-    console.log(this.data.inputMsg, 'inputMsg')
-    wx.hideShareMenu();
+
     wx.showShareMenu({
       // 要求小程序返回分享目标信息
       withShareTicket: true
     });
     that.resetSwiper();
   },
+
+  /* 判断用户swiper需要多少分页 */
   swiperChange: function (e) {
     this.setData({
       currentSwiper: e.detail.current
     })
   },
+  /* 重置swiper用户头像的排列 */
   resetSwiper: function () {
     /* 获取用户数据并分配 */
     //先request用户数据亚茹userInfo中
@@ -182,6 +174,7 @@ Page({//
   },
   /* 转发 */
   onShareAppMessage: function (ops) {
+    console.log(ops, '转发')
     if (ops.form === 'button') {
       console.log(ops.target, 'button');
     }
@@ -189,9 +182,22 @@ Page({//
     return {
       title: this.data.inputMsg.inputTitle,
       desc: '快来加入我们的头脑风暴吧！',
-      path: 'pages/preparing/preparing',
+      imageUrl: '../../icon/bg2.png',
+      path: 'pages/preparing/preparing?join=1',//传入房间号，在后台查找进入房间
       success: function (e) {
-        console.log('转发成功' + JSON.stringify(e))
+        console.log('转发成功' + JSON.stringify(e));
+        var shareTickets = res.shareTickets;
+        if (shareTickets.length == 0) {
+          console.log(shareTickets, 'shareTickets')
+          return false;
+        }
+        //可以获取群组信息
+        wx.getShareInfo({
+          shareTicket: shareTickets[0],
+          success: function (res) {
+            console.log(res)
+          }
+        })
       },
       fail: function (e) {
         console.log('转发失败' + JSON.stringify(e))
@@ -200,6 +206,8 @@ Page({//
     }
 
   },
+
+  /* 删除用户 */
   bindDelete: function (e) {
     let that = this;
     let id = e.target.id;
@@ -209,7 +217,7 @@ Page({//
       let index = id[id.length - 1];
       console.log(index, 'index');
       let userInfo = that.data.userInfo;
-      let deleted = userInfo.splice(index, 1);
+      let deleted = userInfo.splice(index, 1);//被删除的用户数据
       console.log(deleted, 'deleted')
       that.setData({
         userInfo: userInfo
@@ -219,18 +227,21 @@ Page({//
     this.resetSwiper();
 
   },
+  
+  /* 准备 */
   bindReady: function () {//发送[openId,ready],返回的数据更改相应的ready
     let that = this;
-    if (that.data.join) {
+    let join = this.data.join;
+    if (join!==0) {/////!!!!!!!!!!!!!!!!
       let readyData = 'userInfo[2].ready';
       let ready = that.data.userInfo[2].ready;
-      let text = !ready?'取消准备':'准备';
+      let text =  !ready ? '取消准备' : '准备';
       that.setData({
         [readyData]: !ready,
-        buttonText:text
+        buttonText: text
       })
     } else {
-      if (that.data.allSet) {//请求后台数据，如果所有成员准备完毕,并发送时间
+      if (that.data.allSet) {//请求后台数据，如果除房主外其他所有成员准备完毕,并发送时间
 
       } else {
         wx.showModal({
@@ -247,10 +258,18 @@ Page({//
     }
     that.resetSwiper();
   },
-  bindPickerChange(e) {
+ /*  bindPickerChange(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       index: e.detail.value
+    })
+  }, */
+  /* 用户退出 */
+  onUnload: function (e) {//对应删除该用户的openid
+    wx.showToast({
+      title: '您已退出讨论！',
+      icon: 'none',
+      duration: 2000
     })
   },
 
