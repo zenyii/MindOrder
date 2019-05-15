@@ -165,9 +165,29 @@ Page({
       this.data.value=[];
       newUser.words.push(obj);
       var checkNum = 0;
-      //若有openId属性重复的，则只插入词条数据
-      for (var j = 0; j < app.globalData.UserData.length; j++) {
         var that = this;
+        const db = wx.cloud.database();
+        db.collection('words').add({
+          data : {
+            roomNum: app.globalData.roomNum,
+            text: obj.word,
+            backColor: that.data.backColor,
+            isStar:false
+          }
+        })
+        /*.then(
+          db.collection('words').where({
+            //openId: app.globalData.openId
+            backColor: 'rgb(219, 218, 234)'
+          }).get({
+            success(res){
+              console.log(res);
+            }
+          })
+        )*/
+
+        
+        /*
         //在数据库中保存数据
         wx.request({
           url: 'https://fl123.xyz/api/xcx/addContent.php',
@@ -184,11 +204,12 @@ Page({
           success: function (res) {
             console.log(res.data);
           },
-        })
+        })*/
+      //若有openId属性重复的，则只插入词条数据
+      for (var j = 0; j < app.globalData.UserData.length; j++) {
         //插入词条内容
         if (newUser.openId == app.globalData.UserData[j].openId) {
           app.globalData.UserData[j].words.push(obj);
-          break;
         }
         checkNum++;
       }
@@ -201,8 +222,9 @@ Page({
         upDateUser: this.data.upDateUser,
       });
       //console.log(this.data.upDateUser);
+      //}
     }
-
+    
   },
   cancelEdit:function(){
     this.setData({
@@ -221,6 +243,10 @@ Page({
   },
   deleteWord:function(){
     var that = this;
+    const db = wx.cloud.database();
+    var textId = ''
+    var delword = this.data.upDateUser[0].words[that.data.selectedIndex].word;
+
     wx.showActionSheet({
       itemList: ["删除"],
       itemColor:"red",
@@ -230,10 +256,31 @@ Page({
           that.setData({
             upDateUser: that.data.upDateUser
           })
+          var get = new Promise(function (resolve, reject) {
+            //console.log(delword);
+            db.collection('words').where({
+              text: delword
+            }).get({
+              success: function (res) {
+                //console.log(res);
+                textId = res.data[0]._id;
+                //console.log(textId);
+                resolve();
+              }
+            })
+          });
+          get.then(function () {
+            db.collection('words').doc(textId).remove({
+              success(res) {
+
+              }
+            })
+          }
+          )
         }
       }
     })
-   
+    
   },
   scrollSelect:function(e){
     var that = this;

@@ -1,12 +1,30 @@
 <!--pages/pick/pick.wxml-->
+<!-->
 <view class="{{!isRank ? 'goDiscuss' : 'ungoDiscuss'}}" bindtap='goDiscussing'>讨论区</view><view class="{{isRank ? 'goRanking' : 'ungoRanking'}}" bindtap='goRanking'>排行榜</view>
 
 <view wx:if="{{isRank}}" class='ranking'>
   <view class='Message' wx:for="{{showMessage}}" wx:for-index="index" wx:key="item">
-  <text id='messageItem'>{{item.word}}</text>
-  <view class='showNum'><image id='good' src='../../icon/gooded.png'></image>{{item.num.length}} 
+  <text id='messageItem'>{{item.text}}</text>
+  <view class='showNum'><image id='good' src='../../icon/gooded.png'></image>0 
   <image id='comment' src='../../icon/comment.png'></image> 0</view>
   </view>
 </view>
+<view wx:if="{{!isRank}}">
+  <view class='Message' wx:for="{{showMessage}}" wx:for-index="index" wx:key="item">
+    <text id='messageItem'>{{item.text}}</text>
+    <image wx:if="{{!item.isMore}}" id="{{index}}" class='more' src='../../icon/more.png' bindtap='getMore'></image>
+    <view wx:if="{{item.isMore}}" class='List'>
+    <image bindtap='getStar' id='{{index}}' wx:if="{{!item.isStar}}" class='star' src='../../icon/star.png'></image>
+    <image bindtap='getStar' id='{{index}}' wx:if="{{item.isStar}}" class='star' src='../../icon/stared.png'></image>
+    <image id='good' src='../../icon/good.png'></image>
+    <image bindtap='sendComment' id='{{index}}' class='comment' src='../../icon/comment.png'></image>
+    </view>
+  </view>
+</view>
 
-<button bindtap='insurelast'>确定</button>
+<view class='bottom'>
+<input id="inputCom" placeholder='评论？'></input><button id="send">发送</button>
+</view> -->
+<view class="WxComment">
+  <WxComment tipOne="WxComment " tipTwo="Powered by https://github.com/yicm" submitBtnText="回复" articleID="{{your_article_id}}" contentLen='1' theme="light"></WxComment>
+</view>

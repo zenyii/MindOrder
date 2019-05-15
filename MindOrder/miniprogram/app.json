@@ -1,6 +1,9 @@
 {
   "pages": [
-        "pages/setTime/setTime",
+    "pages/rank/rank",
+    "pages/try/try",
+    "pages/show/show",
+    "pages/setTime/setTime",
     "pages/homePage/homePage",
     "pages/index/index",
     "pages/userConsole/userConsole",
@@ -9,10 +12,7 @@
     "pages/addFunction/addFunction",
     "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib",
-    "pages/rank/rank",
-    "pages/show/show",
     "pages/preparing/preparing",
-    "pages/try/try",
     "pages/test/test",
     "pages/index2/index2",
     "pages/logs/logs",
@@ -46,5 +46,6 @@
         "text": "我的"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

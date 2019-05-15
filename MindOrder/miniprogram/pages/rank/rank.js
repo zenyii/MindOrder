@@ -7,15 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-  showMessage:[
-    { word: "词条1", num: Array(0), isgood: false, openId: 2, backColor: "rgb(255,210,210)" },
-    { word: "词条1", num: Array(0), openId: 1, backColor: "rgb(255,210,210)" },
-    { word: "词条1", num: Array(0), isgood: false, openId: 3, backColor: "rgb(255,228,108)" },
-    { word: "词条2", num: Array(0), openId: 1, backColor: "rgb(189,218,255)" },
-    { word: "词条2", num: Array(0), isgood: false, openId: 3, backColor: "rgb(202,230,241)" },
-    { word: "词条2", num: Array(0), isgood: false, openId: 2, backColor: "rgb(255,228,108)" }
-  ],
-    //showMessage:[],
+    showMessage:[],
     pickMessage:[],
     index:[],
     isRank:false
@@ -25,9 +17,38 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //this.setData({
-    //  showMessage : app.globalData.showMessage
-    //})
+    var that = this;
+    const db = wx.cloud.database();
+    var getData = [];
+    var comment = new Promise(function(resolve,reject){
+      db.collection('words').get({
+      success(res) {
+       // console.log(res);
+        getData = res.data;
+        //console.log(getData);
+        resolve();
+        }
+      })
+    });
+    comment.then(function(){
+      //console.log(getData);
+      that.setData({
+        showMessage: getData
+      })
+      
+      for(let x = 0;x < that.data.showMessage.length;x++){
+        that.data.showMessage[x].isMore = false
+      }
+      //console.log(that.data.showMessage);
+     /* //获取显示的词条
+      var showMessage = that.data.showMessage;
+      //排序词条
+      sort(that, showMessage);
+      that.setData({
+        showMessage: that.data.showMessage
+      })
+      //console.log(that.data.showMessage);*/
+    })
   },
 
   /**
@@ -35,13 +56,6 @@ Page({
    */
   onReady: function () {
     //console.log(this.data.showMessage);
-    //获取显示的词条
-    var showMessage = this.data.showMessage;
-    //排序词条
-    sort(this, showMessage);
-    this.setData({
-      showMessage:this.data.showMessage
-    })
   },
  
   //切换到讨论区
@@ -55,6 +69,51 @@ Page({
   goRanking: function () {
     this.setData({
       isRank: true
+    })
+  },
+
+  //点击更多标志，出现收藏评论的图标
+  getMore:function(e){
+    let id = e.currentTarget.id;
+    this.data.showMessage[id].isMore = true;
+    this.setData({
+      showMessage:this.data.showMessage
+    })
+  },
+
+  //点击收藏按钮后，对是否收藏进行处理
+  getStar:function(e){
+    let id = e.currentTarget.id;
+    this.data.showMessage[id].isStar = !this.data.showMessage[id].isStar;
+   /*
+    const db = wx.cloud.database();
+    db.collection('words').update({
+
+    }); --数据库更新收藏数据*/
+    if (this.data.showMessage[id].isStar){
+      wx.showToast({
+        title: '已收藏',
+        duration: 1000,
+        mask: true
+      })
+    }
+    this.setData({
+      showMessage:this.data.showMessage
+    })
+  },
+
+  //评论词条
+  sendComment:function(e){
+    let id = e.currentTarget.id;
+    this.data.showMessage[id]
+    const db = wx.cloud.database();
+    db.collection('contents').add({
+      data:{
+        comment:'',
+        rootWord:'',
+        sonCom:'',
+        belong:''
+      }
     })
   },
   /**
