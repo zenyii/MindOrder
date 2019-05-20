@@ -108,31 +108,32 @@ Page({
   },
 
   onRemove: function() {
-    // if (this.data.counterId) {
-    //   const db = wx.cloud.database()
-    //   db.collection('counters').doc(this.data.counterId).remove({
-    //     success: res => {
-    //       wx.showToast({
-    //         title: '删除成功',
-    //       })
-    //       this.setData({
-    //         counterId: '',
-    //         count: null,
-    //       })
-    //     },
-    //     fail: err => {
-    //       wx.showToast({
-    //         icon: 'none',
-    //         title: '删除失败',
-    //       })
-    //       console.error('[数据库] [删除记录] 失败：', err)
-    //     }
-    //   })
-    // } else {
-    //   wx.showToast({
-    //     title: '无记录可删，请见创建一个记录',
-    //   })
-    // }
+    if (this.data.counterId) {
+      const db = wx.cloud.database()
+      //db.collection('counters').doc(this.data.counterId).remove({
+      db.collection('counters').where(this.data.counterId,openid).remove({
+        success: res => {
+          wx.showToast({
+            title: '删除成功',
+          })
+          this.setData({
+            counterId: '',
+            count: null,
+          })
+        },
+        fail: err => {
+          wx.showToast({
+            icon: 'none',
+            title: '删除失败',
+          })
+          console.error('[数据库] [删除记录] 失败：', err)
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '无记录可删，请见创建一个记录',
+      })
+    }
   },
 
   nextStep: function () {

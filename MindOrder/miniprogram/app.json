@@ -1,7 +1,9 @@
 {
   "pages": [
-    "pages/setTime/setTime",
+    
     "pages/homePage/homePage",
+    "pages/setTime/setTime",
+    "pages/try/try",
     "pages/index/index",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
@@ -12,7 +14,7 @@
     "pages/rank/rank",
     "pages/show/show",
     "pages/preparing/preparing",
-    "pages/try/try",
+    
     "pages/test/test",
     "pages/index2/index2",
     "pages/logs/logs",

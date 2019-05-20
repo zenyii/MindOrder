@@ -96,7 +96,7 @@ Page({
   //双向绑定输入词条数据
   addWord: function(e) {
    //console.log(e.detail.value);
-    this.data.value.push(e.detail.value);
+    this.data.value.push(e.detail.value)
   },
 
   goEdit:function(){
@@ -169,25 +169,81 @@ Page({
       for (var j = 0; j < app.globalData.UserData.length; j++) {
         var that = this;
         //在数据库中保存数据
-        wx.request({
-          url: 'https://fl123.xyz/api/xcx/addContent.php',
-          data: {
-            id: app.globalData.openId,
-            roomNum:app.globalData.roomNum,
-            text: obj.word,
-            state:1
-          },
-          method: 'POST',
-          header: {
-            'content-type': "application/x-www-form-urlencoded"
-          },
-          success: function (res) {
-            console.log(res.data);
-          },
-        })
+          const db = wx.cloud.database()
+          db.collection('words').add({
+            data: {
+              id: app.globalData.openId,
+              roomNum: app.globalData.roomNum,
+              text: obj.word,
+              state: 1
+            },
+            success: res => {
+              // 在返回结果中会包含新创建的记录的 _id
+              this.setData({
+                counterId: res._id,
+                count: 1
+              })
+              wx.showToast({
+                title: '新增记录成功',
+              })
+              console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+            },
+            fail: err => {
+              wx.showToast({
+                icon: 'none',
+                title: '新增记录失败'
+              })
+              console.error('[数据库] [新增记录] 失败：', err)
+            }
+          })
+
+
+        // wx.request({
+        //   url: 'https://fl123.xyz/api/xcx/addContent.php',
+        //   data: {
+        //     id: app.globalData.openId,
+        //     roomNum:app.globalData.roomNum,
+        //     text: obj.word,
+        //     state:1
+        //   },
+        //   method: 'POST',
+        //   header: {
+        //     'content-type': "application/x-www-form-urlencoded"
+        //   },
+        //   success: function (res) {
+        //     console.log(res.data);
+        //   },
+        // })
         //插入词条内容
         if (newUser.openId == app.globalData.UserData[j].openId) {
           app.globalData.UserData[j].words.push(obj);
+          const db = wx.cloud.database()
+          db.collection('words').add({
+            data: {
+              id: app.globalData.openId,
+              roomNum: app.globalData.roomNum,
+              text: obj.word,
+              state: 1
+            },
+            success: res => {
+              // 在返回结果中会包含新创建的记录的 _id
+              this.setData({
+                counterId: res._id,
+                count: 1
+              })
+              wx.showToast({
+                title: '新增记录成功',
+              })
+              console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+            },
+            fail: err => {
+              wx.showToast({
+                icon: 'none',
+                title: '新增记录失败'
+              })
+              console.error('[数据库] [新增记录] 失败：', err)
+            }
+          })
           break;
         }
         checkNum++;
