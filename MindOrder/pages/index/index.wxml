@@ -1,7 +1,0 @@
-<view class='header' style="background-image:url(../../icon/bg2.png) ;">
-    <image src="../../icon/logo.png" />
-</view>
-<view class="main">
-    <button class="join" open-type="getUserInfo" bindtap='joinRoom'>加入房间</button>
-    <button class="brain" open-type="getUserInfo" bindtap='buildRoom'>头脑风暴</button>
-</view>

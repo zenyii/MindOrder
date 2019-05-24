@@ -1,0 +1,51 @@
+/* pages/login.wxss */
+.content{
+    width:100%;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.content image{
+    display: block;
+    width: 200rpx;
+    height: 200rpx;
+    background-size: 100% 100%;
+    background: no-repeat;
+    margin: 20px;
+}
+.name{
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+.tip{
+    font-size: 14px;
+    color:gray;
+}
+.des{
+    width: 100%;
+    height: 30vh;
+    position: relative;
+    bottom: 0;
+}
+.des .text{
+    color: gray;
+    font-size: 14px;
+    margin: 10px 10px;  
+}
+.bottomTips{
+  position: absolute;
+  bottom: 0;
+}
+button{
+    color: #4880ff;
+    font-size: 20px;
+    position: fixed;
+    bottom: 0;
+    background-color: white;
+    width: 100%;
+}
+button::after {
+    border: none;
+}

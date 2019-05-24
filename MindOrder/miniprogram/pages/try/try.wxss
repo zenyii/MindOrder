@@ -1,0 +1,336 @@
+/* pages/try/try.wxss */
+
+page{
+  background: rgb(207,211,214);
+  overflow: hidden;
+}
+.theme{
+  margin-left: 30rpx;
+  letter-spacing:5rpx;
+  color: rgb(83, 87, 124);
+}
+.timer{
+  width: 710rpx;
+  height: 140rpx;
+  background:rgb(191, 220, 254);
+  border-radius: 10rpx;
+  position: absolute;
+  left: 50%;
+  top: 69rpx;
+  margin-left: -355rpx;
+  text-align: center;
+  line-height: 130rpx;
+  color: rgb(1, 6, 62);
+  font-size: 80rpx;
+}
+
+.timerback1{
+  background: rgb(73, 128, 255);
+  position: absolute;
+  left: 50%;
+  margin-left: -355rpx;
+  top: 63rpx;
+  width: 710rpx;
+  height: 170rpx;
+  border-radius: 10rpx;
+}
+.timerback2{
+  background: rgb(85,230,201);
+  position: absolute;
+  top: 57rpx;
+  left: 50%;
+  margin-left: -355rpx;
+  width: 710rpx;
+  height: 170rpx;
+  border-radius: 10rpx;
+}
+.timerback3{
+  background: rgb(255,231,99);
+  position: absolute;
+  left: 50%;
+  margin-left: -355rpx;
+  width: 710rpx;
+  height: 170rpx;
+  border-radius: 10rpx;
+}
+
+.backs{
+  height: 750rpx;
+  width: 750rpx;
+  -webkit-filter: drop-shadow(0px 10px 10px #000);
+  filter: drop-shadow(0px -3px 3px rgb(148, 172, 200));
+}
+
+.back{
+  height: 94%;
+  width: 100%;
+  top:100rpx;
+  z-index: 0;
+  background: white;
+  position: absolute;
+  clip-path: polygon(0rpx 25rpx,375rpx 90rpx,750rpx 25rpx,750rpx 1500rpx,0rpx 1500rpx);
+}
+.progress{
+  left: 290rpx;
+  top: 85rpx;
+  width: 170rpx;
+  height: 30rpx;
+  position: absolute;
+  background:rgb(139, 190, 255);
+  clip-path: polygon(0% 0%,50% 55%,100% 0%,100% 30%,50% 85%,0% 30%);
+  animation-name: progresser;
+}
+@keyframes progresser{
+  0%{
+    clip-path: polygon(0% 0%,50% 55%,100% 0%,100% 30%,50% 85%,0% 30%);
+  }
+  35%{
+    clip-path: polygon(25% 30%,50% 55%,100% 0%,100% 30%,50% 85%,25% 60%);
+  }
+  50%{
+      clip-path: polygon(50% 55%,50% 55%,100% 0%,100% 30%,50% 85%,50% 85%);
+  }
+  85%{
+    clip-path: polygon(75% 30%,75% 30%,100% 0%,100% 30%,75% 60%,75% 60%);
+  }
+  100%{
+      clip-path: polygon(100% 0%,100% 0%,100% 0%,100% 30%,100% 30%,100% 30%);
+  }
+}
+
+@-webkit-keyframes progresser{
+  0%{
+    clip-path: polygon(0% 0%,50% 55%,100% 0%,100% 30%,50% 85%,0% 30%);
+  }
+  35%{
+    clip-path: polygon(25% 30%,50% 55%,100% 0%,100% 30%,50% 85%,25% 60%);
+  }
+  50%{
+      clip-path: polygon(50% 55%,50% 55%,100% 0%,100% 30%,50% 85%,50% 85%);
+  }
+  85%{
+    clip-path: polygon(75% 30%,75% 30%,100% 0%,100% 30%,75% 60%,75% 60%);
+  }
+  100%{
+      clip-path: polygon(100% 0%,100% 0%,100% 0%,100% 30%,100% 30%,100% 30%);
+  }
+}
+
+.progresstimer{
+ left: 290rpx;
+  top: 85rpx;
+  width: 170rpx;
+  height: 30rpx;
+  position: absolute;
+  background: rgb(208, 211, 218);
+  clip-path: polygon(0% 0%,50% 55%,100% 0%,100% 30%,50% 85%,0% 30%);
+}
+
+.scrollText{
+  height: 60%;
+  width: 100%;
+  position: absolute;
+  top: 200rpx;
+  white-space: nowrap;
+  z-index: 3;
+}
+
+.scrollTextItem{
+    width: 85%;
+    height: 90%;
+    overflow: hidden;
+    margin: auto 30rpx;
+    z-index: 3;
+    display: inline-block;
+    text-align: center;
+    line-height: 550rpx;
+}
+
+.selectItem{
+    width: 95%;
+    height: 95%;
+    overflow: hidden;
+    margin: auto 30rpx;
+    z-index: 3;
+    display: inline-block;
+    text-align: center;
+    line-height: 580rpx;
+}
+
+.allText{
+  width: 100%;
+  height:85%;
+  position: absolute;
+  top: 130rpx;
+}
+.term{
+  border: 1px solid black;
+  width: auto;
+  max-width: 38%;
+  height: auto;
+  margin: 30rpx;
+}
+
+
+.textitem{
+  max-width: 120rpx;
+  width: 120rpx;
+  height: 120rpx;
+  overflow: hidden;
+  float: left;
+  display: flex;
+  font-size: 20rpx;
+  align-items: center;
+  justify-content: center;
+  word-break: break-all;
+  word-wrap: break-word;
+  margin: 10rpx;
+}
+
+.addPaper{
+  position: fixed;
+  bottom: 5%;
+  left: 43%;
+  width: 13%;
+  height: 9%;
+}
+
+.editBack{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top:0;
+  left: 0; 
+  z-index: 1;
+  }
+
+.edit{
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.paperback{
+  position: absolute;
+  width: 100%;
+  height: 55%;
+  -webkit-filter: drop-shadow(0px 10px 10px #000);
+  filter: drop-shadow(2px 5px 3px rgb(202, 220, 220));
+  top:270rpx;
+  z-index: 2;
+}
+
+
+.paper{
+  background: rgb(255, 212, 213);
+  width: 93%;
+  height: 100%;
+  top: 0;
+  margin: auto;
+  clip-path: polygon(0% 0%,100% 0%,100% 100%,15% 100%,0% 85%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+#word{
+  vertical-align: middle;
+  text-align: center;
+  font-size: 40rpx;
+}
+
+
+.paper:before{
+  background: rgb(221, 220, 236);
+  height: 15%;
+  width: 15%;
+  position: absolute;
+  top: 85%;
+  left: 2%;
+  content: '';
+  box-shadow: 5rpx 0rpx 6rpx rgb(212, 190, 190);
+  border-radius: 10rpx;
+}
+
+.newPaper{
+  position: absolute;
+  width: 19%;
+  height: 4%;
+  top:79%;
+  right: 4%;
+  background: white;
+  text-align: center;
+  border: 1rpx solid rgb(73, 128, 255);
+  font-size: 20rpx;
+  color: rgb(73, 128, 255);
+  z-index: 3;
+}
+
+.step{
+  position: absolute;
+  width: 50%;
+  height: 5%;
+  top: 80%;
+  left: 40%;
+  }
+
+#stepItem{
+  width: 10%;
+  height: 75%;
+  margin: 0 20rpx;
+}
+
+.colorbroad{
+  position: absolute;
+  top: 90%;
+  height: 50rpx;
+  width: 500rpx;
+  opacity: 0;
+  z-index: 2;
+}
+
+.coloritem{
+  width: 40rpx;
+  height: 55rpx;
+  float: left;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+#color{
+  position: fixed;
+  bottom: 1%;
+  width: 6%;
+  height: 6%;
+  left: 5%;
+  z-index: 3;
+}
+
+#keybroad{
+  position: fixed;
+  bottom: 2%;
+  width: 12%;
+  height: 4%;
+  right: 5%;
+  z-index: 3;
+}
+
+#bin{
+  position: fixed;
+  bottom: 3%;
+  left: 10%;
+  width: 8%;
+  height: 5%;
+  z-index: 3;
+}
+
+
+#edit{
+  position: fixed;
+  bottom: 3%;
+  right: 10%;
+  width: 8%;
+  height: 5%;
+  z-index: 3;
+}
