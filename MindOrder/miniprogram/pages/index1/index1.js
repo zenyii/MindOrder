@@ -1,11 +1,9 @@
 //index.js
 //获取应用实例
 const app = getApp();
-const utils = require('../../utils/util');
 Page({
   data: {
     userInfo: {},
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     selected: 0,
     color: "#000000",
     selectedColor: "#4880ff",
@@ -26,43 +24,20 @@ Page({
 
   onLoad: function (e) {
     console.log(e.selected);
+    
     this.setData({
-      selected: e.selected ? e.selected : 0
+      selected: e.selected ? e.selected : 0,
+      userInfo:app.globalData.userInfo
     })
 
   },
-   /*  getUserInfo() {
-      let that = this;
-      return new utils.promise((resolve, reject) => {
-        app.getUserInfo().then(e => {
-          //console.log(e, 'userinfo')
-          console.log('用户信息获取成功')
-          resolve(e);
-        }, e => {
-          console.log('用户信息获取失败！')
-          reject(e)
-        })
-      }) 
-    },*/
 
-    /* changeData: function (){
-      this.setData({
-        selected:0
-      })
-      console.log(this.data.selected,'selected')
-    }, */
     buildRoom:function() {
       let that = this;
       wx.navigateTo({
         url: '../buildRooming/buildRooming'
       })
-     /*  that.getUserInfo().then(e => {
-        wx.navigateTo({
-          url: '../buildRooming/buildRooming'
-        })
-      },e=>{
-  
-      }) */
+
     },
     joinRoom:function() {
       let that = this;
@@ -70,14 +45,6 @@ Page({
         url: '../inputRoomId/inputRoomId'
       })
       
-      /* that.getUserInfo().then(e => {
-        wx.navigateTo({
-          url: '../inputRoomId/inputRoomId'
-        })
-      },e=>{
-        
-      }) 
-    }*/
   },
   switchTab:function(e) {
     console.log(e,'switch')
@@ -93,9 +60,6 @@ Page({
         selected: data.index
       })
     }
-    /* this.setData({
-      selected:0
-    }) */
   }
 })
  

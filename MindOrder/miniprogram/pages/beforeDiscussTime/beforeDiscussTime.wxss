@@ -1,0 +1,78 @@
+/* miniprogram/pages/beforeDiscussTime/beforeDiscussTime.wxss */
+page{
+    background:#ccc;
+}
+.content{
+    width: 750rpx;
+    height:100vh;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.header{
+    width: 100%;
+    height:7vh;
+    background:#4880ff;
+    box-shadow: 0 3px 10px #4880ff;
+    color: white;
+    line-height: 7vh;
+    text-align: center;
+}
+/* .tips{
+    height: 100rpx;
+    font-size: 16px;
+    margin:0 20px;
+} */
+.time{
+    font-size:20px;
+    position: relative;
+    
+}
+.time::before{
+    content:'离会议开始还有 :';
+    font-size:16px;
+    position: absolute;
+    left: -280rpx;
+}
+.rutes{
+    width: 95%;
+    height:93vh;
+    background:white;
+    border-radius: 5px 5px 0 0;
+    margin-top: 5px;
+    
+}
+.head{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: #4880ff;
+    font-size: 16px;
+    margin: 20px 0;
+}
+.text{
+    width: 80%;
+    color:gray;
+    font-size: 14px;
+    line-height: 25px;
+    margin: 0 auto;
+    border-bottom: 1px solid lightgray;
+}
+@media(min-width:768px){
+    .time{
+        font-size:100%;  
+    }
+    .time::before{
+        font-size:18px;
+        left: -250rpx;
+    }
+    .head{
+        font-size: 20px;
+        margin: 25px 0;
+    }
+    .text{
+        font-size: 18px;
+        line-height: 35px;
+    }
+}

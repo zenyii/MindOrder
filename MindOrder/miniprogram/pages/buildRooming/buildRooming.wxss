@@ -1,3 +1,6 @@
+page{
+  background: #f2f2f2;
+}
 image{
   display:inline-block;
   width: 100px;
@@ -113,4 +116,25 @@ button,#roomId,#inputTitle{
 }
 button::after {
   border: none;
+}
+
+@media(min-width:768px){
+  .inputGradient{
+      height: 1.51rem;
+  }
+  .inputGradient::before{
+      line-height: 1.51rem;
+  }
+  #inputTitle,#roomId{
+      height: 1.4rem;
+      font-size: 18px;
+  }
+  .buildRoom,.roomId{
+      height:1.51rem;
+      line-height: 1.51rem;
+      font-size: 16px;
+  } 
+  .roomId::before{
+    line-height: 1.51rem;
+  }
 }

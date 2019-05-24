@@ -1,10 +1,9 @@
 //获取应用实例
 const app = getApp()
-const request = require('../../requests/request');
 Page({
   data: {
-    roomId: 0,
     inputValue: {},
+    queryRes:null
   },
   /**
    * 生命周期函数--监听页面加载
@@ -12,17 +11,15 @@ Page({
   onLoad: function (options) {
     let that = this;
     /* 随机roomid */
-    that.setData({
-      roomId: that.getRandomInt(100000, 999999)
-    })
-
+    that.getRandomInt(100000, 999999);
   },
- 
+
   goToBuild: function () {
+    let that = this;
     /* 跳转到invite页面 */
     wx.navigateTo({
       //传入roomid,主题
-      url: `../invite/invite?roomNum=${this.data.inputValue.roomNum}&text=${this.data.inputValue.text}`
+      url: `../invite/invite?roomNum=${that.data.inputValue.roomNum}&text=${that.data.inputValue.text}`
     })
     //console.log('goto')
   },
@@ -32,38 +29,88 @@ Page({
     let that = this;
     let inputValue = values.detail.value;//获取表单信息
     //inputValue.userIdArr = [app.globalData.selfOpenid];//获取用户自己的openid
-    app.globalData.roomMaster=app.globalData.selfOpenid;//设置房主openid
-    app.globalData.roomNum = this.data.roomId;//全局保存房间号
+    app.globalData.roomMaster = app.globalData.selfOpenid;//设置房主openid
+    app.globalData.roomNum = String(this.data.inputValue.roomNum);//全局保存房间号
     wx.showLoading({
       title: '加载中',
     })
-    /* 发送表单数据 */
-    request.request('https://fl123.xyz/api/xcx/createRoom.php', inputValue, 'POST')
-      .then(e => {
+    /* 插入数据 */
+    app.onAdd('rooms',
+      {
+        title: inputValue.text,
+        roomNum: String(inputValue.roomNum),
+        roomMaster: { openid: app.globalData.roomMaster, avatarUrl: app.globalData.userInfo.avatarUrl, nickName: app.globalData.nickName },
+        readyArr: [],
+        roommates: [{ openid:app.globalData.roomMaster, avatarUrl: app.globalData.userInfo.avatarUrl, nickName: app.globalData.nickName , ready: false }],
+        allset: false,
+        inMeeting: false,
+        preparingTime: 2,
+        meetingTime: 10
+      })
+      .then(res => {
+        console.log(res);
+        console.log('[数据库] [新增room记录] 成功，记录 _id: ', res._id)
         that.setData({
+          [app.globalData.roomId]: res._id,
           inputValue: inputValue
         })
         console.log('form发生了submit事件，携带数据为：', that.data.inputValue);
-      }, e => {
-        console.log('发送表单失败！' + e);
+      }, err => {
+        console.error('[数据库] [新增room记录] 失败：', err)
       })
       .then(e => {//数据发送到服务器并反馈成功后页面跳转
         that.goToBuild();
-      }, e => {
-
-      }).finally(
-        () => {
-          wx.hideLoading();
-        }
-      )
+        wx.hideLoading();
+      })
   },
-  
-  /* 随机数 */
+
+  /*
+  * 返回一个未存在的房间号
+  */
   getRandomInt: function (min, max) {
+    //获取房间号区间
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-    //不含最大值，含最小值
+    //定义循环控制变量、房间号、房间号查询存在结果
+    let that = this
+    const db = wx.cloud.database()
+    let roomNum = `inputValue.roomNum`
+    //生成随机房号
+    that.setData({
+      [roomNum]: Math.floor(Math.random() * (max - min)) + min
+    })
+    //查询房号是否存在
+    var getRoomNum = new Promise(function (resolve, reject) {
+      db.collection('rooms').where({
+        roomNum: that.data.inputValue.roomNum
+      }).get({
+        success: res => {
+          that.setData({
+            queryRes: res.data.length,
+          })
+          //console.log('[数据库] [查询记录] 成功: ', res.data.length)
+          //console.log('生成的房号是: ', that.data.roomNum)
+          //console.log('test：', that.data.queryRes)
+          resolve();
+        }
+      })
+    });
+    getRoomNum.then(function () {
+      //房号唯一，返回生成的房号
+      if (that.data.queryRes == 0) {
+        //console.log('返回房间号是：', that.data.roomNum)
+        that.setData({
+          roomId: that.data.inputValue.roomNum
+        })
+        //console.log('返回唯一房间号：', that.data.roomNum)
+      }
+      else {
+        //房号不唯一，递归调用
+        //console.log('查到了重复！重置房间号')
+        that.getRandomInt(100000, 999999)
+      }
+    })
+
   },
 
   /* 返回到首页不刷新 */

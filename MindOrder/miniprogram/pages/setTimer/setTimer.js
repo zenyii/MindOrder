@@ -1,10 +1,11 @@
 // miniprogram/pages/setTimer/setTimer.js
+const app = getApp();
 Page({
   data: {
     timeRangeWrite: [],
     timeRangePrepare: [],
-    indexW:'',
-    indexP:''
+    timeHold:'',
+    timePrepare:''
   },
 
   /**
@@ -15,8 +16,8 @@ Page({
     let timeRangePrepare = [];
     let that = this;
     Array.from({ length: 13 }, (v, i) => {
-      timeRangeWrite.push(`${i+1}  分钟`);
-      timeRangePrepare.push(`${i+1}  分钟`);
+      timeRangeWrite.push(i+1);
+      timeRangePrepare.push(i+1);
     });
     that.setData({
       timeRangeWrite: timeRangeWrite,
@@ -26,17 +27,31 @@ Page({
   bindPickerChangeW(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
-      indexW: e.detail.value
+      timeHold: e.detail.value
     })
   },
   bindPickerChangeP(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
-      indexP: e.detail.value
+      timePreparing: e.detail.value
     })
   },
   formSubmit:function(){
-
+    let that = this;
+    let timeRangePrepare =that.data.timeRangePrepare;
+    let timeRangeWrite =that.data.timeRangeWrite; 
+    let timePreparing = timeRangePrepare[that.data.timePreparing];//获取时间值
+    let timeHold =  timeRangeWrite[that.data.timeHold];
+      app.onUpdate('rooms',app.globalData.roomId,'preparingTime',timePreparing)//更新准备时间的值
+      .then(res=>{
+        wx.redirectTo({
+          url:`../beforeDiscussTime/beforeDiscussTime?timePreparing=${timePreparing}&timeHold=${timeHold}`,
+          success:function(){
+            app.onUpdate('rooms',app.globalData.roomId,'allset',true)
+          }
+        })
+    })
+   
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

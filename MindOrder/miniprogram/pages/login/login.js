@@ -9,14 +9,16 @@ Page({
   handleLogin(res) {
     let data = res.detail;
     //console.log(data,'data')
-    let iv = data.iv;
+    /* let iv = data.iv;
     let encryptedData = data.encryptedData;
     let code = this.data.code;
     let rawData = data.rawData;
-    let signature = data.signature;
-    let userInfo = data.userInfo;
+    let signature = data.signature; */
+    let userInfo = {};
+    userInfo.avatarUrl = data.userInfo.avatarUrl;
+    userInfo.nickName=data.userInfo.nickName;
     let that = this;
-    if (this.data.loading || !iv || !encryptedData) {
+    if (this.data.loading) {
       return
     }
     //console.log(this.data.code, 'code');
@@ -27,7 +29,40 @@ Page({
     this.setData({
       loading: true,
     })
-    request.request('https://fl123.xyz/api/xcx/addUser.php', { code, iv, encryptedData, rawData, signature }, 'POST', 'application/x-www-form-urlencoded')
+     // 调用云函数
+     wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        console.log('[云函数] [login] user openid: ', res.result.openid)
+        console.log(userInfo,'userInfo')
+        app.globalData.selfOpenid = res.result.openid
+        wx.setStorageSync('userInfo', userInfo);//本地缓存用户信息
+        app.globalData.userInfo = userInfo;//全局储存用户信息
+        wx.hideLoading();
+        that.setData({
+          loading: false
+        });
+
+        if (that.data.redirect_url) {
+          //console.log('重定向！')
+          wx.reLaunch({
+            url: that.data.redirect_url
+          })
+        } else {
+          //console.log('没有来源，默认index1')
+          wx.reLaunch({
+            url: 'pages/index1/index1'///!!!!
+          })
+        }
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+        
+      }
+    })
+
+    /* request.request('https://fl123.xyz/api/xcx/addUser.php', { code, iv, encryptedData, rawData, signature }, 'POST', 'application/x-www-form-urlencoded')
       .then(r => {
         //返回自定义登录态
         console.log(r, '添加用户数据成功');
@@ -52,7 +87,7 @@ Page({
       }, r => {
         console.log(r, '添加用户失败')
         reject(r);
-      })
+      }) */
 
   },
   onLoad: function (options) {

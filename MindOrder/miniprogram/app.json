@@ -1,11 +1,14 @@
 {
   "pages": [
     "pages/index1/index1",
-    "pages/setTimer/setTimer",
-    "pages/setTime/setTime",
-    "pages/invite/invite",
     "pages/preparing/preparing",
+    "pages/inputRoomId/inputRoomId",
     "pages/buildRooming/buildRooming",
+    "pages/login/login",
+    "pages/beforeDiscussTime/beforeDiscussTime",
+    "pages/setTimer/setTimer",
+    "pages/invite/invite",
+    "pages/setTime/setTime",
     "pages/index/index",
     "pages/homePage/homePage",
     "pages/userConsole/userConsole",
@@ -20,9 +23,7 @@
     "pages/test/test",
     "pages/index2/index2",
     "pages/logs/logs",
-    "pages/login/login",
     "pages/mine/mine"
-
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -31,7 +32,6 @@
     "navigationBarTextStyle": "white"
   },
   "tabBar": {
-    "custom": true,
     "color": "#ffffff",
     "borderStyle": "black",
     "selectedColor": "#4880ff",
@@ -39,7 +39,7 @@
       {
         "selectedIconPath": "icon/indexChecked.png",
         "iconPath": "icon/index.png",
-        "pagePath": "pages/index1/index1",
+        "pagePath": "pages/mine/mine",
         "text": "首页"
       },
       {
