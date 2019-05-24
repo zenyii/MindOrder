@@ -99,19 +99,19 @@ button::after {
 
 .buildRoom {
   background-color: #4880ff;
-  box-shadow: 1px 1px 13px 1px #4880ff;
+  box-shadow: 4px 6px 10px -4px #6188ff;
 }
 
 .invitePeople {
-  background-color: #02063F;
-  box-shadow: 1px 1px 13px 1px #02063F;
+  background-color: #0FCCA6;
+  box-shadow: 4px 6px 10px -4px #80c7a2;
 }
 
-.generCode {
+/* .generCode {
   background-color: #0FCCA6;
   box-shadow: 1px 1px 13px 1px #0fcca6;
 }
-
+ */
 button, #roomId {
   letter-spacing: 2px;
 }

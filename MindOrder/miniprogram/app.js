@@ -76,6 +76,7 @@ App({
       return
     }
   },
+
 //云开发添加记录
   onAdd: function (collect,data) {
     const db = wx.cloud.database()
@@ -99,6 +100,8 @@ App({
       }
       
     })
-  }
+  },
+
+
   
 })

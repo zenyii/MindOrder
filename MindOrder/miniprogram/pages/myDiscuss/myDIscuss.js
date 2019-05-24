@@ -15,11 +15,12 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+
     wx.setNavigationBarTitle({
       title: '我的讨论',
     })
 
-    var selfOpenId = app.globalData.selfOpenId;
+    var selfOpenId = app.globalData.selfOpenid;
     var hisroomMsg = [];
     //从user表拉取自己参与过得话题
     const db = wx.cloud.database();

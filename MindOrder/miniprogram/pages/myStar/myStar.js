@@ -27,7 +27,7 @@ Page({
     db.collection('users').where({
       _openid: selfOpenId
     }).get().then(res => {
-      //console.log(res);
+      console.log(res);
       that.setData({
         star: res.data[0].star
       })

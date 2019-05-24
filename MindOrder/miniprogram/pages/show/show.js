@@ -52,7 +52,7 @@ Page({
     var roomNumber = app.globalData.roomNum;
     var that = this;
     //console.log(that.data.showMessage[id]._id);
-
+    console.log(this.data.showMessage,'show')
     //将点赞过的人的昵称存入supporter数组中，并处理点赞事件
     if (length) {
       for (var i = 0; i < length; i++) {

@@ -17,7 +17,7 @@ Page({
   goToBuild: function () {
     let that = this;
     /* 跳转到invite页面 */
-    wx.navigateTo({
+    wx.redirectTo({
       //传入roomid,主题
       url: `../invite/invite?roomNum=${that.data.inputValue.roomNum}&text=${that.data.inputValue.text}`
     })
@@ -27,6 +27,9 @@ Page({
   /* button开启房间 */
   formSubmit: function (values) {//
     let that = this;
+    let userInfo = wx.getStorageSync('userInfo');
+    app.globalData.userInfo = userInfo;
+    //console.log( aa,'userInfo');
     let inputValue = values.detail.value;//获取表单信息
     //inputValue.userIdArr = [app.globalData.selfOpenid];//获取用户自己的openid
     app.globalData.roomMaster = app.globalData.selfOpenid;//设置房主openid

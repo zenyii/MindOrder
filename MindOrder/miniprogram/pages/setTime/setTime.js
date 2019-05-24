@@ -1,63 +1,64 @@
-// pages/setTime/setTime.js
-import {countDown} from '../../utils/timer.js';
-var app = getApp();
-
+// miniprogram/pages/setTimer/setTimer.js
+const app = getApp();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    minutes:[],
-    seconds:[],
-    index1:'0',index2:'0',index3:'0',
-    hour:'0',minute:'0',second:'0'
+    timeRangeWrite: [],
+    timeRangePrepare: [],
+    timeHold:'',
+    timePrepare:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    for (var i = 0; i <=60; i++) {
-      this.data.minutes.push(i);
-    }
-    for (var i = 0; i <= 60; i++) {
-      this.data.seconds.push(i);
-    }
-    this.setData({
-      minutes:this.data.minutes,
-      seconds:this.data.seconds
-    })
-  },
-
-   setMinutes(e) {
-    this.setData({
-      index2: e.detail.value
-    })
-  },
-
-  setSeconds(e) {
-    this.setData({
-      index3: e.detail.value
+    let timeRangeWrite = [];
+    let timeRangePrepare = [];
+    let that = this;
+    Array.from({ length: 13 }, (v, i) => {
+      timeRangeWrite.push(i+1);
+      timeRangePrepare.push(i+1);
+    });
+    that.setData({
+      timeRangeWrite: timeRangeWrite,
+      timeRangePrepare:timeRangePrepare
     });
   },
-
-  settime(){
+  bindPickerChangeW(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
-      minute:this.data.index2,
-      second:this.data.index3
+      timeHold: e.detail.value
     })
+  },
+  bindPickerChangeP(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
-      index2:'0',
-      index3:'0'
+      timePreparing: e.detail.value
     })
-
-    app.globalData.minute = this.data.minute;
-    app.globalData.second = this.data.second;
-
-    wx.navigateTo({
-      url: '../try/try',
+  },
+  formSubmit:function(){
+    let that = this;
+    let timeRangePrepare =that.data.timeRangePrepare;
+    let timeRangeWrite =that.data.timeRangeWrite; 
+    let timePreparing = timeRangePrepare[that.data.timePreparing];//获取时间值
+    let timeHold =  timeRangeWrite[that.data.timeHold];
+    app.globalData.minute =  `${Number(timeHold)-1}`;
+    app.globalData.second = `60`;
+    console.log(app.globalData.minute ,'minute')
+    console.log(app.globalData.second ,'second')
+    app.onUpdate('rooms',app.globalData.roomId,'meetingTime',timeHold).then(res=>{
+      app.onUpdate('rooms',app.globalData.roomId,'preparingTime',timePreparing)//更新准备时间的值
+      .then(res=>{
+        wx.redirectTo({
+          url:`../beforeDiscussTime/beforeDiscussTime?timePreparing=${timePreparing}&timeHold=${timeHold}`,
+          success:function(){
+            app.onUpdate('rooms',app.globalData.roomId,'allset',true)
+          }
+        })
     })
+    })
+      
+   
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

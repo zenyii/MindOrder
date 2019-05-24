@@ -17,6 +17,7 @@ Page({
     let userInfo = {};
     userInfo.avatarUrl = data.userInfo.avatarUrl;
     userInfo.nickName=data.userInfo.nickName;
+    app.globalData.userInfo = userInfo;//全局储存用户信息
     let that = this;
     if (this.data.loading) {
       return
@@ -36,9 +37,9 @@ Page({
       success: res => {
         console.log('[云函数] [login] user openid: ', res.result.openid)
         console.log(userInfo,'userInfo')
-        app.globalData.selfOpenid = res.result.openid
+        app.globalData.selfOpenid = res.result.openid;
         wx.setStorageSync('userInfo', userInfo);//本地缓存用户信息
-        app.globalData.userInfo = userInfo;//全局储存用户信息
+        wx.setStorageSync('selfOpenid', res.result.openid);
         wx.hideLoading();
         that.setData({
           loading: false
@@ -52,7 +53,7 @@ Page({
         } else {
           //console.log('没有来源，默认index1')
           wx.reLaunch({
-            url: 'pages/index1/index1'///!!!!
+            url: 'pages/index/index'///!!!!
           })
         }
       },

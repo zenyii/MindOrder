@@ -9,7 +9,7 @@
       <view class="hr"></view>
       <view class="btn-area">
         <button open-type='share' class="invitePeople">邀请讨论</button>
-        <button class="generCode" bindtap="onCreateLimit">生成小程序码</button>
+       <!--  <button class="generCode" bindtap="onCreateLimit">生成小程序码</button> -->
         <!-- https://minapp.com/article/12683/ -->
         <button class="buildRoom" bindtap='joinRoom'> 进入</button>
       </view>

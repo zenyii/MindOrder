@@ -1,7 +1,7 @@
 <!--miniprogram/pages/myDiscuss/myDIscuss.wxml-->
 <!--主题显示界面-->
 <view class='allTheme'>
-  <view class='titleItem' wx:for="{{titleMsg}}">
+  <view class='titleItem' wx:for="{{titleMsg}}" wx:key="">
       <view id='text'>主题：{{item}}</view>
       <image id="more" src='../../icon/more.png'></image>
   </view>

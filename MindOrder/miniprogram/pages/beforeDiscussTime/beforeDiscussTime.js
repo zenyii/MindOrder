@@ -7,13 +7,46 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that =this;
-    app.onUpdate('rooms',app.globalData.roomId,'meetingTime',Number(options.timeHold))//更新会议时间
+    let that = this;
+    app.onUpdate('rooms', app.globalData.roomId, 'meetingTime', Number(options.timeHold))//更新会议时间
     //console.log(options.timePreparing,'indexP')
     let counts = options.timePreparing
-  /*   let counts = 2; */
+    /*   let counts = 2; */
     that.setData({
-      counts:counts*60
+      counts: counts * 60
+    })
+
+    /*  //创建users表
+     app.onAdd('users', {
+       _openid: app.globalData.selfOpenid,
+       avatarUrl: app.globalData.userInfo.avatarUrl,
+       hisRoom: [],
+       nickName: app.globalData.userInfo.nickName,
+       star: [],
+       userInfo: {},
+     }) */
+
+    //更新users表
+    /* app.onUpdatePush('users',{ openid: app.globalData.selfOpenid },'hisRoom' , app.globalData.roomNum)
+    .then(res=>{
+      console.log(res,'res')
+      console.log('更新users记录成！')
+    }) */
+    let hisRooms;
+    console.log(app.globalData.selfOpenid,'id')
+    app.onQuery('users', { openid: app.globalData.selfOpenid }, { hisRoom: true }).then(res => {
+      let data = res.data[0];
+      hisRooms = data.hisRoom;
+      hisRooms.push(app.globalData.roomNum);
+      wx.cloud.callFunction({
+        name: 'updateComplex',
+        data: {
+          collect: 'users',
+          where: { openid: app.globalData.selfOpenid },
+          key :'hisRoom',
+          value:hisRooms
+        }
+      }).then(console.log('更新成功！'))  
     })
   },
 
@@ -22,15 +55,20 @@ Page({
    */
   onReady: function () {
     let that = this;
-    let counts = that.data.counts;
-    let inter = setInterval(function(){
+    let counts = 5;
+    let inter = setInterval(function () {
       counts--;
       that.setData({
-        seconds:counts%60,
-        minutes:Math.floor(counts/60)
+        seconds: counts % 60,
+        minutes: Math.floor(counts / 60)
       });
-      if(counts===0) clearInterval(inter);
-    },1000)
+      if (counts === 0) {
+        clearInterval(inter);
+        wx.redirectTo({
+          url: '../try/try'
+        })
+      }
+    }, 1000)
   },
 
   /**

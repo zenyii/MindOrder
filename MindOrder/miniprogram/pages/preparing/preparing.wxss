@@ -26,7 +26,7 @@
 
  .buttonReady {
    background-color: #4880ff;
-   box-shadow: 1px 1px 13px 1px #4880ff;
+   box-shadow: 4px 6px 10px -4px #6188ff;
    width: 60vw;
    height: 45px;
    line-height: 45px;

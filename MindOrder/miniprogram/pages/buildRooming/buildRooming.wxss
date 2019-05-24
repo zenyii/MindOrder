@@ -109,7 +109,7 @@ form{
   font-size: 14px;
   letter-spacing: 2px;
   background-color: #4880ff;
-  box-shadow: 1px 1px 13px 1px #4880ff;
+  box-shadow: 4px 6px 10px -4px #6188ff;
 }
 button,#roomId,#inputTitle{
   letter-spacing: 2px;

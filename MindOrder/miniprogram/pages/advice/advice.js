@@ -26,7 +26,7 @@ Page({
     if (!this.data.value[this.data.value.length - 1]) {
       wx.showToast({
         title: '不能为空',
-        duration: 1000,
+        duration: 2000,
         mask: true
       })
     }
@@ -36,7 +36,7 @@ Page({
       })
       wx.showToast({
         title: '感谢',
-        duration: 1000,
+        duration: 2000,
         mask: true
       })
       const db  = wx.cloud.database();
