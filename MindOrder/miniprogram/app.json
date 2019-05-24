@@ -12,6 +12,13 @@
     "pages/buildRooming/buildRooming",
     "pages/setTime/setTime",
     "pages/homePage/homePage",
+    "pages/index1/index1",
+    "pages/preparing/preparing",
+    "pages/inputRoomId/inputRoomId",
+    "pages/login/login",
+    "pages/beforeDiscussTime/beforeDiscussTime",
+    "pages/setTimer/setTimer",
+    "pages/invite/invite",
     "pages/index/index",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
@@ -19,14 +26,11 @@
     "pages/addFunction/addFunction",
     "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib",
-    "pages/preparing/preparing",
     "pages/test/test",
     "pages/index2/index2",
     "pages/logs/logs",
-    "pages/mine/mine",
-    "pages/inputRoomId/inputRoomId",
-    "pages/login/login",
     "pages/showPlan/showPlan"
+    "pages/mine/mine"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -42,7 +46,7 @@
       {
         "selectedIconPath": "icon/indexChecked.png",
         "iconPath": "icon/index.png",
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/mine/mine",
         "text": "首页"
       },
       {

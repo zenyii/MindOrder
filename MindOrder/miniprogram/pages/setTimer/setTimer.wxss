@@ -7,27 +7,33 @@ form{
     align-items: center;
     margin: 80px 0;
 }
+.outer{
+    margin: 10px 0;
+}
+.outer label{
+    font-size: 14px;
+    margin: 10px 0;
+}
 
 .inputGradient{
-    width: 60vw;
+    width: 50vw;
     height: 45px;
     border-radius: 5px;
     background:linear-gradient(to right ,#4880ff,#0fccA6);
     padding: 2px;
     box-sizing: border-box;
     position: relative;
-    margin: 30px 0;
 }
 .inputGradient::before{
-    content: '房 号 ';
+    content: '分 钟';
     position: absolute;
     display: inline-block;
     top: 0;
-    left: -40px;
+    right: -40px;
     font-size: 15px;
     line-height: 45px;
 }
-#roomId{
+#prepareTime,#writeTime{
     width: 100%;
     height: 41px;
     border-radius: 5px;
@@ -35,7 +41,7 @@ form{
     background-color: white;
     padding:0 5px;
     box-sizing: border-box;
-    font-size: 15px;
+    font-size: 14px;
     min-height: 41px;
 }
 
@@ -44,27 +50,30 @@ form{
     width: 60vw;
     height:45px;
     line-height: 45px;
-    margin: 10px 0;
+    margin: 30px 0;
     color: white;
     font-size: 14px;
     letter-spacing: 2px;
     background-color: #4880ff;
     box-shadow: 1px 1px 13px 1px #4880ff;
 }
-button,#roomId{
+/* button,#prepareTime,#writeTime{
     letter-spacing: 2px;
-}
+} */
 button::after {
     border: none;
 }
 @media(min-width:768px){
     .inputGradient{
+        width: 54vw;
         height: 1.51rem;
     }
     .inputGradient::before{
         line-height: 1.51rem;
+        font-size: 16px;
+        right: -50px;
     }
-    #roomId{
+    #prepareTime,#writeTime{
         height: 1.4rem;
         font-size: 18px;
     }
@@ -72,5 +81,9 @@ button::after {
         height:1.51rem;
         line-height: 1.51rem;
         font-size: 16px;
+        margin: 70px 0;
     } 
+    .outer label{
+        font-size: 16px;
+    }
 }

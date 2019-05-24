@@ -1,11 +1,12 @@
 <view class="index" wx:if="{{selected===0}}">
-    <view class='header' style="background-image:url(../../icon/bg2.png) ;">
+    <view class='header' style="background-image:url(../../icon/bg1.png) ;">
         <image src="../../icon/logo.png" />
     </view>
     <view class="userinfo">
         <button class="join" bindtap='joinRoom'>加入房间</button>
         <button class="brain" bindtap='buildRoom'>头脑风暴</button>
     </view>
+
 </view>
 <view class="mine" wx:if="{{selected===2}}">
   <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>

@@ -1,0 +1,50 @@
+<view class="index" wx:if="{{selected!==2}}">
+    <view class='header' style="background-image:url(../../icon/bg1.png) ;">
+        <image src="../../icon/logo.png" />
+    </view>
+    <view class="main">
+        <button class="join" bindtap='joinRoom'>加入房间</button>
+        <button class="brain" bindtap='buildRoom'>头脑风暴</button>
+    </view>
+</view>
+<view class="mine" wx:if="{{selected===2}}">
+    <view class="headerMine">
+        <view class="avatar">
+            <image class="url" src="{{userInfo.avatarUrl}}" />
+        </view>
+        <text class="name">{{userInfo.nickName}}</text>
+    </view>
+    <view class="contentMine">
+        <view class="discuss">
+            <span class="line">
+                <image src="../../icon/taolun.png" class="icon"></image>
+                我的讨论
+            </span>
+            <span class="iconfont icon-youjiankuohao"></span>
+        </view>
+        <view class="discuss">
+            <span class="line">
+                <image src="../../icon/shoucang.png" class="icon"></image>
+                我的收藏
+            </span>
+            <span class="iconfont icon-youjiankuohao"></span>
+        </view>
+        <view class="set">
+            <span class="line">
+                <image src="../../icon/shezhi.png" class="icon"></image>
+                设置
+            </span>
+            <span class="iconfont icon-youjiankuohao"></span>
+        </view>
+    </view>
+</view>
+<!-- miniprogram/custom-tab-bar/index.wxml -->
+<view class="tab-bar">
+    <!-- <cover-view class="tab-bar-border"></cover-view> -->
+    <view wx:for="{{list}}" wx:key="index" class="tab-bar-item bar{{index}}" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+        <image class="image" src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></image>
+        <view class="view" style="color: {{selected === index ? selectedColor : color}};">
+            {{item.text}}
+        </view>
+    </view>
+</view>
