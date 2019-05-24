@@ -24,9 +24,9 @@ Page({
     windowHeight: 0,
     isActive:false,
     ifColor:false,
-    backColor: "rgb(255,210,210)",
+    backColor: "#8AACFF",
     show:null,
-    color: ["rgb(255,210,210)", "rgb(219,218,234)", "rgb(255,228,108)", "rgb(189,218,255)","rgb(202,230,241)"],
+    color: ["#8AACFF", "#A6B1F0", "#9AE3F0", "#AEEDE1","#F8DC2E"],
     isEdit: false,
     isCheck:false,
     selectedIndex: 0, 
@@ -56,34 +56,16 @@ Page({
     this.setData({
       timer:parseInt(this.data.minute)*60+parseInt(this.data.second)
     })
-                                                
-    //获取用户昵称和已存储信息
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        //upDateUser : app.globalData.UserData
+    /*
+    //从words表中拉取数据
+    const db = wx.cloud.database();
+    db.collection('words').where({
+      roomNum:app.globalData.roomNum
+    }).get().then(res=>{
+      that.setData({
+        
       })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          //upDateUser: app.globalData.UserData
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            //upDateUser: app.globalData.UserData
-          })
-        }
-      })
-    }
+    })*/
 
   },
   //点击键盘按钮出发输入框
@@ -169,10 +151,13 @@ Page({
         const db = wx.cloud.database();
         db.collection('words').add({
           data : {
-            roomNum: app.globalData.roomNum,
-            text: obj.word,
-            backColor: that.data.backColor,
-            isStar:false
+            roomNum: app.globalData.roomNum,              //所属房间
+            text: obj.word,                               //词条内容
+            backColor: that.data.backColor,               //词条背景颜色
+            isStar:false,                                 //是否被收藏
+            nickName:"zenyi" ,//app.globalData.userInfo.nickName,   //词条作者名称
+            comment:[],                                    //词条的评论
+            term: 1 //app.globalData.term   //轮数记录
           }
         })
         /*.then(

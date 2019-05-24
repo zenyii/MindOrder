@@ -10,17 +10,23 @@ Page({
     showMessage:[],
     pickMessage:[],
     index:[],
-    isRank:false
+    isRank:false,
+    isActive:false,
+    empty:'',
+    value:[],
+    wordId:'',  
+    commentMsg:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function (options) { 
     var that = this;
     const db = wx.cloud.database();
     var getData = [];
-    var comment = new Promise(function(resolve,reject){
+    //从words表中取出数据并更新
+    /*var comment = new Promise(function(resolve,reject){
       db.collection('words').get({
       success(res) {
        // console.log(res);
@@ -34,11 +40,28 @@ Page({
       //console.log(getData);
       that.setData({
         showMessage: getData
+      })*/
+
+      /*const db = wx.cloud.database();
+      db.collection('contents').where({
+        roomNum: app.globalData.roomNum
+      }).get({
+        success: function (res) {
+          //console.log(res.data);
+          that.setData({
+            commentMsg: res.data
+          })
+        }
+      })*/
+      db.collection('words').where({
+        roomNum: app.globalData.roomNum
+      }).get({
+        success:function(res){
+          that.setData({
+            showMessage:res.data
+          })
+        }
       })
-      
-      for(let x = 0;x < that.data.showMessage.length;x++){
-        that.data.showMessage[x].isMore = false
-      }
       //console.log(that.data.showMessage);
      /* //获取显示的词条
       var showMessage = that.data.showMessage;
@@ -48,7 +71,7 @@ Page({
         showMessage: that.data.showMessage
       })
       //console.log(that.data.showMessage);*/
-    })
+    //})
   },
 
   /**
@@ -115,6 +138,66 @@ Page({
         belong:''
       }
     })
+  },
+  //点击词条激发键盘弹起
+  acKeyboard:function(e){
+    var id = '';
+    this.setData({
+      isActive:true,
+      wordId: e.currentTarget.id
+    })
+  },
+
+  //输入评论
+  editComment:function(e){
+    this.data.value.push(e.detail.value);
+  },
+
+  //点击回复按钮，则添加评论
+  addComment:function(){
+    //检测输入内容是否为空
+    if (!this.data.value[this.data.value.length - 1]) {
+      wx.showToast({
+        title: '不能为空',
+        duration: 1000,
+        mask: true
+      })
+    }
+    else {
+    this.setData({
+      empty:''
+    })
+    console.log(this.data.showMessage);
+    var that = this;
+    const db = wx.cloud.database();
+    var selectRoom = app.globalData.roomNum;
+    //将评论加入词条字段Comment中
+    this.data.showMessage[this.data.wordId].comment.push(this.data.value[this.data.value.length - 1]);
+    this.setData({
+      showMessage:this.data.showMessage
+    })
+    //新增评论的内容
+    var updateComment = this.data.showMessage[this.data.wordId].comment;
+
+      db.collection('contents').add({
+        data: {
+          content: that.data.value[that.data.value.length - 1],
+          word: that.data.showMessage[that.data.wordId].text,         //所属词条
+          authorId: that.data.showMessage[that.data.wordId]._openid,  //所属词条作者的openid
+          //wordId: id,                       //所属词条的id
+          nickName: "zenyi",
+          roomNum: selectRoom                  //所属房间
+        }
+      })
+
+    db.collection('words').doc(this.data.showMessage[this.data.wordId]._id).update({
+      data: {
+        comment: updateComment
+      }
+    })
+
+    }
+
   },
   /**
    * 生命周期函数--监听页面显示

@@ -1,0 +1,8 @@
+<!--miniprogram/pages/about/about.wxml-->
+<view class='banner'>
+  <view class='logo'><image src='../../icon/logo.png'></image></view>
+  <view id="title">头脑智序</view>
+  <view class='text'>
+    介绍：fcdsfirgvisrhedfvjbghdfkjbhvujdfzhbvujdfbzhuvhdfuvghbdfvb
+  </view>
+</view>

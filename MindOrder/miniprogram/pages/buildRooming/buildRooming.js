@@ -15,39 +15,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that = this;
-    that.setData({
-      roomId: that.getRandomInt(100000, 999999)
-    })
-
-    /* 初始化，载入现存的用户数据
-      if (app.globalData.userInfo) {
-       console.log(1)
-       this.setData({
-         userInfo: app.globalData.userInfo,
-       })
-     } else if (this.data.canIUse) {
-       console.log(2)
-       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-       // 所以此处加入 callback 以防止这种情况
-       app.userInfoReadyCallback = res => {
-         this.setData({
-           userInfo: res.userInfo,
- 
-         })
-       }
-     } else {
-       console.log(3)
-       // 在没有 open-type=getUserInfo 版本的兼容处理
-       wx.getUserInfo({
-         success: res => {
-           app.globalData.userInfo = res.userInfo
-           this.setData({
-             userInfo: res.userInfo,
-           })
-         }
-       })
-     } */
+      this.getRandomInt(100000, 999999)
   },
 //获取房主的openid然后随链接传参给preparing，赋值在全局上！！！！！
   goToBuild: function () {
@@ -84,12 +52,56 @@ Page({
       }
     ) 
   },
-  getRandomInt:function(min, max) {
+
+  a:function(){
+    var b =  this.getRandomInt(100000, 999999);
+    console.log("hhhh",b);
+  },
+
+  getRandomInt: function (min, max) {
+    //获取房间号区间
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-    //不含最大值，含最小值
-  },
+    console.log(min,max);
+    //定义循环控制变量、房间号、房间号查询存在结果
+    var existCrl, roomNum, queryRes
+    var that = this;
+    existCrl = true
+    const db = wx.cloud.database()
+
+  if (existCrl) {
+      //生成随机房号
+      roomNum = Math.floor(Math.random() * (max - min)) + min;
+      console.log(roomNum);
+      //查询房号是否存在
+      var getRoomNum = new Promise(function (resolve, reject) {
+        db.collection('rooms').where({
+          roomNum: roomNum
+        }).get({
+          success:function(res){
+            queryRes = res.data.length
+            console.log('[数据库] [查询记录] 成功: ', res.data.length)
+            console.log('生成的房号是: ', roomNum)
+            console.log('test：', queryRes);
+            resolve();
+          }
+        })
+      });
+      getRoomNum.then(function () {
+        //房号存在，继续循环。房号不存在，返回生成的房号
+        if (!queryRes) {
+          console.log('测试值是：', queryRes)
+          console.log(roomNum);
+          that.setData({
+            roomId: roomNum
+          })
+        } else {
+          console.log('测试值是：', queryRes)
+          console.log(11111);
+        }
+      })
+    }
+   }
   /*   formReset() {
       console.log('form发生了reset事件')
     } */

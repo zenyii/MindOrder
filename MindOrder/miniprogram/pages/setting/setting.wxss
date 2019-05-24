@@ -1,0 +1,29 @@
+/* miniprogram/pages/setting/setting.wxss */
+page{
+  background: rgb(221, 223, 222)
+}
+
+.allTheme{
+  width: 100%;
+  height: 100%;
+}
+
+.bar{
+  min-height: 100rpx;
+  display: flex;
+  align-items: center;
+  margin: auto 10rpx;
+  border-bottom: 5rpx solid rgb(205, 209, 212);
+  background: white;
+  font-size: 30rpx;
+}
+
+#text{
+  width: 650rpx;
+  margin-left: 30rpx;
+}
+
+#more{
+  width: 50rpx;
+  height: 50rpx;
+}

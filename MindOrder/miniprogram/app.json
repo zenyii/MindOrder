@@ -1,8 +1,15 @@
 {
   "pages": [
-    "pages/rank/rank",
-    "pages/try/try",
     "pages/show/show",
+    "pages/try/try",
+    "pages/setting/setting",
+    "pages/about/about",
+    "pages/advice/advice",
+    "pages/myStar/myStar",
+    "pages/myDiscuss/myDIscuss",
+    "pages/wirtePlan/writePlan",
+    "pages/rank/rank",
+    "pages/buildRooming/buildRooming",
     "pages/setTime/setTime",
     "pages/homePage/homePage",
     "pages/index/index",
@@ -16,10 +23,10 @@
     "pages/test/test",
     "pages/index2/index2",
     "pages/logs/logs",
-    "pages/buildRooming/buildRooming",
+    "pages/mine/mine",
     "pages/inputRoomId/inputRoomId",
     "pages/login/login",
-    "pages/mine/mine"
+    "pages/showPlan/showPlan"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -28,7 +35,6 @@
     "navigationBarTextStyle": "white"
   },
   "tabBar": {
-    "custom": true,
     "color": "#ffffff",
     "borderStyle": "black",
     "selectedColor": "#4880ff",

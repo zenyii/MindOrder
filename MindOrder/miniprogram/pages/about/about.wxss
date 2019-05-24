@@ -1,0 +1,40 @@
+/* miniprogram/pages/about/about.wxss */
+page{
+  background: rgb(221, 223, 222);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.banner{
+  width: 90%;
+  background: white;
+  height: 90%;
+  margin: auto;
+  margin-top: 50rpx;
+}
+
+.logo{
+  margin-top: 50rpx;
+  text-align: center;
+}
+
+.logo image{
+  width: 125rpx;
+  height: 125rpx;
+}
+
+#title{
+  color: rgb(73, 128, 255);
+  font-size: 30rpx;
+  text-align: center;
+}
+
+.text{
+  width: 80%;
+  font-size: 30rpx;
+  color:rgb(65, 66, 65);
+  margin: auto;
+  word-break: break-all;
+  margin-top: 50rpx;
+}
