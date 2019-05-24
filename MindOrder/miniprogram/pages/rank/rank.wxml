@@ -1,12 +1,34 @@
 <!--pages/pick/pick.wxml-->
-<view class="{{!isRank ? 'goDiscuss' : 'ungoDiscuss'}}" bindtap='goDiscussing'>讨论区</view><view class="{{isRank ? 'goRanking' : 'ungoRanking'}}" bindtap='goRanking'>排行榜</view>
 
+<view class="{{!isRank ? 'goDiscuss' : 'ungoDiscuss'}}" bindtap='goDiscussing'>讨论区</view><view class="{{isRank ? 'goRanking' : 'ungoRanking'}}" bindtap='goRanking'>排行榜</view>
+<!--排行榜显示内容-->
 <view wx:if="{{isRank}}" class='ranking'>
   <view class='Message' wx:for="{{showMessage}}" wx:for-index="index" wx:key="item">
-  <text id='messageItem'>{{item.word}}</text>
-  <view class='showNum'><image id='good' src='../../icon/gooded.png'></image>{{item.num.length}} 
-  <image id='comment' src='../../icon/comment.png'></image> 0</view>
+    <view id='messageTxt'>{{item.text}}</view>
+    <view class='showNum'>
+    <image id='good' src='../../icon/gooded.png'></image>0 
+    <image id="comment" src='../../icon/comment.png'></image>0
+     </view>
+  </view>
+</view>
+<!--讨论区内容-->
+<view wx:if="{{!isRank}}">
+  <view class='Message' wx:for="{{showMessage}}" wx:for-index="index" wx:key="item">
+    <view class='messageItem'>
+      <view class='text' id='{{index}}' bindtap='acKeyboard'>{{item.text}}</view>
+      <image id='good' src='../../icon/good.png'></image>
+      <image bindtap='getStar' id='{{index}}' wx:if="{{!item.isStar}}" class='star' src='../../icon/star.png'></image>
+      <image bindtap='getStar' id='{{index}}' wx:if="{{item.isStar}}" class='star' src='../../icon/stared.png'></image>
+    </view>
+    <view class="commentArea">
+      <view class='comment' wx:for="{{item.comment}}" wx:for-item="comment">
+        <view id='commentItem'><text style='color:rgb(67,132,217)'>评论</text>：{{comment}}</view>
+      </view>
+    </view>
   </view>
 </view>
 
-<button bindtap='insurelast'>确定</button>
+<view class='bottom' wx:if="{{isActive}}">
+  <input id='inputBox' focus='{{isActive}}' value='{{empty}}' bindinput="editComment"></input> <button bindtap='addComment' id='send' >评论</button>
+</view>
+

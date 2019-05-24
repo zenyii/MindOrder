@@ -3,7 +3,7 @@
 
 <view class='messageBack'>
 <view class='message' wx:for='{{showMessage}}' wx:for-index='index' wx:key='item'  style='background:{{item.backColor}}'>
-    <view id='content'>{{item.word}}</view> 
+    <view id='content'>{{item.text}}</view> 
       <image class='love' id='{{index}}' bindtap='like' wx:if='{{!item.isgood}}' src='../../icon/good.png'></image>
       <image class='love' id='{{index}}' bindtap='like' wx:if='{{item.isgood}}' src='../../icon/gooded.png'></image>
 </view>

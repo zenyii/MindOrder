@@ -21,3 +21,4 @@
     </block>
   </view>
 </view>
+<button bindtap='a'>fdg</button>

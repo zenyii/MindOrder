@@ -67,12 +67,13 @@ Page({
   /*
   * 返回一个未存在的房间号
   */
+
   getRandomInt: function (min, max) {
     //获取房间号区间
     min = Math.ceil(min);
     max = Math.floor(max);
     //定义循环控制变量、房间号、房间号查询存在结果
-    let that = this
+    let that = this;
     const db = wx.cloud.database()
     let roomNum = `inputValue.roomNum`
     //生成随机房号

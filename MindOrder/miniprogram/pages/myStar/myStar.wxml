@@ -1,0 +1,7 @@
+<!--miniprogram/pages/myStar/myStar.wxml-->
+<view class='allTheme'>
+  <view class='titleItem' wx:for="{{titleMsg}}">
+      <view id='text'>主题：{{item}}</view>
+      <image id="more" src='../../icon/more.png'></image>
+  </view>
+</view>

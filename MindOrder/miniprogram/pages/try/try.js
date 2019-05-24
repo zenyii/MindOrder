@@ -24,9 +24,9 @@ Page({
     windowHeight: 0,
     isActive:false,
     ifColor:false,
-    backColor: "rgb(255,210,210)",
+    backColor: "#8AACFF",
     show:null,
-    color: ["rgb(255,210,210)", "rgb(219,218,234)", "rgb(255,228,108)", "rgb(189,218,255)","rgb(202,230,241)"],
+    color: ["#8AACFF", "#A6B1F0", "#9AE3F0", "#AEEDE1","#F8DC2E"],
     isEdit: false,
     isCheck:false,
     selectedIndex: 0, 
@@ -56,34 +56,16 @@ Page({
     this.setData({
       timer:parseInt(this.data.minute)*60+parseInt(this.data.second)
     })
-                                                
-    //获取用户昵称和已存储信息
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        //upDateUser : app.globalData.UserData
+    /*
+    //从words表中拉取数据
+    const db = wx.cloud.database();
+    db.collection('words').where({
+      roomNum:app.globalData.roomNum
+    }).get().then(res=>{
+      that.setData({
+        
       })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          //upDateUser: app.globalData.UserData
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            //upDateUser: app.globalData.UserData
-          })
-        }
-      })
-    }
+    })*/
 
   },
   //点击键盘按钮出发输入框
@@ -165,9 +147,32 @@ Page({
       this.data.value=[];
       newUser.words.push(obj);
       var checkNum = 0;
-      //若有openId属性重复的，则只插入词条数据
-      for (var j = 0; j < app.globalData.UserData.length; j++) {
         var that = this;
+        const db = wx.cloud.database();
+        db.collection('words').add({
+          data : {
+            roomNum: app.globalData.roomNum,              //所属房间
+            text: obj.word,                               //词条内容
+            backColor: that.data.backColor,               //词条背景颜色
+            isStar:false,                                 //是否被收藏
+            nickName:"zenyi" ,//app.globalData.userInfo.nickName,   //词条作者名称
+            comment:[],                                    //词条的评论
+            term: 1 //app.globalData.term   //轮数记录
+          }
+        })
+        /*.then(
+          db.collection('words').where({
+            //openId: app.globalData.openId
+            backColor: 'rgb(219, 218, 234)'
+          }).get({
+            success(res){
+              console.log(res);
+            }
+          })
+        )*/
+
+        
+        /*
         //在数据库中保存数据
         wx.request({
           url: 'https://fl123.xyz/api/xcx/addContent.php',
@@ -184,11 +189,12 @@ Page({
           success: function (res) {
             console.log(res.data);
           },
-        })
+        })*/
+      //若有openId属性重复的，则只插入词条数据
+      for (var j = 0; j < app.globalData.UserData.length; j++) {
         //插入词条内容
         if (newUser.openId == app.globalData.UserData[j].openId) {
           app.globalData.UserData[j].words.push(obj);
-          break;
         }
         checkNum++;
       }
@@ -201,8 +207,9 @@ Page({
         upDateUser: this.data.upDateUser,
       });
       //console.log(this.data.upDateUser);
+      //}
     }
-
+    
   },
   cancelEdit:function(){
     this.setData({
@@ -221,6 +228,10 @@ Page({
   },
   deleteWord:function(){
     var that = this;
+    const db = wx.cloud.database();
+    var textId = ''
+    var delword = this.data.upDateUser[0].words[that.data.selectedIndex].word;
+
     wx.showActionSheet({
       itemList: ["删除"],
       itemColor:"red",
@@ -230,10 +241,31 @@ Page({
           that.setData({
             upDateUser: that.data.upDateUser
           })
+          var get = new Promise(function (resolve, reject) {
+            //console.log(delword);
+            db.collection('words').where({
+              text: delword
+            }).get({
+              success: function (res) {
+                //console.log(res);
+                textId = res.data[0]._id;
+                //console.log(textId);
+                resolve();
+              }
+            })
+          });
+          get.then(function () {
+            db.collection('words').doc(textId).remove({
+              success(res) {
+
+              }
+            })
+          }
+          )
         }
       }
     })
-   
+    
   },
   scrollSelect:function(e){
     var that = this;

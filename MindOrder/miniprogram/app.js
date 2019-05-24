@@ -3,7 +3,7 @@ const utils = require('./utils/util');
 const request = require('./requests/request');
 App({
   globalData: {
-    roomNum: '565656',
+    roomNum: '',
     appid: 'wx8d5d22897bfc549c',
     secret: '92751c1e7384da0a6fe2f851c20451da',
    // userId: 'oGw5W49WStN-HbdVgfbSxykI8SC0',
@@ -12,11 +12,10 @@ App({
     roomId:'8d22b6d6-d5ce-4aa3-b373-0da450a66465',//字段id
     //userInfo: {},
     hasUserInfo: false,
-    userInfo: {
-      avatarUrl:"https://wx.qlogo.cn/mmopen/vi_32/lXib4ldvq8FjEs2ac7bECPHiapHk12Haykf2vcIGcsy7wErYDDm4sQowgr5kFiaJBgFeNGhUHacCKKWPt2JQ3SjAQ/132",
-      nickName:'hhahahah'
-    },
-    openId: 1123,
+
+    userInfo: null,
+    trem: 1,              //轮数默认为1,再来一轮时累加
+    selfOpenId:"o6e-P4nvU2HvdRqKOZIwRsw_wgD8",
     UserData: [
       {
         openId: 1,
