@@ -30,6 +30,7 @@ Page({
     isEdit: false,
     isCheck:false,
     selectedIndex: 0, 
+   
     },
 
   /**
@@ -134,6 +135,8 @@ Page({
       backColor:index
     })
   },
+
+  
 
   newpaper: function() {
     //检测输入内容是否为空

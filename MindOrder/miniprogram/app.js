@@ -73,7 +73,12 @@ App({
   },
   /* 获取用户数据 */
   //1、调用微信登录接口，获取code
-
+  
+  /*查询记录*/
+  onQuery: function (collect, where, field){
+    const db = wx.cloud.database()
+    return db.collection(collect).where(where).field(field).get()
+  },
   getUserInfo: function () {
     let that = this;
     let userInfo = wx.getStorageSync('userInfo') || {};

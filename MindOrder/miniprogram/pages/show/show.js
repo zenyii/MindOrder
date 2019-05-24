@@ -12,13 +12,19 @@ Page({
     allMessage:[],
     showMessage:[],
     userInfo:{},
+    queryBollen:false,//词条显示效果布尔值
+    words:[],
+    queryRes:null,//词条点赞者openID数组
+    querywordsId:null,//点赞词条的_id
     color: ["rgb(255,210,210)", "rgb(219,218,234)", "rgb(255,228,108)", "rgb(189,218,255)", "rgb(202,230,241)"],
+    wordsInfo: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.queryWordsInfo()
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -74,6 +80,18 @@ Page({
 
     //console.log(this.data.showMessage);
   },
+  //获取词条的数据
+  queryWordsInfo: function () {
+    const db = wx.cloud.database()
+    db.collection('words').where({ roomNum: this.data.roomNum }).field({ content: true, supportNum: true }).get().then(
+      res => {
+        
+          //设置开始时间的时间戳
+          //startTime: this.data.startTime
+        console.log(res.data)
+      })
+
+  },
 
   //点赞
   like:function(e){
@@ -112,27 +130,136 @@ Page({
     //console.log(this.data.showMessage);
     //用户点赞后请求点赞结果
     var that = this;
-    wx.request({
-      url: 'https://fl123.xyz/api/xcx/support.php',
-      data: {
-        roomNum: roomNumber,
-        userId: openId,
-        author: that.data.showMessage[id].openId,
-        text: that.data.showMessage[id].word,
-        state: 1
-      },
-      method: 'POST',
-      header: {
-        'content-type': "application/x-www-form-urlencoded"
-      },
-      success: function (res) {
-       //返回true或false来判定用户是否点赞
-        that.data.showMessage[id].isgood = res.data;
+    
+    /*
+    *为词条添加点赞数据
+    */
+    const db = wx.cloud.database()
+    const _ = db.command
+    //查询该词条的点赞信息是否存在
+    var updateSupport = new Promise(function (resolve, reject) {
+      db.collection('words').where({
+        //使用时填词条的查询条件
+        // "author":that.data.showMessage[id].openId,
+        // "content": that.data.showMessage[id].word,
+        // "roomNum": roomNumber,
+
+        //测试数据，用时注释
+        _id: "96c1cbbe5ccff8f20d045eed0a250256"
+      }).get({
+        success: res => {
+          //获取查询信息
+          that.setData({
+            queryRes: res.data[0].supporter,
+            querywordsId: res.data[0]._id
+          })
+          //console.log('[数据库] [查询记录] 成功: ', res.data)
+          // console.log('生成的房号是: ', that.data.roomNum)
+          //console.log('test：', that.data.queryRes)
+          resolve();
+        }
+      })
+    });
+    updateSupport.then(function () {
+      //检查使用者openID是否在词条点赞者中
+      let index = that.inarray(app.globalData.openId, that.data.queryRes) 
+      //如果赞过
+      if (index!=-1) {
+        //console.log('赞过', index)
         that.setData({
-          showMessage: that.data.showMessage
+          queryBollen: false,
         })
-      },
+        //点赞中删除点赞用户
+        that.data.queryRes.splice(index, 1)
+        //console.log('test2', that.data.querywordsId)
+        //console.log('test2', that.data.queryRes)
+        db.collection('words').doc(that.data.querywordsId).update({
+          data: {
+            //自减一
+            supportNum: _.inc(-1),
+            supporter: _.set(
+              that.data.queryRes
+            )
+          }
+        })
+        //console.log('点赞重复')
+      }
+      else {
+        //没赞过
+        that.setData({
+          queryBollen: true
+        })
+        db.collection('words').doc(that.data.querywordsId).update({
+          data: {
+            //自增一
+            supportNum: _.inc(1),
+            supporter: _.push(openId)
+          },
+          success: res => {
+            //console.log(res.data)
+            
+            this.setData({
+             
+            })
+          }
+        })
+        //console.log('点赞成功')
+        //that.getRandomInt(100000, 999999)
+      }
+      // db.collection('words').doc("96c1cbbe5ccff8f20d045eed0a250256").update({
+      //   data: {
+      //     supportNum: 1,
+      //     supporter: [
+      //       {
+      //         "avatarUrl": "",
+      //         "nickName": "",
+      //         "openid": openId,
+      //       },
+      //     ]
+      //   },
+      //   success: res => {
+      //     console.log(res.data)
+      //     this.setData({
+
+      //     })
+      //     resolve();
+      //   }
+      // })
     })
+    
+    // wx.request({
+    //   url: 'https://fl123.xyz/api/xcx/support.php',
+    //   data: {
+    //     roomNum: roomNumber,
+    //     userId: openId,
+    //     author: that.data.showMessage[id].openId,
+    //     text: that.data.showMessage[id].word,
+    //     state: 1
+    //   },
+    //   method: 'POST',
+    //   header: {
+    //     'content-type': "application/x-www-form-urlencoded"
+    //   },
+    //   success: function (res) {
+    //    //返回true或false来判定用户是否点赞
+    //     that.data.showMessage[id].isgood = res.data;
+    //     that.setData({
+    //       showMessage: that.data.showMessage
+    //     })
+    //   },
+    // })
+  },
+  querywords:function(){
+
+  },
+  inarray:function(index,array){
+    let i
+    for(i=0;i<array.length;i++){
+      if(array[i]==index){
+        return i
+      }
+    }
+    return -1
   },
   change(){
     wx.navigateTo({

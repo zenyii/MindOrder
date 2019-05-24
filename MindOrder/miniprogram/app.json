@@ -1,8 +1,10 @@
 {
   "pages": [
-    
+    "pages/show/show",
     "pages/homePage/homePage",
-    "pages/setTime/setTime",
+    "pages/preparing/preparing",
+    "pages/setTime/setTime",  
+    
     "pages/try/try",
     "pages/index/index",
     "pages/userConsole/userConsole",
@@ -12,8 +14,6 @@
     "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib",
     "pages/rank/rank",
-    "pages/show/show",
-    "pages/preparing/preparing",
     
     "pages/test/test",
     "pages/index2/index2",
