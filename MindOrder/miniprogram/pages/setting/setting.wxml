@@ -1,0 +1,11 @@
+<!--miniprogram/pages/setting/setting.wxml-->
+<view class='allTheme'>
+<view class='bar'>
+    <view bindtap='goAbout' id='text'>关于</view>
+    <image id="more" src='../../icon/more.png'></image>
+</view>
+<view class='bar'>
+  <view bindtap='goAdvice' id='text'>提建议</view>
+  <image id="more" src='../../icon/more.png'></image>
+</view>
+</view>

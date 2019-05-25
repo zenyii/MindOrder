@@ -1,0 +1,60 @@
+<!--pages/try/try.wxml-->
+<!--开头界面 主题、倒计时等-->
+<view class='theme'><text>主题:xxxxx</text></view>
+<view class='timerback3'></view>
+<view class='timerback2'></view>
+<view class='timerback1'></view>
+<text class='timer'><text wx:if="{{minute<10}}">0</text>{{minute}}:<text wx:if="{{second<10}}">0</text>{{second}}</text>
+<!--中间界面，包括进度条以及已写便签显示-->
+<view class='backs'>
+  <view class='back'>
+    <!--回顾排行榜按钮显示-->
+    <image bindtap='getRank' id='watchBack' src='../../icon/watchBack.png'></image>
+    <!--进度条-->
+    <view class='progresstimer'></view>
+  <view style='animation-duration:{{timer}}s' class='progress'></view>
+  <!--遮罩层，方便编辑便签后回到主页面-->
+  <view wx:if="{{isCheck}}" class='editBack' bindtap='cancelCheck'></view>
+    <!--查看单个便签的滚动栏-->
+    <scroll-view scroll-x="true" class='scrollText' wx:if="{{isCheck}}" bindscroll="scrollSelect">
+      <view wx:for="{{upDateUser[0].words}}" wx:for-item="words" wx:key="id" class="{{words.select?'selectItem':'scrollTextItem'}}"  style='background:{{words.backColor}}' ><input value='{{words.word}}' focus='{{words.isModify}}' bindinput="addWord"></input>
+        </view>
+    </scroll-view>
+    <button wx:if="{{isCheck}}" class='newPaper' bindtap='insure'>确定修改</button>
+    <image wx:if="{{isCheck}}" bindtap='deleteWord' id="bin" src='../../icon/bin.png'></image>
+    <image wx:if="{{isCheck}}" bindtap='EditWord' id="edit" src='../../icon/edit.png'></image>
+  <!--每轮标签集合可移动-->
+  <movable-area class="allText">
+  <!-- 每轮标签条显示--> 
+    <movable-view direction="all" wx:if="{{upDateUser[0].words.length}}" class='term'>
+          <view bindtap='checkText' class='textitem' wx:for="{{upDateUser[0].words}}" wx:for-item="words" wx:key="id"  style='background:{{words.backColor}}'><text>{{words.word}}</text>
+          </view>
+    </movable-view>
+  </movable-area>
+
+    <!--添加便签按钮-->
+    <image  wx:if="{{!isEdit && !isCheck}}" bindtap='goEdit' class='addPaper' src='../../icon/addPaper.png'></image>
+  </view>
+</view>
+<!--编辑界面后的遮罩层,用于取消填写便签-->
+<view class='editBack' wx:if="{{isEdit}}" bindtap='cancelEdit'></view>
+<!-- 整体编辑界面-->
+<view class='edit' wx:if="{{isEdit}}">
+ <!-- 中间编辑便签界面-->
+<view class='paperback'>
+  <view bindtap='inputWord' class='paper' style='background:{{backColor}}'>
+    <input placeholder='请输入你的想法' bindinput="addWord" id='word' focus='{{isActive}}' value='{{end}}'></input>
+  </view>
+</view>
+<!-- 下一张按钮 撤回前进按钮-->
+<button class='newPaper' bindtap='newpaper'>下一张 +</button>
+<view class='step'>
+<image id='stepItem' src='../../icon/back2.png'></image><image  id='stepItem' src='../../icon/go2.png'></image>
+</view>
+<!--颜色板-->
+<view animation="{{show}}" class='colorbroad'>
+  <button class='coloritem' wx:for="{{color}}" id="{{item}}" style='background:{{item}}' bindtap='selectColor' ></button>
+</view>
+<!-- 更换颜色按钮 键盘按钮-->
+<image src='../../icon/colorChange.png' id='color' bindtap='changeColor'></image><image src='../../icon/keyBroad.png' id='keybroad' bindtap='inputWord'>键盘</image>
+</view>
