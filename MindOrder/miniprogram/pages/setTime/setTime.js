@@ -4,24 +4,28 @@ Page({
   data: {
     timeRangeWrite: [],
     timeRangePrepare: [],
-    timeHold:'',
-    timePrepare:''
+    timeHold: '',
+    timePrepare: '',
+    rank: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let rank = options.rank;
+    console.log(rank,'rank')
     let timeRangeWrite = [];
     let timeRangePrepare = [];
     let that = this;
     Array.from({ length: 13 }, (v, i) => {
-      timeRangeWrite.push(i+1);
-      timeRangePrepare.push(i+1);
+      timeRangeWrite.push(i + 1);
+      timeRangePrepare.push(i + 1);
     });
     that.setData({
+      rank: rank,
       timeRangeWrite: timeRangeWrite,
-      timeRangePrepare:timeRangePrepare
+      timeRangePrepare: timeRangePrepare
     });
   },
   bindPickerChangeW(e) {
@@ -36,29 +40,38 @@ Page({
       timePreparing: e.detail.value
     })
   },
-  formSubmit:function(){
+  formSubmit: function () {
     let that = this;
-    let timeRangePrepare =that.data.timeRangePrepare;
-    let timeRangeWrite =that.data.timeRangeWrite; 
-    let timePreparing = timeRangePrepare[that.data.timePreparing];//获取时间值
-    let timeHold =  timeRangeWrite[that.data.timeHold];
-    app.globalData.minute =  `${Number(timeHold)-1}`;
+    let timeRangeWrite = that.data.timeRangeWrite;
+    let timeHold = timeRangeWrite[that.data.timeHold];
+    app.globalData.minute = `${Number(timeHold) - 1}`;
     app.globalData.second = `60`;
-    console.log(app.globalData.minute ,'minute')
-    console.log(app.globalData.second ,'second')
-    app.onUpdate('rooms',app.globalData.roomId,'meetingTime',timeHold).then(res=>{
-      app.onUpdate('rooms',app.globalData.roomId,'preparingTime',timePreparing)//更新准备时间的值
-      .then(res=>{
-        wx.redirectTo({
-          url:`../beforeDiscussTime/beforeDiscussTime?timePreparing=${timePreparing}&timeHold=${timeHold}`,
-          success:function(){
-            app.onUpdate('rooms',app.globalData.roomId,'allset',true)
-          }
+    console.log(app.globalData.minute, 'minute')
+    console.log(app.globalData.second, 'second')
+    if (that.data.rank === 0) {//初次
+      var timeRangePrepare = that.data.timeRangePrepare;
+      var timePreparing = timeRangePrepare[that.data.timePreparing];//获取时间值
+      app.onUpdate('rooms', app.globalData.roomId, 'preparingTime', timePreparing)//更新准备时间的值
+        .then(res => {
+          console.log('更新准备时间成功');
         })
-    })
-    })
-      
-   
+    }
+    app.onUpdate('rooms', app.globalData.roomId, 'meetingTime', timeHold)
+        .then(res => {
+          if(that.data.rank===0){
+            wx.redirectTo({
+              url: `../beforeDiscussTime/beforeDiscussTime?timePreparing=${timePreparing}&timeHold=${timeHold}`,
+              success: function () {
+                app.onUpdate('rooms', app.globalData.roomId, 'allset', true)
+              }
+            })
+          }else{
+            wx.redirectTo({
+              url: `../try/try`,
+            })
+          }
+         
+        })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

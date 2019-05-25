@@ -25,23 +25,25 @@ Page({
   onLoad: function (e) {
     console.log(e.selected);
     app.globalData.userInfo = wx.getStorageSync('userInfo');
-    app.globalData.selfOpenid = wx.getStorageSync('selfOpenid');
+    app.globalData.selfOpenId = wx.getStorageSync('selfOpenId');
     this.setData({
       selected: e.selected ? e.selected : 0,
       userInfo: app.globalData.userInfo
     })
 
     //先查询是否有此用户记录，再创建users表
-    app.onQuery('users', { openid: app.globalData.selfOpenid }, { nickName: true }).then(res => {
+    app.onQuery('users', { openid: app.globalData.selfOpenId }, { nickName: true }).then(res => {
       let data = res.data;
-      if (!data) {//如果后台没有此用户记录，则加入
+      //console.log(res.data,'data')
+      if (data) {//如果后台没有此用户记录，则加入
+        console.log('haha')
         app.onAdd('users', {
           avatarUrl: app.globalData.userInfo.avatarUrl,
           hisRoom: [],
           nickName: app.globalData.userInfo.nickName,
           star: [],
           userInfo: {},
-          openid: app.globalData.selfOpenid
+          openid: app.globalData.selfOpenId
         }).then(res => {
           console.log('创建users记录成功！')
         })

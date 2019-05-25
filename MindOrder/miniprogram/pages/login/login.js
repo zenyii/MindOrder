@@ -37,9 +37,9 @@ Page({
       success: res => {
         console.log('[云函数] [login] user openid: ', res.result.openid)
         console.log(userInfo,'userInfo')
-        app.globalData.selfOpenid = res.result.openid;
+        app.globalData.selfOpenId = res.result.openid;
         wx.setStorageSync('userInfo', userInfo);//本地缓存用户信息
-        wx.setStorageSync('selfOpenid', res.result.openid);
+        wx.setStorageSync('selfOpenId', res.result.openid);
         wx.hideLoading();
         that.setData({
           loading: false

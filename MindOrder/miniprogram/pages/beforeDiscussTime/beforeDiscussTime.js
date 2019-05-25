@@ -18,26 +18,9 @@ Page({
       title:app.globalData.title
     })
 
-    /*  //创建users表
-     app.onAdd('users', {
-       _openid: app.globalData.selfOpenid,
-       avatarUrl: app.globalData.userInfo.avatarUrl,
-       hisRoom: [],
-       nickName: app.globalData.userInfo.nickName,
-       star: [],
-       userInfo: {},
-     }) */
-
-    //更新users表
-    /* app.onUpdatePush('users',{ openid: app.globalData.selfOpenid },'hisRoom' , app.globalData.roomNum)
-    .then(res=>{
-      console.log(res,'res')
-      console.log('更新users记录成！')
-    }) */
-
     let hisRooms;
-    console.log(app.globalData.selfOpenid,'id')
-    app.onQuery('users', { openid: app.globalData.selfOpenid }, { hisRoom: true }).then(res => {
+    console.log(app.globalData.selfOpenId,'id')
+    app.onQuery('users', { openid: app.globalData.selfOpenId }, { hisRoom: true }).then(res => {
       let data = res.data[0];
       hisRooms = data.hisRoom;
       hisRooms.push(app.globalData.roomNum);
@@ -45,7 +28,7 @@ Page({
         name: 'updateComplex',
         data: {
           collect: 'users',
-          where: { openid: app.globalData.selfOpenid },
+          where: { openid: app.globalData.selfOpenId },
           key :'hisRoom',
           value:hisRooms
         }

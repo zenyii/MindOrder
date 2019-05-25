@@ -5,7 +5,7 @@
             <input placeholder="请设置头脑书写时长" name='writeTime' type="number" id="writeTime" value="{{timeRangeWrite[timeHold]}}" />
         </picker>
     </view>
-    <view class='outer'>
+    <view wx:if="{{rank===0}}" class='outer'>
         <label>准备时长</label>
         <picker class="inputGradient" bindchange="bindPickerChangeP" value="{{timePreparing}}" range='{{timeRangePrepare}}'>
             <input placeholder="请设置准备时长" name='prepareTime' type="number" id="prepareTime" value="{{timeRangePrepare[timePreparing]}}" />

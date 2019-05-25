@@ -1,34 +1,27 @@
-<!--pages/pick/pick.wxml-->
-
-<view class="{{!isRank ? 'goDiscuss' : 'ungoDiscuss'}}" bindtap='goDiscussing'>讨论区</view><view class="{{isRank ? 'goRanking' : 'ungoRanking'}}" bindtap='goRanking'>排行榜</view>
-<!--排行榜显示内容-->
-<view wx:if="{{isRank}}" class='ranking'>
-  <view class='Message' wx:for="{{showMessage}}" wx:for-index="index" wx:key="item">
-    <view id='messageTxt'>{{item.text}}</view>
-    <view class='showNum'>
-    <image id='good' src='../../icon/gooded.png'></image>0 
-    <image id="comment" src='../../icon/comment.png'></image>0
-     </view>
-  </view>
-</view>
-<!--讨论区内容-->
-<view wx:if="{{!isRank}}">
-  <view class='Message' wx:for="{{showMessage}}" wx:for-index="index" wx:key="item">
-    <view class='messageItem'>
-      <view class='text' id='{{index}}' bindtap='acKeyboard'>{{item.text}}</view>
-      <image id='good' src='../../icon/good.png'></image>
-      <image bindtap='getStar' id='{{index}}' wx:if="{{!item.isStar}}" class='star' src='../../icon/star.png'></image>
-      <image bindtap='getStar' id='{{index}}' wx:if="{{item.isStar}}" class='star' src='../../icon/stared.png'></image>
-    </view>
-    <view class="commentArea">
-      <view class='comment' wx:for="{{item.comment}}" wx:for-item="comment">
-        <view id='commentItem'><text style='color:rgb(67,132,217)'>评论</text>：{{comment}}</view>
+<!--miniprogram/pages/rank/rank.wxml-->
+<view class='rank'>
+  <view wx:for="{{rankMsg}}" wx:for-index="index" class="{{index<3?'MsgItemtop':'MsgItem'}}" >
+  <!--排行前三独立样式-->
+      <view class='num' wx:if="{{index < 3}}" style="background:{{rankColor[index]}}"><text id='num'>NO.{{index+1}}</text></view>
+      <view wx:if="{{index < 3}}" class='Message'>{{item.text}}</view>
+        <view wx:if="{{index < 3}}" class='goodItem'>
+            <image id='good' wx:if="{{false}}" src='../../icon/good.png'></image>
+            <image id='good' src='../../icon/gooded.png'></image>
+            <text>{{item.supportNum}}</text>
+          </view>
+    <!--排行大于三样式独立-->
+    <view class='num' wx:if="{{index > 2}}"></view>
+      <view wx:if="{{index > 2}}" class='Message'>{{item.text}}</view>
+      <view wx:if="{{index > 2}}" class='goodItem'>
+        <image id='good' wx:if="{{false}}" src='../../icon/good.png'></image>
+        <image id='good' src='../../icon/gooded.png'></image>
+        <text>{{item.supportNum}}</text>
       </view>
-    </view>
+  </view>
+
+  <!--房主视角按钮-->
+  <view class='bottom' wx:if="{{isroomMaster}}">
+    <view id="again" bindtap='again'><text id="btnText">继续讨论</text></view>
+    <view id='report' bindtap='goReport'><text id="btnText">生成报告</text></view>
   </view>
 </view>
-
-<view class='bottom' wx:if="{{isActive}}">
-  <input id='inputBox' focus='{{isActive}}' value='{{empty}}' bindinput="editComment"></input> <button bindtap='addComment' id='send' >评论</button>
-</view>
-

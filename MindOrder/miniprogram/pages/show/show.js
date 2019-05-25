@@ -23,12 +23,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.setNavigationBarTitle({
+      title: '点赞区',
+    })
+
+    //修改当前页面状态
+    app.globalData.nowPage = 2;
 
     const db = wx.cloud.database();
     var that = this;
     db.collection('words').where({
         roomNum:app.globalData.roomNum,
-        term:1    //app.globalData.trem  //根据轮数取出数据
+        term:app.globalData.term   //根据轮数取出数据
       }).get({
       success(res){
         console.log(res);

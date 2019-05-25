@@ -1,4 +1,4 @@
-const regeneratorRuntime = require('../../utils/runtime')
+
 // pages/invite/invite.js
 const app = getApp();
 Page({

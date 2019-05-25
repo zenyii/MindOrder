@@ -23,7 +23,7 @@ Page({//
     /* 一进来先后台查询此房间是否已在讨论中， */
     let that = this;
     app.globalData.userInfo = wx.getStorageSync('userInfo');
-    app.globalData.selfOpenid = wx.getStorageSync('selfOpenid');
+    app.globalData.selfOpenId = wx.getStorageSync('selfOpenId');
     /* 获取房号 */
     let inputMsg = that.data.inputMsg;
     let join = Number(e.join);
@@ -70,7 +70,7 @@ Page({//
           app.globalData.roomId = data._id;
 
           let newPerson = {
-            openid: app.globalData.selfOpenid,
+            openid: app.globalData.selfOpenId,
             avatarUrl: app.globalData.userInfo.avatarUrl,
             nickName: app.globalData.userInfo.nickName,
             ready: false
@@ -251,10 +251,10 @@ Page({//
 
         //寻找自己的位置，修改roommates的ready
         let userInfo = data.roommates;//实时更新
-        let selfOpenid = app.globalData.selfOpenid;
+        let selfOpenId = app.globalData.selfOpenId;
         let indexx;
         userInfo.some((item, index) => {
-          if (item.openid === selfOpenid) {
+          if (item.openid === selfOpenId) {
             indexx = index;
             return true
           }
@@ -270,8 +270,8 @@ Page({//
         })
         //修改数据readyArr
         //先拉取
-        let yIndex = readyArr.indexOf(selfOpenid);
-        yIndex !== -1 ? readyArr.splice(yIndex, 1) : readyArr.push(selfOpenid);
+        let yIndex = readyArr.indexOf(selfOpenId);
+        yIndex !== -1 ? readyArr.splice(yIndex, 1) : readyArr.push(selfOpenId);
 
         //整体update&set到数据库上
         //console.log(that.data.userInfo, 'user',readyArr,'arr');
@@ -342,18 +342,18 @@ Page({//
 
           //删除数据
           let userInfo = that.data.userInfo;
-          let selfOpenid = app.globalData.selfOpenid;
+          let selfOpenId = app.globalData.selfOpenId;
           let indexx;
           
           userInfo.some((item, index) => {
-            if (item.openid === selfOpenid) {
+            if (item.openid === selfOpenId) {
               indexx = index;
               return true;
             }
           });
           let deleted = userInfo.splice(indexx, 1);//被删除的用户数据
           //console.log(deleted, 'deleted')
-          if(selfOpenid===app.globalData.roomMaster)//房主自己退出房间！
+          if(selfOpenId===app.globalData.roomMaster)//房主自己退出房间！
           {
             app.globalData.roomMaster=userInfo[0].openid;//设置房间第一位为房主
           }

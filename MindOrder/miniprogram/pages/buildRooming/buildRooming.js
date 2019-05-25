@@ -32,7 +32,7 @@ Page({
     //console.log( aa,'userInfo');
     let inputValue = values.detail.value;//获取表单信息
     //inputValue.userIdArr = [app.globalData.selfOpenid];//获取用户自己的openid
-    app.globalData.roomMaster = app.globalData.selfOpenid;//设置房主openid
+    app.globalData.roomMaster = app.globalData.selfOpenId;//设置房主openid
     app.globalData.roomNum = String(this.data.inputValue.roomNum);//全局保存房间号
     app.globalData.title=inputValue.text;
     wx.showLoading({

@@ -1,5 +1,5 @@
 // pages/try/try.js
-import { countDown } from '../../utils/timer.js'
+import {countDown} from '../../utils/timer.js'
 
 var app = getApp()
 
@@ -14,150 +14,139 @@ Page({
     userInfo: {},
     message: [],
     upDateUser: [],
-    combineUser: [],
-    minute: '',
-    second: '',
-    timer: 0,
-    position: [],
-    totalHeight: 0,
-    windowWidth: 0,
+    combineUser:[],
+    minute:'',
+    second:'',
+    timer:0,
+    position:[],
+    totalHeight:0,
+    windowWidth:0,
     windowHeight: 0,
-    isActive: false,
-    ifColor: false,
+    isActive:false,
+    ifColor:false,
     backColor: "#8AACFF",
-    show: null,
-    color: ["#8AACFF", "#A6B1F0", "#9AE3F0", "#AEEDE1", "#F8DC2E"],
+    show:null,
+    color: ["#8AACFF", "#A6B1F0", "#9AE3F0", "#AEEDE1","#F8DC2E"],
     isEdit: false,
-    isCheck: false,
-    selectedIndex: 0,
-    title: ''
-  },
+    isCheck:false,
+    selectedIndex: 0, 
+    term: 0,              //轮数获取  
+    }, 
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    wx.setNavigationBarTitle({
-      title: '创意板',
+  onLoad: function(options) {
+
+    //修改当前页面状态
+    app.globalData.nowPage = 1;
+
+    //获取当前轮数
+    this.setData({
+      term:app.globalData.term
     })
 
-    console.log(app.globalData.minute, 'minute')
-    console.log(app.globalData.second, 'second')
     var that = this;
     //获取屏幕宽度以及计算屏幕换算rpx值
     wx.getSystemInfo({
-      success: function (res) {
+      success: function(res) {
         that.setData({
-          windowWidth: res.windowWidth,
-          windowHeight: res.windowHeight,
+          windowWidth:res.windowWidth,
+          windowHeight:res.windowHeight,
         })
       },
     })
 
     //获取时间数据
     this.setData({
-      minute: app.globalData.minute,
-      second: app.globalData.second,
-      title: app.globalData.title
+      minute:app.globalData.minute,
+      second:app.globalData.second
     })
-
-    console.log(typeof that.data.minute, 'minute');
-    console.log(typeof that.data.second, 'second');
     this.setData({
-      timer: parseInt(that.data.minute) * 60 + parseInt(that.data.second)
+      timer:parseInt(this.data.minute)*60+parseInt(this.data.second)
     })
-    console.log(that.data.timer);
-    /*
-    //从words表中拉取数据
-    const db = wx.cloud.database();
-    db.collection('words').where({
-      roomNum:app.globalData.roomNum
-    }).get().then(res=>{
-      that.setData({
-        
-      })
-    })*/
 
   },
   //点击键盘按钮出发输入框
-  inputWord: function () {
+  inputWord:function(){
     this.setData({
-      isActive: true,
+      isActive:true,
     })
   },
 
   //双向绑定输入词条数据
-  addWord: function (e) {
-    //console.log(e.detail.value);
+  addWord: function(e) {
+   //console.log(e.detail.value);
     this.data.value.push(e.detail.value);
   },
 
-  goEdit: function () {
+  goEdit:function(){
     this.setData({
-      isEdit: true
+      isEdit:true
     })
   },
 
   //点击换颜色后色板弹出动画
-  changeColor: function () {
-    var temp = this.data.ifColor ? false : true;
+  changeColor:function(){
+    var temp = this.data.ifColor?false:true;
     this.setData({
-      ifColor: temp
+      ifColor:temp
     })
     var animation = null;
     animation = wx.createAnimation({
-      duration: 1000,
-      timingFunction: "ease"
+      duration:1000,
+      timingFunction:"ease"
     });
     //色板弹出动画
     if (this.data.ifColor) {
       animation.translateY(-30).translateX(70).opacity(1).scale(1.2, 1.2).step();
-      this.setData({ show: animation.export() })
+    this.setData({show:animation.export()})
     }
     //色板收回动画
-    else {
-      animation.translateY(30).translateX(-70).opacity(0).scale(1, 1).step();
+    else{
+      animation.translateY(30).translateX(-70).opacity(0).scale(1,1).step();
       this.setData({ show: animation.export() })
     }
   },
 
-  selectColor: function (e) {
+  selectColor:function(e){
     var index = e.currentTarget.id;
     this.setData({
-      backColor: index
+      backColor:index
     })
   },
 
-  newpaper: function () {
+  newpaper: function() {
     //检测输入内容是否为空
-    if (!this.data.value[this.data.value.length - 1]) {
+    if (!this.data.value[this.data.value.length - 1]){
       wx.showToast({
         title: '不能为空',
         duration: 1000,
         mask: true
       })
     }
-    else {
-      //发送后输入框清空
+    else{
+    //发送后输入框清空
       this.setData({
         end: '',
       })
 
-      //将新建对象存入UserData数组中
-      var newUser = {};
-      newUser.openId = app.globalData.openId;
+   //将新建对象存入UserData数组中
+    var newUser = {};
+    newUser.openId = app.globalData.openId;
 
-      newUser.words = new Array();
+    newUser.words = new Array();
       var obj = {
         word: '',
         num: [],
-        backColor: this.data.backColor,
-        isModify: false
+        backColor : this.data.backColor,
+        isModify:false
       }
       obj.word = this.data.value[this.data.value.length - 1];
-      this.data.value = [];
+      this.data.value=[];
       newUser.words.push(obj);
       var checkNum = 0;
+      //将新增词条写入数据库
       var that = this;
       const db = wx.cloud.database();
       db.collection('words').add({
@@ -165,43 +154,12 @@ Page({
           roomNum: app.globalData.roomNum,              //所属房间
           text: obj.word,                               //词条内容
           backColor: that.data.backColor,               //词条背景颜色
-          isStar: false,                                 //是否被收藏
           nickName: "zenyi",//app.globalData.userInfo.nickName,   //词条作者名称
-          comment: [],                                    //词条的评论
-          term: 1,//app.globalData.term   //轮数记录
-          supporter: []
+          term: app.globalData.term,          //轮数记录
+          supporter: [],                        //点赞者存放数组
+          supportNum: 0                          //存取点赞数  
         }
       })
-      /*.then(
-        db.collection('words').where({
-          //openId: app.globalData.openId
-          backColor: 'rgb(219, 218, 234)'
-        }).get({
-          success(res){
-            console.log(res);
-          }
-        })
-      )*/
-
-
-      /*
-      //在数据库中保存数据
-      wx.request({
-        url: 'https://fl123.xyz/api/xcx/addContent.php',
-        data: {
-          id: app.globalData.openId,
-          roomNum:app.globalData.roomNum,
-          text: obj.word,
-          state:1
-        },
-        method: 'POST',
-        header: {
-          'content-type': "application/x-www-form-urlencoded"
-        },
-        success: function (res) {
-          console.log(res.data);
-        },
-      })*/
       //若有openId属性重复的，则只插入词条数据
       for (var j = 0; j < app.globalData.UserData.length; j++) {
         //插入词条内容
@@ -211,7 +169,7 @@ Page({
         checkNum++;
       }
       //若无openId属性重复，则插入新对象
-      if (checkNum == app.globalData.UserData.length) {
+      if (checkNum == app.globalData.UserData.length){
         app.globalData.UserData.push(newUser);
       }
       this.data.upDateUser.push(newUser);
@@ -221,24 +179,24 @@ Page({
       //console.log(this.data.upDateUser);
       //}
     }
-
+    
   },
-  cancelEdit: function () {
+  cancelEdit:function(){
     this.setData({
-      isEdit: false
+      isEdit:false
     })
   },
-  checkText: function () {
+  checkText:function(){
     this.setData({
-      isCheck: true
+      isCheck:true
     })
   },
-  cancelCheck: function () {
+  cancelCheck:function(){
     this.setData({
-      isCheck: false
+      isCheck:false
     })
   },
-  deleteWord: function () {
+  deleteWord:function(){
     var that = this;
     const db = wx.cloud.database();
     var textId = ''
@@ -246,9 +204,9 @@ Page({
 
     wx.showActionSheet({
       itemList: ["删除"],
-      itemColor: "red",
-      success(res) {
-        if (res.tapIndex === 0) {
+      itemColor:"red",
+      success(res){
+        if(res.tapIndex===0){
           that.data.upDateUser[0].words.splice(that.data.selectedIndex, 1);
           that.setData({
             upDateUser: that.data.upDateUser
@@ -277,49 +235,49 @@ Page({
         }
       }
     })
-
+    
   },
-  scrollSelect: function (e) {
+  scrollSelect:function(e){
     var that = this;
     var paper;
     var paperSize;
     var lengthToLeft;
     var remainWidth;
 
-    return new Promise(function (res, rej) {
-      for (var i = 0; i < that.data.upDateUser[0].words.length; i++) {
-        that.data.upDateUser[0].words[i].select = false;
-      }
-      var systemInfo = wx.getSystemInfoSync();
-      paper = that.data.upDateUser[0].words;
-      paperSize = 660;
-      lengthToLeft = (e.detail.scrollLeft) * 750 / systemInfo.windowWidth;
-      that.data.selectedIndex = Math.floor(lengthToLeft / paperSize);
-      remainWidth = lengthToLeft / systemInfo.windowWidth;
+    return new Promise(function(res,rej){
+      for (var i = 0; i < that.data.upDateUser[0].words.length;i++){
+      that.data.upDateUser[0].words[i].select = false;
+    }
+    var systemInfo = wx.getSystemInfoSync();
+    paper = that.data.upDateUser[0].words;
+    paperSize = 660;
+    lengthToLeft = (e.detail.scrollLeft) * 750 / systemInfo.windowWidth;
+    that.data.selectedIndex = Math.floor(lengthToLeft/paperSize);
+    remainWidth = lengthToLeft / systemInfo.windowWidth;
       res(systemInfo.windowWidth);
     })
       .then((windowWidth) => {
         if (remainWidth < 0.8 * windowWidth) {
-          this.data.upDateUser[0].words[this.data.selectedIndex].select = true;
-        }
-        //console.log(selectedIndex,remainWidth, windowWidth)
-        this.setData({
-          upDateUser: this.data.upDateUser,
-          selectedIndex: this.data.selectedIndex
-        })
-        //console.log(this.data.upDateUser[0].words);
+        this.data.upDateUser[0].words[this.data.selectedIndex].select = true;
+      }
+      //console.log(selectedIndex,remainWidth, windowWidth)
+      this.setData({
+        upDateUser: this.data.upDateUser,
+        selectedIndex:this.data.selectedIndex
       })
+      //console.log(this.data.upDateUser[0].words);
+    })
   },
-  EditWord: function () {
+  EditWord:function(){
     //console.log(this.data.selectedIndex);
     var that = this;
-    return new Promise(function (res, rej) {
+    return new Promise(function(res,rej){
       for (var i = 0; i < that.data.upDateUser[0].words; i++) {
         that.data.upDateUser[0].words[i].isModify = false;
       }
       res();
-    }).then(() => {
-      this.data.upDateUser[0].words[this.data.selectedIndex].isModify = true;
+    }).then(()=>{
+      this.data.upDateUser[0].words[this.data.selectedIndex].isModify =  true;
 
       this.setData({
         upDateUser: this.data.upDateUser
@@ -327,7 +285,7 @@ Page({
     })
   },
 
-  insure: function () {
+  insure:function(){
     if (!this.data.value[this.data.value.length - 1]) {
       wx.showToast({
         title: '无修改内容',
@@ -337,60 +295,82 @@ Page({
     }
     else {
       this.data.upDateUser[0].words[this.data.selectedIndex].word = this.data.value[this.data.value.length - 1];
-      this.data.value = [];
-      this.data.upDateUser[0].words[this.data.selectedIndex].isModify = false
-      this.setData({
-        upDateUser: this.data.upDateUser
-      })
+    this.data.value = [];
+    this.data.upDateUser[0].words[this.data.selectedIndex].isModify=false
+    this.setData({
+      upDateUser:this.data.upDateUser
+    })
     }
   },
+
+  getRank:function(){
+    //若第一轮则不跳转页面
+    if(app.globalData.term<2){
+      wx.showToast({
+        title: '无数据',
+        duration: 1000,
+        mask: true
+      })
+    }else{
+    wx.navigateTo({
+      url: '../rank/rank',
+    })
+    }
+  },
+
+  goshow:function(){
+    wx.navigateTo({
+      url: '../show/show',
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-    countDown(this, 1);
+  onReady: function() {
+    countDown(this,1);
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
+  onShow: function() {
+   
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   }
 })
