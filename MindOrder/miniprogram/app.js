@@ -12,31 +12,14 @@ App({
     roomId:'8d22b6d6-d5ce-4aa3-b373-0da450a66465',//字段id
     //userInfo: {},
     hasUserInfo: false,
-
     userInfo: null,
     trem: 1,              //轮数默认为1,再来一轮时累加
     selfOpenId:"o6e-P4nvU2HvdRqKOZIwRsw_wgD8",
-    UserData: [
-      {
-        openId: 1,
-        words: [{ word: "词条1", num: [] }, { word: "词条2", num: [] }],
-        method: [{ content: "具体方法1", num: [], isgood: false }, { content: "具体方法2", num: [], isgood: false }]
-      },
-      {
-        openId: 2,
-        words: [{ word: "词条1", num: [], isgood: false }, { word: "词条2", num: [], isgood: false }],
-        method: [{ content: "具体方法1", num: [], isgood: false }, { content: "具体方法2", num: [], isgood: false }]
-      },
-      {
-        openId: 3,
-        words: [{ word: "词条1", num: [], isgood: false }, { word: "词条2", num: [], isgood: false }],
-        method: [{ content: "具体方法1", num: [], isgood: false }, { content: "具体方法2", num: [], isgood: false }]
-      },
-    ],
     minute: '',
     second: '',
     showMessage: [],
-    pickMessage: []
+    pickMessage: [],
+    title:''
   },
   onLaunch: function (path) {
     wx.hideTabBar({
@@ -100,8 +83,5 @@ App({
       }
       
     })
-  },
-
-
-  
+  },  
 })

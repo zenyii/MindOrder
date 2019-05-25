@@ -20,4 +20,14 @@
       </view>
     </block>
   </view>
+    <view class="tab-bar">
+    <!-- <cover-view class="tab-bar-border"></cover-view> -->
+    <view class="tab-bar-item bar1">
+      <!-- <image class="image" src="../../icon/unBuild.png" bindtap='bindQuite'></image> -->
+      <image class="image barson2" bindtap='bindQuite' src="../../icon/arrowbg.png"></image>
+      <!-- <view class="view" style="color: {{selected === index ? selectedColor : color}};">
+            {{item.text}}
+        </view> -->
+    </view>
+  </view>
 </view>

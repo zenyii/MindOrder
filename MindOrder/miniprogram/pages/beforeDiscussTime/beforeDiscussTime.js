@@ -2,6 +2,7 @@
 const app = getApp();
 Page({
   data: {
+    title:''
   },
   /**
    * 生命周期函数--监听页面加载
@@ -13,7 +14,8 @@ Page({
     let counts = options.timePreparing
     /*   let counts = 2; */
     that.setData({
-      counts: counts * 60
+      counts: counts * 60,
+      title:app.globalData.title
     })
 
     /*  //创建users表
@@ -32,6 +34,7 @@ Page({
       console.log(res,'res')
       console.log('更新users记录成！')
     }) */
+
     let hisRooms;
     console.log(app.globalData.selfOpenid,'id')
     app.onQuery('users', { openid: app.globalData.selfOpenid }, { hisRoom: true }).then(res => {
@@ -58,9 +61,11 @@ Page({
     let counts = 5;
     let inter = setInterval(function () {
       counts--;
+      let second = String(counts % 60).padStart(2,0);
+      let minute = String(Math.floor(counts / 60)).padStart(2,0);
       that.setData({
-        seconds: counts % 60,
-        minutes: Math.floor(counts / 60)
+        seconds: second,
+        minutes: minute
       });
       if (counts === 0) {
         clearInterval(inter);

@@ -1,5 +1,5 @@
 <!--pages/show/show.wxml-->
-<view class='theme'><text>主题:xxxxx</text></view>
+<view class='theme'><text>主题:{{title}}</text></view>
 
 <view class='messageBack'>
 <view class='message' wx:for='{{showMessage}}' wx:key="" wx:for-index='index' wx:key='item'  style='background:{{item.backColor}}'>

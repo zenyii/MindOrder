@@ -1,6 +1,0 @@
-/* pages/setTime/setTime.wxss */
-picker{
-  width: 30%;
-  height: 10%;
-  border: 1px solid black;
-}

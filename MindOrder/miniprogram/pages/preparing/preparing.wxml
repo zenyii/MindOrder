@@ -3,7 +3,7 @@
     <block>
       <view class='header'>
         <view class="title">房号：{{inputMsg.roomNum}}</view>
-      <!--   <view class="title">主题：{{inputMsg.text}}</view> -->
+        <!-- <view class="title">主题：{{inputMsg.text}}</view> -->
         <!-- <picker bindchange="bindPickerChange" value="{{index}}" range='{{timeRange}}'>
           <view wx:if="{{!join}}">请输入前期个人准备时间：{{timeRange[index]}}  分钟</view>
         </picker> -->
@@ -27,13 +27,10 @@
                       <view class="imgPart">
                         <image src='{{innerItem.avatarUrl}}' class="headImg" />
                         <view wx:if="{{!innerItem.ready && innerIndex !==0 && outerIndex !== 0}}" class="map"></view>
-                        <view wx:if="{{ innerIndex ===0 && outerIndex === 0 }}" class="houseHolder" style='background:url(../../icon/roomowner.png) no-repeat ;background-size: 100%;' ></view>
-                          <image  wx:if="{{join===0}}" class="{{ outerIndex === 0 ? (innerIndex === 0 ? 'hidden' : 'delete' ): 'delete'}}"
-                           id="delete{{outerIndex*8+innerIndex}}" src="../../icon/delete.png"  />
+                        <view wx:if="{{ innerIndex ===0 && outerIndex === 0 }}" class="houseHolder" style='background:url(../../icon/roomowner.png) no-repeat ;background-size: 100%;'></view>
+                        <image wx:if="{{join===0}}" class="{{ outerIndex === 0 ? (innerIndex === 0 ? 'hidden' : 'delete' ): 'delete'}}" id="delete{{outerIndex*8+innerIndex}}" src="../../icon/delete.png" />
                       </view>
-                      <view class="nickName">
-                        {{innerItem.nickName}}
-                      </view>
+                      <view class="nickName">{{innerItem.nickName}}</view>
                     </view>
                   </block>
                   <button wx:if="{{outerIndex===userInfoSwiper.length-1}}" class="invite" open-type='share' style="background:url('../../icon/join.png');background-size:100%"></button>
@@ -52,16 +49,17 @@
     </block>
     <view class="buttonBlock">
       <button class='buttonReady' bindtap='bindReady'>{{buttonText}}</button>
-      <!--  <button class='buttonReady' bindtap='bindQuite'>退出房间</button> -->
+      <!-- <button class='buttonReady' bindtap='bindQuite'>退出房间</button> -->
     </view>
   </view>
   <view class="tab-bar">
     <!-- <cover-view class="tab-bar-border"></cover-view> -->
     <view class="tab-bar-item bar1">
-        <image class="image" src="../../icon/unBuild.png" bindtap='bindQuite'></image>
-        <!-- <view class="view" style="color: {{selected === index ? selectedColor : color}};">
+      <!-- <image class="image" src="../../icon/unBuild.png" bindtap='bindQuite'></image> -->
+      <image class="image barson2" bindtap='bindQuite' src="../../icon/arrowbg.png"></image>
+      <!-- <view class="view" style="color: {{selected === index ? selectedColor : color}};">
             {{item.text}}
         </view> -->
     </view>
-</view>
+  </view>
 </view>

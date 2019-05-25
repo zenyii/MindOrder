@@ -12,8 +12,8 @@ Page({
       selectedIconPath: "../../icon/indexChecked.png",
       text: "首页"
     }, {
-      iconPath: "../../icon/build.png",
-      selectedIconPath: "../../icon/build.png",
+      iconPath: "../../icon/arrowbg.png",
+      selectedIconPath: "../../icon/arrowbg.png",
     }, {
       iconPath: "../../icon/mine.png",
       selectedIconPath: "../../icon/mineChecked.png",
@@ -53,7 +53,7 @@ Page({
 
   buildRoom: function () {
     let that = this;
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../buildRooming/buildRooming'
     })
 
@@ -70,9 +70,9 @@ Page({
     const data = e.currentTarget.dataset
     const url = data.path
     if (data.index === 1) {
-      wx.navigateTo({ url: '/pages/buildRooming/buildRooming' });
+      wx.redirectTo({ url: '/pages/buildRooming/buildRooming' });
       this.setData({
-        selected: 0
+        selected: 1
       })
     } else {
       this.setData({

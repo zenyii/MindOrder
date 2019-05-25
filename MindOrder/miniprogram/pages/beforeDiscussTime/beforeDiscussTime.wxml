@@ -4,6 +4,8 @@
         <span class="time">{{minutes}} : {{seconds}}</span>
     </view>
     <view class="rutes">
+        <view class="head"><span>{{'>'}}</span>主题<span>{{'<'}}</span></view>
+        <view class="title">主题: {{title}}</view>
         <view class="head"><span>{{'>'}}</span>规则<span>{{'<'}}</span></view>
         <view class="text">1.在与会过程中禁止讨论和批评，也不要自谦。对别人提出的任何想法都不能批判。不得阻拦。</view>
         <view class="text">2.目标集中，追求设想，越多越好。</view>

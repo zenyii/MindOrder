@@ -16,6 +16,7 @@ Page({
     queryRes: null,//词条点赞者openID数组
     querywordsId: null,//点赞词条的_id
     color: ["#8AACFF", "#A6B1F0", "#9AE3F0", "#AEEDE1", "#F8DC2E"],
+    title:''
   },
 
   /**
@@ -32,7 +33,8 @@ Page({
       success(res){
         console.log(res);
         that.setData({
-          showMessage:res.data
+          showMessage:res.data,
+          title:app.globalData.title
         })
         for(let x = 0;x < that.data.showMessage.length;x++){
           that.data.showMessage[x].isLike = false

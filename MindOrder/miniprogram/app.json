@@ -1,11 +1,12 @@
 {
   "pages": [
-    "pages/setTimer/setTime",
+    "pages/report/report",
+    "pages/index/index",
     "pages/setTime/setTime",
     "pages/beforeDiscussTime/beforeDiscussTime",
-    "pages/index/index",
+    "pages/buildRooming/buildRooming",
+    "pages/preparing/preparing",
     "pages/about/about",
-
     "pages/try/try",
     "pages/show/show",
     "pages/myStar/myStar",
@@ -14,9 +15,7 @@
     "pages/advice/advice",
     "pages/wirtePlan/writePlan",
     "pages/rank/rank",
-    "pages/buildRooming/buildRooming",
     "pages/homePage/homePage",
-    "pages/preparing/preparing",
     "pages/inputRoomId/inputRoomId",
     "pages/login/login",
     "pages/invite/invite",
@@ -26,10 +25,8 @@
     "pages/addFunction/addFunction",
     "pages/deployFunctions/deployFunctions",
     "pages/chooseLib/chooseLib",
-    "pages/index2/index2",
     "pages/logs/logs",
     "pages/showPlan/showPlan"
-    
 
   ],
   "window": {
@@ -46,13 +43,13 @@
       {
         "selectedIconPath": "icon/indexChecked.png",
         "iconPath": "icon/index.png",
-        "pagePath":"pages/logs/logs",
+        "pagePath": "pages/logs/logs",
         "text": "首页"
       },
       {
         "selectedIconPath": "icon/mineChecked.png",
         "iconPath": "icon/mine.png",
-        "pagePath":"pages/logs/logs",
+        "pagePath": "pages/logs/logs",
         "text": "我的"
       }
     ]

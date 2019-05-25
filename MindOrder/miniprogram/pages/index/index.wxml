@@ -39,10 +39,16 @@
     </view>
 </view>
 <!-- miniprogram/custom-tab-bar/index.wxml -->
+
 <view class="tab-bar">
     <!-- <cover-view class="tab-bar-border"></cover-view> -->
     <view wx:for="{{list}}" wx:key="index" class="tab-bar-item bar{{index}}" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
-        <image class="image" src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></image>
+        <image wx:if="{{index!=1}}" class="image"  src="{{selected === index ? item.selectedIconPath : item.iconPath}}">
+           <!--  <view class="cross" wx:if="{{index===1}}"></view> -->
+        </image>
+        <image wx:if="{{index==1}}" class="image  {{selected === index ? 'barson2':'barson1'}}"  src="{{selected === index ? item.selectedIconPath : item.iconPath}}">
+           <!--  <view class="cross" wx:if="{{index===1}}"></view> -->
+        </image>
         <view class="view" style="color: {{selected === index ? selectedColor : color}};">
             {{item.text}}
         </view>

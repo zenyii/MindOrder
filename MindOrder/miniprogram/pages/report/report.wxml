@@ -1,0 +1,25 @@
+<!--miniprogram/pages/report/report.wxml-->
+<view class="header">
+    <view class="titleMsg">
+        <image src="../../icon/stared.png" /><span class="title">主题: XXXXX</span>
+        <view class="date">日期: XX</view>
+        <view class="date">时长: XXX</view>
+        <view class="button">导出<span class="iconfont icon-youjiankuohao"></span></view>
+    </view>
+    <view class="display">
+        <view class="circle" style="background-image:url(../../icon/circle.png)">
+            <view class="text">本次有效方案数</view>
+            <view class="text">{{}}个</view>
+        </view>
+    </view>
+</view>
+<view class="contain">
+    <view class="markKing">
+        <view class="avatar">
+            <image src="../../icon/bg.jpg" />
+            <view class="map" style="background-image:url(../../icon/zanKing.png)"></view>
+        </view>
+        <view class="tips">本次获赞王<span class="nums">+47{{}}</span></view>
+    </view>
+    <view class="scheme"></view>
+</view>

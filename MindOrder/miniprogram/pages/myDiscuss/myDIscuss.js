@@ -38,7 +38,7 @@ Page({
       //根据拉取到的历史房间号从rooms表中拉取数据
       for (let x = 0; x < that.data.hisRoom.length; x++) {
         var roomnum = that.data.hisRoom[x];
-        //console.log(roomnum);
+        console.log(roomnum,'roomNum');
         db.collection('rooms').where({
           roomNum: roomnum
         }).get().then(res => { 

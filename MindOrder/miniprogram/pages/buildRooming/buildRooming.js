@@ -34,6 +34,7 @@ Page({
     //inputValue.userIdArr = [app.globalData.selfOpenid];//获取用户自己的openid
     app.globalData.roomMaster = app.globalData.selfOpenid;//设置房主openid
     app.globalData.roomNum = String(this.data.inputValue.roomNum);//全局保存房间号
+    app.globalData.title=inputValue.text;
     wx.showLoading({
       title: '加载中',
     })
@@ -116,6 +117,24 @@ Page({
     })
 
   },
+
+    /* 用户退出 */
+    bindQuite: function () {
+      let that = this;
+      wx.showModal({
+        title: '提示',
+        content: '确定退出讨论吗？您将返回主页',
+        success(res) {
+          if (res.confirm) {
+            wx.redirectTo({
+              url: '../index/index'
+            });
+          } else if (res.cancel) {
+  
+          }
+        }
+      })
+    },
 
   /* 返回到首页不刷新 */
   onUnload: function () {

@@ -24,7 +24,7 @@ Page({//
     let that = this;
     app.globalData.userInfo = wx.getStorageSync('userInfo');
     app.globalData.selfOpenid = wx.getStorageSync('selfOpenid');
-    /* 获取房号和主题 */
+    /* 获取房号 */
     let inputMsg = that.data.inputMsg;
     let join = Number(e.join);
     /*  let join = 1; */
@@ -57,11 +57,14 @@ Page({//
           })
           return
         }
+
         let userInfo = data.roommates;
         inputMsg.text = data.title;
+        
 
         //如果是新加进来的用户，先补充全局变量，还需把他的数据push到数据库更新数据
         if (join !== 0) {
+          app.globalData.title = data.title;
           app.globalData.roomNum = inputMsg.roomNum;
           app.globalData.roomMaster = data.roomMaster;
           app.globalData.roomId = data._id;

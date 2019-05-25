@@ -17,6 +17,7 @@ Page({
     combineUser: [],
     minute: '',
     second: '',
+    timer: 0,
     position: [],
     totalHeight: 0,
     windowWidth: 0,
@@ -29,6 +30,7 @@ Page({
     isEdit: false,
     isCheck: false,
     selectedIndex: 0,
+    title: ''
   },
 
   /**
@@ -39,8 +41,8 @@ Page({
       title: '创意板',
     })
 
-    //console.log(app.globalData.minute, 'minute')
-    //console.log(app.globalData.second, 'second')
+    console.log(app.globalData.minute, 'minute')
+    console.log(app.globalData.second, 'second')
     var that = this;
     //获取屏幕宽度以及计算屏幕换算rpx值
     wx.getSystemInfo({
@@ -55,10 +57,16 @@ Page({
     //获取时间数据
     this.setData({
       minute: app.globalData.minute,
-      second: app.globalData.second
+      second: app.globalData.second,
+      title: app.globalData.title
     })
-    console.log(that.data.minute,'minute');
-    console.log(that.data.second,'second');
+
+    console.log(typeof that.data.minute, 'minute');
+    console.log(typeof that.data.second, 'second');
+    this.setData({
+      timer: parseInt(that.data.minute) * 60 + parseInt(that.data.second)
+    })
+    console.log(that.data.timer);
     /*
     //从words表中拉取数据
     const db = wx.cloud.database();
@@ -160,8 +168,8 @@ Page({
           isStar: false,                                 //是否被收藏
           nickName: "zenyi",//app.globalData.userInfo.nickName,   //词条作者名称
           comment: [],                                    //词条的评论
-          term: 1 ,//app.globalData.term   //轮数记录
-          supporter:[]
+          term: 1,//app.globalData.term   //轮数记录
+          supporter: []
         }
       })
       /*.then(
