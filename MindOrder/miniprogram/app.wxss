@@ -5,24 +5,3 @@
   align-items: center;
   box-sizing: border-box;
 } 
-@font-face {
-  font-family: 'iconfont';  /* project id 1206925 */
-  src: url('//at.alicdn.com/t/font_1206925_84h6t61x77f.eot');
-  src: url('//at.alicdn.com/t/font_1206925_84h6t61x77f.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1206925_84h6t61x77f.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1206925_84h6t61x77f.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1206925_84h6t61x77f.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1206925_84h6t61x77f.svg#iconfont') format('svg');
-}
-.iconfont {
-  font-family: "iconfont" !important;
-  font-size: 16px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-
-.icon-youjiankuohao:before {
-  content: '\e612';
-}

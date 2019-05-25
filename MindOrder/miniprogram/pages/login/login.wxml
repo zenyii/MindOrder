@@ -1,12 +1,2 @@
-<!-- pages/login.wxml -->
-<view class='content'>
-    <image src='../../icon/logo.png' />
-    <view class="name">头脑智序</view>
-    <view class="tip">头脑智序——发掘你的无限可能性</view>
-</view>
-<view class="des">
-   <view class='bottomTips'>
-    <view class="text">该程序将获得以下授权</view>
-    <view class="text">-获得您的公开信息(头像、昵称等)</view></view>
-</view>
+<!--pages/login.wxml-->
 <button open-type='getUserInfo' bindgetuserinfo='handleLogin'>立即授权</button>

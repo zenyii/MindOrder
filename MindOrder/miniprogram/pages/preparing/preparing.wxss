@@ -2,54 +2,18 @@
    margin: 0;
    padding: 0;
    box-sizing: border-box;
-   background: #f2f2f2;
- }
-
- .info {
-   width: 100%;
-   text-align: center;
-   font-size: 12px;
-   color: gray;
- }
-
- .buttonBlock {
-   margin-top: 20px;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
- }
-
- button::after {
-   border: none;
- }
-
- .buttonReady {
-   background-color: #4880ff;
-   box-shadow: 1px 1px 13px 1px #4880ff;
-   width: 60vw;
-   height: 45px;
-   line-height: 45px;
-   margin: 10px 0;
-   color: white;
-   font-size: 14px;
-   letter-spacing: 2px;
- }
-
- .header {
-   margin: 8px 7%;
+   background: #ccc;
  }
 
  .title {
-   font-size: 15px;
-   color: white;
+   font-size: 16px;
  }
 
  .hidden {
    display: none;
  }
 
- image, .map {
+ image {
    display: inline-block;
    width: 50px;
    height: 50px;
@@ -61,19 +25,16 @@
    flex-direction: row;
    flex-wrap: wrap;
  }
-
- .peopleItem {
-   width: 25%;
-   height: 70px;
-   position: relative;
-   display: flex;
-   justify-content: center;
-   padding-top: 2px;
+ .peopleItem{
+  width:25%;
+  height: 70px;
+  position: relative;
+  display: flex;
+  justify-content: center;
  }
 
  .imgPart {
    position: absolute;
-   overflow: visible;
  }
 
  .headImg {
@@ -82,20 +43,24 @@
 
  .map {
    color: white;
-   background: rgba(0, 0, 0, .4);
+   width: 100%;
+   height: 100px;
+   background: rgba(0, 0, 0, .2);
    position: absolute;
    top: 0;
    left: 0;
+   text-align: center;
+   line-height: 100px;
  }
 
  .houseHolder {
-   width: 56px;
-   height: 56px;
+   width: 16px;
+   height: 16px;
    position: absolute;
    top: -2px;
-   left: -3px;
+   left: 5px;
    display: inline-block;
-   z-index: 100;
+   z-index: 1;
  }
 
  .delete {
@@ -115,33 +80,22 @@
  .nickName {
    text-align: center;
    font-size: 12px;
-   position: absolute;
-   bottom: 0;
-   height: 20px;
  }
 
  button::after {
    border: none;
  }
 
- button.invite {
-   padding: 0;
-   margin-left: 5%;
-   width: 50px;
-   height: 50px;
- }
-
  /* .wrap{
   height: auto;
   position: relative;
 } */
-
- .main {
-   width: 100%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
- }
+.main{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
  .swiperOuter {
    width: 90%;
@@ -150,6 +104,16 @@
    border-radius: 2%;
    box-shadow: 1px 2px 8px gray;
    margin-bottom: 10px;
+ }
+
+ #chevron {
+   position: relative;
+   text-align: center;
+   background: lightblue;
+   height: 40px;
+   width: 100%;
+   border-radius: 5% 5% 0 0;
+   top: -6px;
  }
 
  .circle {
@@ -166,16 +130,6 @@
    z-index: 1;
  }
 
- #chevron {
-   position: relative;
-   text-align: center;
-   background: lightblue;
-   height: 40px;
-   width: 100%;
-   border-radius: 5% 5% 0 0;
-   top: -6px;
- }
-
  #chevron::before {
    content: '';
    width: 51%;
@@ -189,7 +143,7 @@
    -ms-transform: skew(0deg, 6deg);
    -o-transform: skew(0deg, 6deg);
    transform: skew(0deg, 6deg);
-   box-shadow: inset 0 -6px 5px -5px gray;
+   box-shadow: inset 0 -5px 4px -4px gray;
  }
 
  #chevron::after {
@@ -205,7 +159,7 @@
    -ms-transform: skew(0deg, -6deg);
    -o-transform: skew(0deg, -6deg);
    transform: skew(0deg, -6deg);
-   box-shadow: inset 0 -6px 5px -5px gray;
+   box-shadow: inset 0 -5px 4px -4px gray;
  }
 
  .outer {
@@ -237,7 +191,6 @@
  .contain {
    width: 100%;
    /*  height: 150px; */
-   height: 210px;
    position: relative;
    bottom: 0px;
    padding: 25px 20px;
@@ -270,183 +223,3 @@
  .active {
    background-color: #4880ff;
  }
-
- .tab-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 48px;
-  background: white;
-  display: flex;
-  padding-bottom: env(safe-area-inset-bottom);
-  overflow: visible;
-  padding-top: 5px;
-  border-top: #f2f2f2;
-}
-
-
-.tab-bar-item,.bar1 {
-  overflow: visible;
-  flex: 1;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.tab-bar-item .image {
-  width: 20px;
-  height: 20px;
-  overflow: visible;
-}
-.bar1 .image {
-  width: 46px;
-  height: 65px;
-  position: absolute;
-  margin: 0 auto;
-  bottom: 20px;
-  z-index: 2;
-
-}
-.bar1 .image::after,.bar1 .image::before {
-  content: '';
-  display: inline-block;
-  width:  1px;
-  height: 38px;
-  position: absolute;
-  /* transform: rotate(45deg); */
-  /* border-style: solid;
-  border-width: 20px;
-  border-color: transparent transparent transparent transparent; */
-  z-index: -1;
-
-}
-.bar1 .image::after{
-  height: 38px;
-  right: 44px;
-  transform: rotate(35deg);
-  box-shadow: 40px 0px 6px  #06023f;
-  bottom: 19px; 
-}
-.bar1 .image::before{
-  height: 40px;
-  left: 38px;
-  transform: rotate(-35deg);
-  box-shadow: -30px 0px 5px  #06023f;
-  bottom: 9px; 
-}
-.tab-bar-item .view {
-  margin: 5px 0;
-  font-size: 10px;
-
-
-}
-
- @media(min-width:768px) {
-   .title {
-     font-size: 17px;
-   }
-   .contain {
-     height: 400px;
-     padding:55px 40px;
-   }
-   .nickName{
-     bottom: 23px;
-     font-size: 16px;
-   }
-   .dot{
-     margin-top: 18px;
-     height:6rpx;
-   }
-   .info{
-     font-size: 16px;
-   }
-   #chevron {
-     position: relative;
-     text-align: center;
-     background: lightblue;
-     height: 55px;
-     width: 100%;
-     border-radius: 5% 5% 0 0;
-     top: -6px;
-   }
-   #chevron::before {
-     content: '';
-     width: 51%;
-     height: 45px;
-     position: absolute;
-     top: 60%;
-     left: 0;
-     background: lightblue;
-     -webkit-transform: skew(0deg, 6deg);
-     -moz-transform: skew(0deg, 6deg);
-     -ms-transform: skew(0deg, 6deg);
-     -o-transform: skew(0deg, 6deg);
-     transform: skew(0deg, 6deg);
-     box-shadow: inset 0 -6px 5px -5px gray;
-   }
-   #chevron::after {
-     content: '';
-     width: 50%;
-     height: 45px;
-     position: absolute;
-     top: 60%;
-     right: 0;
-     background: lightblue;
-     -webkit-transform: skew(0deg, -6deg);
-     -moz-transform: skew(0deg, -6deg);
-     -ms-transform: skew(0deg, -6deg);
-     -o-transform: skew(0deg, -6deg);
-     transform: skew(0deg, -6deg);
-     box-shadow: inset 0 -6px 5px -5px gray;
-   }
-   .buttonReady {
-     height: 60px;
-     line-height: 60px;
-     font-size: 18px;
-   }
-   .circle {
-     width: 60px;
-     height: 60px;
-     top: 35px;
-   }
-   swiper {
-     height: 320px;
-   }
-   .peopleItem {
-     height: 155px;
-   }
-   .houseHolder {
-     width: 25px;
-     height: 25px;
-   }
-   image, .map {
-     display: inline-block;
-     width: 100px;
-     height: 100px;
-     border-radius: 50%;
-   }
-   .houseHolder {
-    width: 112px;
-    height: 112px;
-    position: absolute;
-    top: -4px;
-    left: -5px;
-    display: inline-block;
-    z-index: 100;
-  }
-   button.invite {
-    margin-left: 5%;
-    width: 100px;
-    height: 100px;
-   }
-   .buttonBlock{
-     margin-top: 50px;
-   }
-
-
-   
-  }
-  

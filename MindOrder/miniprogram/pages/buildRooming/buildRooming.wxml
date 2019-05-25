@@ -1,21 +1,24 @@
 <view class="container">
   <view>
     <block>
-      <view class='header' style="background-image:url(../../icon/bg1.png) ;">
-        <image src="../../icon/logo.png" />
+      <view class='header'>
       </view>
       <view class='main'>
         <form bindsubmit='formSubmit' bindreset="formReset" action='' method='post'>
-          <view class='roomId'>
-            <input name='roomNum' type="number" id="roomId" value="{{inputValue.roomNum}}" disabled />
-          </view>
-          <view class="inputGradient">
-            <input name='text' type="text" id="inputTitle" placeholder="请输入脑暴主题" value="canwihaha" required />
-          </view>
-          <view class="btn-area">
-            <!-- <button form-type="reset">重置数据</button> -->
-            <button form-type="submit" class="buildRoom">开启房间</button>
-          </view>
+          <label for='roomId'>
+            <view class="title">房号 ：</view>
+            <input  name='roomNum' type="number" id="roomId" value="{{roomId}}" readonly/>
+          </label>
+          <label for='inputTitle'>
+            <view class="title">脑暴主题 ：</view>
+            <input name='text' type="text" id="inputTitle" placeholder="请输入脑暴主题" value="这是主题" required/>
+          </label>
+        <view class="btn-area">
+          <!-- <button form-type="reset">重置数据</button> -->
+          <button form-type="submit" class="">
+            开启房间
+          </button>
+        </view>
         </form>
       </view>
     </block>

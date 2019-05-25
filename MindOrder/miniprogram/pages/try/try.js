@@ -30,12 +30,21 @@ Page({
     isEdit: false,
     isCheck:false,
     selectedIndex: 0, 
-    },
+    term: 0,              //轮数获取  
+    }, 
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+
+    //修改当前页面状态
+    app.globalData.nowPage = 1;
+
+    //获取当前轮数
+    this.setData({
+      term:app.globalData.term
+    })
 
     var that = this;
     //获取屏幕宽度以及计算屏幕换算rpx值
@@ -56,16 +65,6 @@ Page({
     this.setData({
       timer:parseInt(this.data.minute)*60+parseInt(this.data.second)
     })
-    /*
-    //从words表中拉取数据
-    const db = wx.cloud.database();
-    db.collection('words').where({
-      roomNum:app.globalData.roomNum
-    }).get().then(res=>{
-      that.setData({
-        
-      })
-    })*/
 
   },
   //点击键盘按钮出发输入框
@@ -147,49 +146,20 @@ Page({
       this.data.value=[];
       newUser.words.push(obj);
       var checkNum = 0;
-        var that = this;
-        const db = wx.cloud.database();
-        db.collection('words').add({
-          data : {
-            roomNum: app.globalData.roomNum,              //所属房间
-            text: obj.word,                               //词条内容
-            backColor: that.data.backColor,               //词条背景颜色
-            isStar:false,                                 //是否被收藏
-            nickName:"zenyi" ,//app.globalData.userInfo.nickName,   //词条作者名称
-            comment:[],                                    //词条的评论
-            term: 1 //app.globalData.term   //轮数记录
-          }
-        })
-        /*.then(
-          db.collection('words').where({
-            //openId: app.globalData.openId
-            backColor: 'rgb(219, 218, 234)'
-          }).get({
-            success(res){
-              console.log(res);
-            }
-          })
-        )*/
-
-        
-        /*
-        //在数据库中保存数据
-        wx.request({
-          url: 'https://fl123.xyz/api/xcx/addContent.php',
-          data: {
-            id: app.globalData.openId,
-            roomNum:app.globalData.roomNum,
-            text: obj.word,
-            state:1
-          },
-          method: 'POST',
-          header: {
-            'content-type': "application/x-www-form-urlencoded"
-          },
-          success: function (res) {
-            console.log(res.data);
-          },
-        })*/
+      //将新增词条写入数据库
+      var that = this;
+      const db = wx.cloud.database();
+      db.collection('words').add({
+        data: {
+          roomNum: app.globalData.roomNum,              //所属房间
+          text: obj.word,                               //词条内容
+          backColor: that.data.backColor,               //词条背景颜色
+          nickName: "zenyi",//app.globalData.userInfo.nickName,   //词条作者名称
+          term: app.globalData.term,          //轮数记录
+          supporter: [],                        //点赞者存放数组
+          supportNum: 0                          //存取点赞数  
+        }
+      })
       //若有openId属性重复的，则只插入词条数据
       for (var j = 0; j < app.globalData.UserData.length; j++) {
         //插入词条内容
@@ -332,6 +302,28 @@ Page({
     })
     }
   },
+
+  getRank:function(){
+    //若第一轮则不跳转页面
+    if(app.globalData.term<2){
+      wx.showToast({
+        title: '无数据',
+        duration: 1000,
+        mask: true
+      })
+    }else{
+    wx.navigateTo({
+      url: '../rank/rank',
+    })
+    }
+  },
+
+  goshow:function(){
+    wx.navigateTo({
+      url: '../show/show',
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -8,6 +8,8 @@
 <!--中间界面，包括进度条以及已写便签显示-->
 <view class='backs'>
   <view class='back'>
+    <!--回顾排行榜按钮显示-->
+    <image bindtap='getRank' id='watchBack' src='../../icon/watchBack.png'></image>
     <!--进度条-->
     <view class='progresstimer'></view>
   <view style='animation-duration:{{timer}}s' class='progress'></view>
@@ -56,3 +58,4 @@
 <!-- 更换颜色按钮 键盘按钮-->
 <image src='../../icon/colorChange.png' id='color' bindtap='changeColor'></image><image src='../../icon/keyBroad.png' id='keybroad' bindtap='inputWord'>键盘</image>
 </view>
+<button bindtap='goshow'>go</button>
