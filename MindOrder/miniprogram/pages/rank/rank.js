@@ -96,37 +96,6 @@ Page({
       url: '../setTime/setTime?rank=1',
     })
   },
-
-    /* 同步房间数据 */
-  dataQuary: function () {
-    let that = this;
-    app.onQuery('rooms', { roomNum: app.globalData.roomNum },
-      { roommates: true, allset: true, preparingTime: true })
-      .then(res => {
-        let data = res.data[0];
-        //console.log(res.data,'data')
-        //console.log(typeof app.globalData.roomNum,'roomNum')
-        //console.log(data,'666');
-        that.setData({
-          userInfo: data.roommates,
-        })
-        console.log("test")
-        if (!data.allset) {
-          setTimeout(function () {
-            //要延时执行的代码
-            that.dataQuary();
-            that.resetSwiper();
-          }, 4000) //延迟时间
-        } else {//房主已经设置开始了,传入准备时间
-          if (that.data.join === 1) {//如果是成员，接收到allset后直接跳转到准备时间页面
-            wx.redirectTo({
-              url: `../beforeDiscussTime/beforeDiscussTime?timePreparing=${data.preparingTime}`
-            })
-          }
-
-        }
-      })
-  }, 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
