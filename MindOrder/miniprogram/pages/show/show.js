@@ -174,7 +174,7 @@ Page({
     return -1
   },
   change(){
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../rank/rank',
     })
   },

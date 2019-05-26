@@ -143,7 +143,7 @@ Page({//
   /* 重置swiper用户头像的排列 */
   resetSwiper: function () {
     /* 获取用户数据并分配 */
-    //先request用户数据亚茹userInfo中
+    //先request用户数据压入userInfo中
     let that = this;
     console.log(that.data.userInfo,'userInfo');
     let userInfoTem = that.data.userInfo.slice();

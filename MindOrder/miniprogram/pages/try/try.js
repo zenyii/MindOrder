@@ -31,6 +31,7 @@ Page({
     isCheck:false,
     selectedIndex: 0, 
     term: 0,              //轮数获取  
+    title:''
     }, 
 
   /**
@@ -53,6 +54,7 @@ Page({
         that.setData({
           windowWidth:res.windowWidth,
           windowHeight:res.windowHeight,
+          title:app.globalData.title
         })
       },
     })
@@ -154,7 +156,7 @@ Page({
           roomNum: app.globalData.roomNum,              //所属房间
           text: obj.word,                               //词条内容
           backColor: that.data.backColor,               //词条背景颜色
-          nickName: "zenyi",//app.globalData.userInfo.nickName,   //词条作者名称
+          nickName: app.globalData.userInfo.nickName,   //词条作者名称
           term: app.globalData.term,          //轮数记录
           supporter: [],                        //点赞者存放数组
           supportNum: 0                          //存取点赞数  
@@ -294,6 +296,11 @@ Page({
       })
     }
     else {
+      wx.showToast({
+        title: '已修改',
+        duration: 500,
+        mask: true
+      })
       this.data.upDateUser[0].words[this.data.selectedIndex].word = this.data.value[this.data.value.length - 1];
     this.data.value = [];
     this.data.upDateUser[0].words[this.data.selectedIndex].isModify=false
@@ -312,14 +319,14 @@ Page({
         mask: true
       })
     }else{
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../rank/rank',
     })
     }
   },
 
   goshow:function(){
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../show/show',
     })
   },

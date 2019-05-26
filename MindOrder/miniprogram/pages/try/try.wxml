@@ -1,6 +1,6 @@
 <!--pages/try/try.wxml-->
 <!--开头界面 主题、倒计时等-->
-<view class='theme'><text>主题:xxxxx</text></view>
+<view class='theme'><text>主题:{{title}}</text></view>
 <view class='timerback3'></view>
 <view class='timerback2'></view>
 <view class='timerback1'></view>
@@ -58,4 +58,3 @@
 <!-- 更换颜色按钮 键盘按钮-->
 <image src='../../icon/colorChange.png' id='color' bindtap='changeColor'></image><image src='../../icon/keyBroad.png' id='keybroad' bindtap='inputWord'>键盘</image>
 </view>
-<button bindtap='goshow'>go</button>

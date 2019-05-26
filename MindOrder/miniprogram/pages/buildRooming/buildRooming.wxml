@@ -10,7 +10,7 @@
             <input name='roomNum' type="number" id="roomId" value="{{inputValue.roomNum}}" disabled />
           </view>
           <view class="inputGradient">
-            <input name='text' type="text" id="inputTitle" placeholder="请输入脑暴主题" value="555" required />
+            <input name='text' type="text" id="inputTitle" placeholder="请输入脑暴主题" value="" required />
           </view>
           <view class="btn-area">
             <!-- <button form-type="reset">重置数据</button> -->

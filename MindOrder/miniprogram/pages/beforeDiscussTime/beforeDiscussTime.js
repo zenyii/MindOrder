@@ -12,7 +12,6 @@ Page({
     if (app.globalData.selfOpenId == app.globalData.roomMaster) {//房主更新会议时间
       app.onUpdate('rooms', app.globalData.roomId, 'meetingTime', Number(options.timeHold))//更新会议时间
     }
-
     //console.log(options.timePreparing,'indexP')
     let counts = options.timePreparing
     /*   let counts = 2; */

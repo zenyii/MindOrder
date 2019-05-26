@@ -29,11 +29,11 @@ Page({
     let that = this;
     let userInfo = wx.getStorageSync('userInfo');
     //console.log(values.detail.value.text,'values')
-    if(values.detail.value.text===""){
+    if (values.detail.value.text === "") {
       wx.showToast({
-        title:'主题不能为空！',
-        icon:'none',
-        duration:2000
+        title: '主题不能为空！',
+        icon: 'none',
+        duration: 2000
       })
       return
     }
