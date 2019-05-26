@@ -30,7 +30,7 @@ Page({
     isEdit: false,
     isCheck:false,
     selectedIndex: 0, 
-    term: 0,              //轮数获取  
+    term: 0,              //轮数获取 
     }, 
 
   /**
@@ -56,7 +56,7 @@ Page({
         })
       },
     })
-
+    
     //获取时间数据
     this.setData({
       minute:app.globalData.minute,
@@ -65,7 +65,6 @@ Page({
     this.setData({
       timer:parseInt(this.data.minute)*60+parseInt(this.data.second)
     })
-
   },
   //点击键盘按钮出发输入框
   inputWord:function(){
@@ -317,7 +316,7 @@ Page({
         mask: true
       })
     }else{
-    wx.redirectTo({
+    wx.navigateTo({
       url: '../rank/rank',
     })
     }

@@ -30,15 +30,15 @@ page{
   display: flex;
   align-items: center;
   vertical-align: center;
-  clip-path: polygon(0% 0%,100% 0%,100% 100%,7% 100%,0% 80%);
+  clip-path: polygon(0% 0%,100% 0%,100% 100%,5% 100%,0% 85%);
 }
 
 .message:before{
   background: rgb(221, 220, 236);
-  height: 25%;
-  width: 6%;
+  height: 30rpx;
+  width: 30rpx;
   position: absolute;
-  top: 75%;
+  bottom: 0;
   left: 0;
   content: '';
   box-shadow: 5rpx 0rpx 6rpx rgb(212, 190, 190);
@@ -46,14 +46,16 @@ page{
 
 #content{
  display: inline-block;
- margin-left: 20rpx;
+ margin-left: 50rpx;
  width: 82%;
  word-break: break-all; 
+ margin-top: 20rpx;
+ margin-bottom: 20rpx;
 }
 
 .love{
-  height: 60rpx;
-  width: 60rpx;
+  height: 50rpx;
+  width: 50rpx;
 }
 
 .bottom{
