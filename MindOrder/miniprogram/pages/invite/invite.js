@@ -4,7 +4,7 @@ const app = getApp();
 Page({
   data: {
     inputMsg: {//保存上一页面传来的房间信息
-      roomNum: 565656,
+      roomNum: '',
       text: '',
     },
     title: 'qrcode',
@@ -36,16 +36,17 @@ Page({
   },
     /* 转发 */
     onShareAppMessage: function (ops) {
+      let that = this;
       console.log(ops,'转发')
       if (ops.form === 'button') {
         console.log(ops.target, 'button');
       }
       //console.log(ops.target);
       return {
-        title: this.data.inputMsg.inputTitle,
+        title: that.data.inputMsg.inputTitle,
         desc: '快来加入我们的头脑风暴吧！',
         imageUrl:'../../icon/bg2.png',
-        path: `/pages/preparing/preparing?join=1&roomNum=${this.data.inputMsg.roomNum}`,//传入房间号，在后台查找进入房间
+        path: `/pages/preparing/preparing?join=1&roomNum=${that.data.inputMsg.roomNum}`,//传入房间号，在后台查找进入房间
         success: function (e) {
           console.log('转发成功' + JSON.stringify(e));
           var shareTickets = res.shareTickets;

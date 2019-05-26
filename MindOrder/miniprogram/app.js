@@ -3,18 +3,19 @@ const utils = require('./utils/util');
 const request = require('./requests/request');
 App({
   globalData: {
-    roomNum: '556677',
+    roomId:'',
+    roomNum: '',
     appid: 'wx8d5d22897bfc549c',
     secret: '92751c1e7384da0a6fe2f851c20451da',
     userId: 'oGw5W49WStN-HbdVgfbSxykI8SC0',
     //selfOpenid: '',
-    roomMaster: "o6e-P4nvU2HvdRqKOZIwRsw_wgD8",//获取房主的openid
+    roomMaster: "",//获取房主的openid
     //userInfo: {},
     hasUserInfo: false,
     userInfo: null,
     term: 1,              //轮数默认为1,再来一轮时累加
     nowPage:0,          //判断当前页面状态，主要区分是书写(1)、点赞(2)、排行榜(3)
-    selfOpenId:"o6e-P4nvU2HvdRqKOZIwRsw_wgD8",
+    selfOpenId:"",
     minute: '',
     second: '',
     showMessage: [],

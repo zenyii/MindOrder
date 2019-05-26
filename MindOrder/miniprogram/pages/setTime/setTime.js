@@ -6,18 +6,25 @@ Page({
     timeRangePrepare: [],
     timeHold: '',
     timePrepare: '',
-    rank: 0
+    rank: 0,
+    placeHolderWri:1,
+    placeHolderPre:1
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this;
     let rank = options.rank;
+    if(options.placeHolderWri){
+      that.setData({
+        placeHolderWri:Number(options.placeHolderWri)
+      })
+    }
     console.log(rank,'rank')
     let timeRangeWrite = [];
     let timeRangePrepare = [];
-    let that = this;
     Array.from({ length: 13 }, (v, i) => {
       timeRangeWrite.push(i + 1);
       timeRangePrepare.push(i + 1);
@@ -31,14 +38,22 @@ Page({
   bindPickerChangeW(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
-      timeHold: e.detail.value
+      timeHold: e.detail.value,
+      placeHolderWri:0
     })
   },
   bindPickerChangeP(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
-      timePreparing: e.detail.value
+      timePreparing: e.detail.value,
+      placeHolderPre:0
     })
+  },
+  bindfocus:function(){
+    console.log('焦点时间')
+  },
+  bindblus:function(){
+    console.log('失焦事件')
   },
   formSubmit: function () {
     let that = this;
@@ -46,8 +61,9 @@ Page({
     let timeHold = timeRangeWrite[that.data.timeHold];
     app.globalData.minute = `${Number(timeHold) - 1}`;
     app.globalData.second = `60`;
-    console.log(app.globalData.minute, 'minute')
-    console.log(app.globalData.second, 'second')
+    //console.log(app.globalData.minute, 'minute')
+    //console.log(app.globalData.second, 'second')
+    console.log(that.data.rank,'rank')
     if (that.data.rank == 0) {//初次
       var timeRangePrepare = that.data.timeRangePrepare;
       var timePreparing = timeRangePrepare[that.data.timePreparing];//获取时间值
@@ -56,6 +72,7 @@ Page({
           console.log('更新准备时间成功');
         })
     }
+    
     app.onUpdate('rooms', app.globalData.roomId, 'meetingTime', timeHold)
         .then(res => {
           if(that.data.rank==0){

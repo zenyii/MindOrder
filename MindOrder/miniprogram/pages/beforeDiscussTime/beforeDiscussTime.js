@@ -2,7 +2,7 @@
 const app = getApp();
 Page({
   data: {
-    title:''
+    title: ''
   },
   /**
    * 生命周期函数--监听页面加载
@@ -17,11 +17,11 @@ Page({
     /*   let counts = 2; */
     that.setData({
       counts: counts * 60,
-      title:app.globalData.title
+      title: app.globalData.title
     })
 
     let hisRooms;
-    console.log(app.globalData.selfOpenId,'id')
+    console.log(app.globalData.selfOpenId, 'id')
     app.onQuery('users', { openid: app.globalData.selfOpenId }, { hisRoom: true }).then(res => {
       let data = res.data[0];
       hisRooms = data.hisRoom;
@@ -31,10 +31,10 @@ Page({
         data: {
           collect: 'users',
           where: { openid: app.globalData.selfOpenId },
-          key :'hisRoom',
-          value:hisRooms
+          key: 'hisRoom',
+          value: hisRooms
         }
-      }).then(console.log('更新成功！'))  
+      }).then(console.log('更新成功！'))
     })
   },
 
@@ -43,11 +43,11 @@ Page({
    */
   onReady: function () {
     let that = this;
-    let counts = this.data.counts;
+    let counts = that.data.counts;
     let inter = setInterval(function () {
       counts--;
-      let second = String(counts % 60).padStart(2,0);
-      let minute = String(Math.floor(counts / 60)).padStart(2,0);
+      let second = String(counts % 60).padStart(2, 0);
+      let minute = String(Math.floor(counts / 60)).padStart(2, 0);
       that.setData({
         seconds: second,
         minutes: minute

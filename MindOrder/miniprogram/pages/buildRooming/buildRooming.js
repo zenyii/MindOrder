@@ -28,6 +28,7 @@ Page({
   formSubmit: function (values) {//
     let that = this;
     let userInfo = wx.getStorageSync('userInfo');
+    //console.log(values.detail.value.text,'values')
     if (values.detail.value.text === "") {
       wx.showToast({
         title: '主题不能为空！',
@@ -62,10 +63,11 @@ Page({
       .then(res => {
         console.log(res);
         console.log('[数据库] [新增room记录] 成功，记录 _id: ', res._id)
+        app.globalData.roomId = res._id,
         that.setData({
-          [app.globalData.roomId]: res._id,
           inputValue: inputValue
         })
+        console.log(app.globalData.roomId,'roomId');
         console.log('form发生了submit事件，携带数据为：', that.data.inputValue);
       }, err => {
         console.error('[数据库] [新增room记录] 失败：', err)

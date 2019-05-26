@@ -1,9 +1,9 @@
 <form bindsubmit='formSubmit' action='' method='post'>
     <view class="inputGradient">
-      <input placeholder="请输入房号" name='roomId' type="number" id="roomId" value="{{roomId}}" readonly />
+      <input placeholder="请输入房号" name='roomId' type="number" id="roomId" bindinput='inputMsg' value='{{value}}'/>
     </view>
   <view class="btn-area">
-   <button form-type="submit" class="joinRoom"  open-type="getUserInfo">
+   <button form-type="submit" class="joinRoom">
    加入房间</button>
   </view>
 </form>

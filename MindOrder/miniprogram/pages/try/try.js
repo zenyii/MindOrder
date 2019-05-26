@@ -30,7 +30,8 @@ Page({
     isEdit: false,
     isCheck:false,
     selectedIndex: 0, 
-    term: 0,              //轮数获取 
+    term: 0,              //轮数获取  
+    title:''
     }, 
 
   /**
@@ -53,6 +54,7 @@ Page({
         that.setData({
           windowWidth:res.windowWidth,
           windowHeight:res.windowHeight,
+          title:app.globalData.title
         })
       },
     })
