@@ -294,6 +294,11 @@ Page({
       })
     }
     else {
+      wx.showToast({
+        title: '已修改',
+        duration: 500,
+        mask: true
+      })
       this.data.upDateUser[0].words[this.data.selectedIndex].word = this.data.value[this.data.value.length - 1];
     this.data.value = [];
     this.data.upDateUser[0].words[this.data.selectedIndex].isModify=false
