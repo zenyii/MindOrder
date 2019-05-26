@@ -93,7 +93,7 @@ Page({
   again:function(){
     app.globalData.term++;
     wx.redirectTo({
-      url: '../setTime/setTime?rank=1',
+      url: '../setTime/setTime?rank=1&placeHolderWri=1',
     })
   },
   /**

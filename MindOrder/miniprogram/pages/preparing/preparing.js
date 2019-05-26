@@ -18,7 +18,6 @@ Page({//
     userInfoSwiper: [],
   },
   //事件处理函数
-
   onLoad: function (e) {//链接传入roomNum 和join
     /* 一进来先后台查询此房间是否已在讨论中， */
     let that = this;
@@ -289,7 +288,7 @@ Page({//
             console.log('更改inMeeting成功！')
           });//会议已开始，其他人员不可再进入房间
           wx.redirectTo({
-            url: '../setTime/setTime',
+            url: '../setTime/setTime?rank=0',
           })
         } else {
           wx.showModal({

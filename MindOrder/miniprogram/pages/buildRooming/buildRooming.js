@@ -28,6 +28,15 @@ Page({
   formSubmit: function (values) {//
     let that = this;
     let userInfo = wx.getStorageSync('userInfo');
+    //console.log(values.detail.value.text,'values')
+    if(values.detail.value.text===""){
+      wx.showToast({
+        title:'主题不能为空！',
+        icon:'none',
+        duration:2000
+      })
+      return
+    }
     app.globalData.userInfo = userInfo;
     //console.log( aa,'userInfo');
     let inputValue = values.detail.value;//获取表单信息

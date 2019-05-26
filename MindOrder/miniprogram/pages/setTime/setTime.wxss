@@ -34,15 +34,31 @@ form{
     line-height: 45px;
 }
 #prepareTime,#writeTime{
-    width: 100%;
+    position: relative;
+    width: 49vw;
     height: 41px;
     border-radius: 5px;
     border: 2px soild transparent;
     background-color: white;
     padding:0 5px;
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 16px;
     min-height: 41px;
+    line-height: 41px;
+}
+.placeHolderPre::before{
+    content: "请输入准备时长";
+}
+.placeHolderWri::before{
+    content: "请输入讨论时长";
+}
+.placeHolderPre::before,.placeHolderWri::before{
+    position: absolute;
+    bottom: 0;
+    line-height: 41px;
+    left: 5px;
+    color: gray;
+    font-size: 14px;
 }
 
 
@@ -76,6 +92,7 @@ button::after {
     #prepareTime,#writeTime{
         height: 1.4rem;
         font-size: 18px;
+        line-height: 1.4rem;
     }
     .joinRoom{
         height:1.51rem;
