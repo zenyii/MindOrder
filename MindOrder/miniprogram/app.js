@@ -3,6 +3,7 @@ const utils = require('./utils/util');
 const request = require('./requests/request');
 App({
   globalData: {
+    roomId:'',
     roomNum: '',
     appid: 'wx8d5d22897bfc549c',
     secret: '92751c1e7384da0a6fe2f851c20451da',

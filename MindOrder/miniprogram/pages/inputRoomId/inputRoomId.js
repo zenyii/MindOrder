@@ -20,10 +20,8 @@ Page({
 
   },
   formSubmit: function (values) {//
-
-    let that = this;
     let roomNums = values.detail.value.roomId;
-    console.log(typeof roomNums, 'value');
+    let that = this;
     if (!roomNums) {
       wx.showToast({
         title: '房号不能为空！',
@@ -35,7 +33,9 @@ Page({
       wx.showLoading({
         title: '加载中',
       })
-      app.onQuery('rooms', { roomNum: roomNums }, { roomNum: true ,roomMaster:true, })
+      console.log(roomNums, 'value');
+      app.globalData.roomNum = roomNums;
+      app.onQuery('rooms', { roomNum: roomNums }, { roomNum: true, roomMaster: true, })
         .then(res => {
           let data = res.data[0];
           //console.log(data, 'data')
@@ -47,8 +47,8 @@ Page({
               duration: 2000
             })
           } else {
-            
-           // console.log('form发生了submit事件，携带数据为：', that.data.inputValue)
+
+            // console.log('form发生了submit事件，携带数据为：', that.data.inputValue)
             that.goToBuild(data.roomNum);
             console.log('goto')
 
