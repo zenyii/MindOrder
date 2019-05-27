@@ -23,7 +23,7 @@ Page({
   //事件处理函数
 
   onLoad: function (e) {
-    console.log(e.selected);
+    //console.log(e.selected);
     app.globalData.userInfo = wx.getStorageSync('userInfo');
     app.globalData.selfOpenId = wx.getStorageSync('selfOpenId');
     this.setData({
@@ -34,8 +34,8 @@ Page({
     //先查询是否有此用户记录，再创建users表
     app.onQuery('users', { openid: app.globalData.selfOpenId }, { nickName: true }).then(res => {
       let data = res.data;
-      //console.log(res.data,'data')
-      if (data) {//如果后台没有此用户记录，则加入
+      console.log(res.data,'userData');
+      if (data.length===0) {//如果后台没有此用户记录，则加入
         console.log('haha')
         app.onAdd('users', {
           avatarUrl: app.globalData.userInfo.avatarUrl,

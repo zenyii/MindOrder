@@ -79,7 +79,8 @@ Page({
             wx.redirectTo({
               url: `../beforeDiscussTime/beforeDiscussTime?timePreparing=${timePreparing}&timeHold=${timeHold}`,
               success: function () {
-                app.onUpdate('rooms', app.globalData.roomId, 'allset', true)
+                app.onUpdate('rooms', app.globalData.roomId, 'allset', true);
+                console.log('房主设置时间成功！allset设为true')
               }
             })
           }else{

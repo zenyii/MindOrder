@@ -95,13 +95,23 @@ image.url {
 .contentMine .set {
   margin: 5px 0;
 }
+.line{
+  position: relative;
+}
+.line span{
+  width: 200px;
+  position: absolute;
+  left: 25px;
+  line-height: 100rpx;
+}
 
 .contentMine .icon {
   display: inline-block;
-  width: 14px;
-  height: 14px;
-  margin-right: 10px;
-  padding-top: 1px;
+  position:absolute;
+  width: 16px;
+  height: 16px;
+  left: 0;
+  bottom: 37rpx;
   box-sizing: border-box;
 }
 
@@ -124,9 +134,21 @@ image.url {
     line-height: 80rpx;
     font-size: 16px;
   }
+  .line span{
+    width: 200px;
+    position: absolute;
+    left: 25px;
+    line-height: 80rpx;
+  }
+  
   .contentMine .icon {
-    width: 16px;
-    height: 16px;
+    display: inline-block;
+    position:absolute;
+    width: 18px;
+    height: 18px;
+    left: 0;
+    bottom: 33rpx;
+    box-sizing: border-box;
   }
 }
 

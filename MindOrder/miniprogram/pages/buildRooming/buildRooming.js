@@ -28,6 +28,8 @@ Page({
   formSubmit: function (values) {//
     let that = this;
     let userInfo = wx.getStorageSync('userInfo');
+    let selfOpenId = wx.getStorageSync('selfOpenId');
+    //console.log(userInfo,'user')
     //console.log(values.detail.value.text,'values')
     if (values.detail.value.text === "") {
       wx.showToast({
@@ -38,10 +40,11 @@ Page({
       return
     }
     app.globalData.userInfo = userInfo;
-    //console.log( aa,'userInfo');
+    app.globalData.selfOpenId = selfOpenId;
+    console.log( selfOpenId,'openid');
     let inputValue = values.detail.value;//获取表单信息
     //inputValue.userIdArr = [app.globalData.selfOpenid];//获取用户自己的openid
-    app.globalData.roomMaster = app.globalData.selfOpenId;//设置房主openid
+    app.globalData.roomMaster = selfOpenId;//设置房主openid
     app.globalData.roomNum = String(this.data.inputValue.roomNum);//全局保存房间号
     app.globalData.title=inputValue.text;
     wx.showLoading({
@@ -52,13 +55,14 @@ Page({
       {
         title: inputValue.text,
         roomNum: String(inputValue.roomNum),
-        roomMaster: { openid: app.globalData.roomMaster, avatarUrl: app.globalData.userInfo.avatarUrl, nickName: app.globalData.nickName },
+        roomMaster: { openid: selfOpenId, avatarUrl: app.globalData.userInfo.avatarUrl, nickName: app.globalData.userInfo.nickName },
         readyArr: [],
-        roommates: [{ openid:app.globalData.roomMaster, avatarUrl: app.globalData.userInfo.avatarUrl, nickName: app.globalData.nickName , ready: false }],
+        roommates: [{ openid:selfOpenId, avatarUrl: app.globalData.userInfo.avatarUrl, nickName: app.globalData.userInfo.nickName , ready: false }],
         allset: false,
         inMeeting: false,
         preparingTime: 2,
-        meetingTime: 10
+        meetingTime: 10,
+        again:false
       })
       .then(res => {
         console.log(res);
