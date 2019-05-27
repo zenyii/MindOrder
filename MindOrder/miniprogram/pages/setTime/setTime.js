@@ -84,6 +84,7 @@ Page({
               }
             })
           }else{
+            app.onUpdate('rooms', app.globalData.roomId, 'again', true)
             wx.redirectTo({
               url: `../try/try`,
             })

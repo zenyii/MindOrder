@@ -16,7 +16,8 @@ Page({
     queryRes: null,//词条点赞者openID数组
     querywordsId: null,//点赞词条的_id
     color: ["#8AACFF", "#A6B1F0", "#9AE3F0", "#AEEDE1", "#F8DC2E"],
-    title:''
+    title:'',
+    timer:null
   },
 
   /**
@@ -26,6 +27,9 @@ Page({
     wx.setNavigationBarTitle({
       title: '点赞区',
     })
+
+    //更改再次讨论变量，方便复用
+    app.onUpdate('rooms', app.globalData.roomId, 'again', false);
 
     //修改当前页面状态
     app.globalData.nowPage = 2;
@@ -49,6 +53,8 @@ Page({
       }
     })
     //console.log(this.data.showMessage);
+    //实时同步数据
+    this.dataQuary();
   },
 
   //点赞
@@ -60,7 +66,7 @@ Page({
     var roomNumber = app.globalData.roomNum;
     var that = this;
     //console.log(that.data.showMessage[id]._id);
-    console.log(this.data.showMessage,'show')
+    //console.log(this.data.showMessage,'show')
     //将点赞过的人的昵称存入supporter数组中，并处理点赞事件
     if (length) {
       for (var i = 0; i < length; i++) {
@@ -145,10 +151,6 @@ Page({
       }
       else {
         //没赞过
-        /*that.data.showMessage[id].isLike = true;
-        that.setData({
-          showMessage: that.data.showMessage
-        })*/
         db.collection('words').doc(that.data.querywordsId).update({
           data: {
             //自增一
@@ -178,6 +180,34 @@ Page({
       url: '../rank/rank',
     })
   },
+
+  /* 同步房间数据 */
+  dataQuary: function () {
+    let that = this;
+    app.onQuery('rooms', { roomNum: "565656" }, //app.globalData.roomNum },
+      { again: true })
+      .then(res => {
+        let data = res.data[0];
+        //console.log(res.data[0]);
+        that.setData({
+          isAgain: data.again,
+        })
+        //console.log("test")
+        if (!data.again) {
+          that.data.timer = setTimeout(function () {
+            //要延时执行的代码
+            that.dataQuary();
+          }, 4000) //延迟时间
+        } else {//房主已经设置开始了,传入准备时间
+          if (that.data.isAgain) {//如果是成员，接收到allset后直接跳转到准备时间页面
+            wx.redirectTo({
+              url: '../try/try'
+            })
+          }
+
+        }
+      })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -203,7 +233,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    clearTimeout(this.data.timer);
   },
 
   /**

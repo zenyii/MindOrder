@@ -9,7 +9,9 @@ Page({
     rankMsg:[],
     rankColor:['#F05959','#F6DA2E','#AEEDE1'],
     isroomMaster:false,
-    term:0,                //当前页面获取数据轮数
+    term:0,                     //当前页面获取数据轮数
+    isAgain:false,                //判断是否继续讨论
+    timer:null                   //计时器
   },
 
   /**
@@ -43,30 +45,44 @@ Page({
     //从数据库获取数据
     const db = wx.cloud.database()
     db.collection("words").where({ 
-      roomNum: app.globalData.roomNum,
-      term: that.data.term
+      roomNum: "556677",//app.globalData.roomNum,
+      term: 1//that.data.term
     }).field({ 
       text: true, 
-      supportNum: true
+      supportNum: true,
+      supporter:true
     }).get().then(res => {
         that.setData({
           rankMsg: res.data
         })
-        console.log(res.data);
       console.log(that.data.rankMsg);
-        that.orderwords();
+      that.orderwords();
       }
-    )
+    ).then(()=>{
+      for(let x = 0; x < that.data.rankMsg.length;x++){
+        that.data.rankMsg[x].isGood = false
+        //判断support数组中是否含自己openid，如果有则改变isGood属性
+        for (let y = 0; y < that.data.rankMsg[x].supporter.length;y++){
+          if (that.data.rankMsg[x].supporter[y]==app.globalData.selfOpenId){
+              that.data.rankMsg[x].isGood = true;
+          }
+        }
+      }
+      that.setData({
+        rankMsg:that.data.rankMsg
+      })
+      console.log(that.data.rankMsg);
+    })
 
     //如果是房主则将索引值改为true且当前页面为排行榜
-    console.log(app.globalData.selfOpenId,'self')
-    console.log(app.globalData.roomMaster,'master')
-    console.log(app.globalData.nowPage,'nowpage')
     if (app.globalData.selfOpenId == app.globalData.roomMaster &&app.globalData.nowPage==3){
       this.setData({
         isroomMaster:true
       })
     }
+
+    //实时获取数据
+    this.dataQuary();
   },
 
   //排行榜排序方法
@@ -87,7 +103,35 @@ Page({
     this.setData({
       rankMsg: arr
     })
-    console.log(this.data.rankMsg)
+    //console.log(this.data.rankMsg)
+  },
+
+  /* 同步房间数据 */
+  dataQuary: function () {
+    let that = this;
+    app.onQuery('rooms', { roomNum: app.globalData.roomNum },
+      { again: true })
+      .then(res => {
+        let data = res.data[0];
+        console.log(res.data[0]);
+        that.setData({
+          isAgain: data.again,
+        })
+        //console.log("test")
+        if (!data.again) {
+          that.data.timer = setTimeout(function () {
+            //要延时执行的代码
+            that.dataQuary();
+          }, 4000) //延迟时间
+        } else {//房主已经设置开始了,传入准备时间
+          if (that.data.isAgain) {//如果是成员，接收到allset后直接跳转到准备时间页面
+            wx.redirectTo({
+              url: '../try/try'
+            })
+          }
+
+        }
+      })
   },
 
   again:function(){
@@ -114,14 +158,13 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    clearTimeout(this.data.timer);
   },
 
   /**
