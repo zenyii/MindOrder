@@ -8,6 +8,10 @@ page{
   margin-left: 30rpx;
   letter-spacing:5rpx;
   color: rgb(83, 87, 124);
+  max-width: 100%;
+  overflow: scroll;
+  text-overflow:clip;
+  white-space: nowrap;
 }
 .timer{
   width: 710rpx;
@@ -16,7 +20,7 @@ page{
   border-radius: 10rpx;
   position: absolute;
   left: 50%;
-  top: 69rpx;
+  top: 65rpx;
   margin-left: -355rpx;
   text-align: center;
   line-height: 130rpx;
@@ -29,7 +33,7 @@ page{
   position: absolute;
   left: 50%;
   margin-left: -355rpx;
-  top: 63rpx;
+  top: 60rpx;
   width: 710rpx;
   height: 170rpx;
   border-radius: 10rpx;
@@ -37,7 +41,7 @@ page{
 .timerback2{
   background: #A6B1F0;
   position: absolute;
-  top: 57rpx;
+  top: 55rpx;
   left: 50%;
   margin-left: -355rpx;
   width: 710rpx;
@@ -184,6 +188,8 @@ page{
   justify-content: center;
   word-break: break-all;
   word-wrap: break-word;
+  text-overflow:ellipsis;
+  white-space: nowrap;
   margin: 10rpx;
 }
 
@@ -341,4 +347,129 @@ page{
   height: 80rpx;
   top: 50rpx;
   left: 630rpx;
+}
+
+.rank{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top:100%;
+  z-index: 5;
+  transition: 1s;
+}
+.MsgItem{
+  width: 100%;
+  min-height: 10%;
+  background: white;
+  display: flex;
+  align-items: center;
+  margin: 5rpx auto;
+  border-bottom: 5rpx solid rgb(205, 209, 212);
+  font-size: 30rpx;
+  position: relative;
+}
+
+.Message{
+  width: 74%;
+  margin-left: 55rpx;
+  word-break: break-all;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+  text-indent:30rpx;
+}
+
+.MsgItemtop{
+  width: 100%;
+  min-height: 10%;
+  background: white;
+  display: flex;
+  align-items: center;
+  margin: 0rpx auto;
+  margin-bottom: 10rpx;
+  border-bottom: 5rpx solid rgb(205, 209, 212);
+  font-size: 30rpx;
+  position: relative;
+}
+
+#good{
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.num{
+  width: 100%;
+  height: 50rpx;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top:0;
+  font-size: 20rpx;
+  color: white;
+  clip-path: polygon(0% 0%,100% 0%,100% 10%,10% 10%,7% 100%,0% 100%);
+}
+
+#num{
+  margin-left: 5rpx;
+}
+
+.goodItem{
+  width: 40rpx;
+  word-break: break-all;
+  text-align: center;
+  margin-left: 50rpx;
+  font-size: 20rpx;
+}
+
+.bottom{
+  width: 100%;
+  height: 10%;
+  bottom: 0;
+  position: fixed;
+  background: white;
+  display: flex;
+  align-items: center;
+}
+
+#again{
+  width: 30%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rpx;
+  margin-left: 50rpx;
+  font-size: 30rpx;
+  color: white;
+  background: #4880FF;
+}
+
+#report{
+  width: 30%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rpx;
+  margin-left: 200rpx;
+  font-size: 30rpx;
+  color: white;
+  background: #55DBBF;
+}
+.getBack{
+  width: 100%;
+  background: rgb(221, 223, 222);
+  text-align: center;
+}
+
+#up{
+  width: 70rpx;
+  height: 70rpx;
+}
+
+.goUp{
+  top:0;
+}
+
+.goDown{
+   top:100%;
 }

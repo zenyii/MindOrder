@@ -1,6 +1,5 @@
 // pages/login.js
 const app = getApp();
-const request = require('../../requests/request');
 Page({
   data: {
     code: '',
@@ -19,9 +18,9 @@ Page({
     userInfo.nickName=data.userInfo.nickName;
     app.globalData.userInfo = userInfo;//全局储存用户信息
     let that = this;
-    if (this.data.loading) {
+    /* if (this.data.loading) {
       return
-    }
+    } */
     //console.log(this.data.code, 'code');
     //console.log(this.data.redirect_url, 'redirect_url')
     wx.showLoading({
@@ -62,33 +61,6 @@ Page({
         
       }
     })
-
-    /* request.request('https://fl123.xyz/api/xcx/addUser.php', { code, iv, encryptedData, rawData, signature }, 'POST', 'application/x-www-form-urlencoded')
-      .then(r => {
-        //返回自定义登录态
-        console.log(r, '添加用户数据成功');
-        wx.setStorageSync('userInfo', userInfo);//本地缓存用户信息
-        app.globalData.userInfo = userInfo;//全局储存用户信息
-        wx.hideLoading();
-        that.setData({
-          loading: false
-        });
-
-        if (that.data.redirect_url) {
-          //console.log('重定向！')
-          wx.reLaunch({
-            url: that.data.redirect_url
-          })
-        } else {
-          //console.log('没有来源，默认index1')
-          wx.reLaunch({
-            url: 'pages/index1/index1'///!!!!
-          })
-        }
-      }, r => {
-        console.log(r, '添加用户失败')
-        reject(r);
-      }) */
 
   },
   onLoad: function (options) {

@@ -1,30 +1,25 @@
 //app.js
-const utils = require('./utils/util');
-const request = require('./requests/request');
 App({
   globalData: {
-    roomId:'',
-    roomNum: '',
-    appid: 'wx8d5d22897bfc549c',
-    secret: '92751c1e7384da0a6fe2f851c20451da',
-    userId: 'oGw5W49WStN-HbdVgfbSxykI8SC0',
+    roomId: '',
+    roomNum: '556677',
+    userId: '',
     //selfOpenid: '',
-    roomMaster: "",//获取房主的openid
-    //userInfo: {},
+    roomMaster: "o6e-P4nvU2HvdRqKOZIwRsw_wgD8",//获取房主的openid
     hasUserInfo: false,
-    userInfo: null,
+    userInfo: {nickname:"zenyi"},//null,
     term: 1,              //轮数默认为1,再来一轮时累加
-    nowPage:0,          //判断当前页面状态，主要区分是书写(1)、点赞(2)、排行榜(3)
-    selfOpenId:"",
+    nowPage: 0,          //判断当前页面状态，主要区分是书写(1)、点赞(2)、排行榜(3)
+    selfOpenId: "o6e-P4nvU2HvdRqKOZIwRsw_wgD8",
     minute: '',
     second: '',
     showMessage: [],
     pickMessage: [],
-    title:'',
-    UserData:[]
+    title: 'efwe如何科学养猪如何科学养猪如何科学养猪如何科学养猪如何科学养猪如何科学养猪如何科学养猪如何科学养猪如何科学养猪如何科学养猪',
+    UserData: []
   },
   onLaunch: function (path) {
-    
+
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
     } else {
@@ -41,6 +36,7 @@ App({
     let query = '';
     let redirect_url = '';
     let userInfo = wx.getStorageSync('userInfo');
+    let selfOpenId = wx.getStorageSync('selfOpenId');
     //解析url中是否带有参数，若有则拼接成字符串
     for (let i in path.query) {
       if (i) {
@@ -52,7 +48,7 @@ App({
     } else {
       redirect_url = path.path;
     }
-    if (!userInfo) {
+    if (!selfOpenId || !userInfo) {
       wx.reLaunch({
         url: 'pages/login/login?redirect_url=' + encodeURIComponent(`/${redirect_url}`),
       })
@@ -60,28 +56,28 @@ App({
     }
   },
 
-//云开发添加记录
-  onAdd: function (collect,data) {
+  //云开发添加记录
+  onAdd: function (collect, data) {
     const db = wx.cloud.database()
     return db.collection(collect).add({
       data: data
     })
   },
-  
-/* 查询记录 */
-  onQuery: function(collect,where,field) {
+
+  /* 查询记录 */
+  onQuery: function (collect, where, field) {
     const db = wx.cloud.database()
     return db.collection(collect).where(where).field(field).get()
   },
-   /* 更改记录 */
-   onUpdate:function(collect,where,data,value){
+  /* 更改记录 */
+  onUpdate: function (collect, where, data, value) {
     const db = wx.cloud.database()
     return db.collection(collect).doc(where).update({
-      data:{
-        [data]:value
+      data: {
+        [data]: value
       }
-      
+
     })
-  },  
+  },
 
 })

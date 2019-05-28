@@ -16,6 +16,7 @@ Page({//
     currentSwiper: 0,
     userInfo: [],
     userInfoSwiper: [],
+    allTime: true
   },
   //事件处理函数
   onLoad: function (e) {//链接传入roomNum 和join
@@ -27,18 +28,18 @@ Page({//
     let inputMsg = that.data.inputMsg;
     let join = Number(e.join);
     /*  let join = 1; */
-    let buttonText = join === 0 ? '开始讨论' : '准备';
-    /* inputMsg.roomNum = e.roomNum;
-    inputMsg.text = e.text; */
+
+
     inputMsg.roomNum = e.roomNum;
-    console.log(inputMsg.roomNum)
+    //console.log(inputMsg.roomNum)
     //console.log(inputMsg, 'inputMsg')
     /* 查找数据库的记录 */
     app.onQuery('rooms', { roomNum: inputMsg.roomNum },
-      { roommates: true, title: true, inMeeting: true, roomMaster: true, })
+      { roommates: true, title: true, inMeeting: true, roomMaster: true, roomNum: true, allset: true })
       .then(res => {
         console.log(res.data, '结果');
         let data = res.data[0];
+        console.log(res, 'res')
         if (data.inMeeting) {
           wx.showToast({
             title: '你来晚啦，房间正在讨论或者已经结束！',
@@ -56,81 +57,106 @@ Page({//
           })
           return
         }
-
-        let userInfo = data.roommates;
-        inputMsg.text = data.title;
-
-
-        //如果是新加进来的用户，先补充全局变量，还需把他的数据push到数据库更新数据
-        if (join !== 0) {
-          let alreadyHas = userInfo.filter(item => item.openid === app.globalData.selfOpenId);
-          console.log(alreadyHas,'already');
-          if (!alreadyHas) {
-
-            app.globalData.title = data.title;
-            app.globalData.roomNum = inputMsg.roomNum;
-            app.globalData.roomMaster = data.roomMaster;
-            app.globalData.roomId = data._id;
-
-            let newPerson = {
-              openid: app.globalData.selfOpenId,
-              avatarUrl: app.globalData.userInfo.avatarUrl,
-              nickName: app.globalData.userInfo.nickName,
-              ready: false
-            };
-            userInfo.push(newPerson);
-            /* 数据库更新 */
-
-            wx.cloud.callFunction({
-              name: 'updateMsg',
-              data: {
-                roomId: app.globalData.roomId,
-                newPerson: newPerson
-              }
-            }).then(console.log('您入库成功！'))
-          }else{
-            console.log('您已存在在库中')
-          }
-
+        let roomMaster = data.roomMaster;
+        if (roomMaster === app.globalData.selfOpenId) {//如果房主链接进来，join重新赋值为0；
+          join = 0;
         }
+        let buttonText = join === 0 ? '开始讨论' : '准备';
+        let userInfo = data.roommates;
+        let allset = data.allset;
+        inputMsg.text = data.title;
+        app.globalData.title = data.title;//无论是谁，刚进来都要全局初始化
+        app.globalData.roomNum = inputMsg.roomNum;
+        app.globalData.roomMaster = data.roomMaster;
+        app.globalData.roomId = data._id;
+
+        //如果是新加进来的用户，还需把他的数据push到数据库更新数据
+        let alreadyHas = userInfo.some(item => item.openid === app.globalData.selfOpenId);
+        console.log(alreadyHas, 'already');
+
+        if (!alreadyHas) {
+          let newPerson = {
+            openid: app.globalData.selfOpenId,
+            avatarUrl: app.globalData.userInfo.avatarUrl,
+            nickName: app.globalData.userInfo.nickName,
+            ready: false
+          };
+          userInfo.push(newPerson);
+          /* 数据库更新 */
+
+          wx.cloud.callFunction({
+            name: 'updateMsg',
+            data: {
+              roomId: app.globalData.roomId,
+              newPerson: newPerson
+            }
+          }).then(console.log('您入库成功！'))
+        } else {
+          console.log('您已存在在库中')
+        }
+        //先查询是否有此用户记录，再创建users表
+        app.onQuery('users', { openid: app.globalData.selfOpenId }, { nickName: true }).then(res => {
+          let data = res.data;
+          console.log(res.data, 'userData');
+          if (data.length === 0) {//如果后台没有此用户记录，则加入
+            console.log('haha')
+            app.onAdd('users', {
+              avatarUrl: app.globalData.userInfo.avatarUrl,
+              hisRoom: [],
+              nickName: app.globalData.userInfo.nickName,
+              star: [],
+              userInfo: {},
+              openid: app.globalData.selfOpenId
+            }).then(res => {
+              console.log('创建users记录成功！')
+            })
+          }
+        })
+
         that.setData({
           join: join,
           buttonText: buttonText,
           inputMsg: inputMsg,
-          userInfo: userInfo
+          userInfo: userInfo,
+          allset: allset
           /* timeRange: timeRange, */
         });
+        console.log(userInfo, 'onloadUser')
         that.resetSwiper();
 
         //开始不断加载数据
-        that.dataQuary();
-       
-
+    
+          that.dataQuary();
+        
       }, err => {
         console.log('搜索失败')
       })
-
   },
 
   /* 同步房间数据 */
   dataQuary: function () {
     let that = this;
+    if (!that.data.allTime) return;
     app.onQuery('rooms', { roomNum: app.globalData.roomNum },
       { roommates: true, allset: true, preparingTime: true })
       .then(res => {
         let data = res.data[0];
-        console.log(res.data,'data')
+
         //console.log(typeof app.globalData.roomNum,'roomNum')
         //console.log(data,'666');
         that.setData({
           userInfo: data.roommates,
+          allset: data.allset
         })
-        console.log("test")
-        if (!data.allset) {
+        //console.log("test")
+        if (!that.data.allset) {
           setTimeout(function () {
             //要延时执行的代码
+            that.resetSwiper();/////////////////
+            console.log(that.data.userInfo, 'that.data.userInfo');//深拷贝？
+            console.log(that.data.allset, 'that.data.allset')
             that.dataQuary();
-            that.resetSwiper();
+
           }, 4000) //延迟时间
         } else {//房主已经设置开始了,传入准备时间
           if (that.data.join === 1) {//如果是成员，接收到allset后直接跳转到准备时间页面
@@ -154,14 +180,16 @@ Page({//
     /* 获取用户数据并分配 */
     //先request用户数据压入userInfo中
     let that = this;
-    console.log(that.data.userInfo, 'userInfo');
+
     let userInfoTem = that.data.userInfo.slice();
+
     let userInfoSwiper = that.assignUser(userInfoTem);
     let length = userInfoSwiper.length;
     that.setData({
       userInfoSwiper: userInfoSwiper,
       dotsWidth: length * 50
     })
+    console.log(that.data.userInfo, 'resetuserInfo');
   },
   //判断用户数量
   assignUser: function (a) {
@@ -347,12 +375,14 @@ Page({//
       content: '确定退出讨论吗？您将返回主页',
       success(res) {
         if (res.confirm) {
-
           //删除数据
           let userInfo = that.data.userInfo;
           let selfOpenId = app.globalData.selfOpenId;
           let indexx;
-
+          that.setData({
+            allTime: false
+          })
+          console.log(userInfo, 'userinfoQuity')
           userInfo.some((item, index) => {
             if (item.openid === selfOpenId) {
               indexx = index;
@@ -365,16 +395,30 @@ Page({//
           {
             app.globalData.roomMaster = userInfo[0].openid;//设置房间第一位为房主
           }
-          app.onUpdate('rooms', app.globalData.roomId, `roomMaster`, userInfo[0]);//在数据库更新房主
-          that.setData({
-            userInfo: userInfo
-          })
-          // console.log(that.data.userInfo, 'userinfo')
 
-          that.deletePerson(that.data.userInfo);
-          //that.resetSwiper();
+          if (userInfo.length === 0) {//，诶呦可以顺位的房主，消除房间
+            const db = wx.cloud.database();
+            db.collection('rooms').doc(app.globalData.roomId).remove({
+              success(res) {
+                console.log('房间删除成功');
+
+              }
+            })
+          } else {
+            app.onUpdate('rooms', app.globalData.roomId, `roomMaster`, userInfo[0]);//在数据库更新房主
+            that.setData({
+              userInfo: userInfo
+            })
+            console.log('删除用户成功')
+
+            that.deletePerson(that.data.userInfo);
+            //that.resetSwiper();
+          }
+          console.log(that.data.allTime,'quityAllTime')
           wx.redirectTo({
-            url: '../index/index'
+            url: '../index/index',
+            success: function () {
+            }
           });
         } else if (res.cancel) {
 
@@ -383,12 +427,15 @@ Page({//
     })
   },
 
-  /*  onUnload: function (e) {//对应删除该用户的openid
-     wx.showToast({
-       title: '您已退出讨论！',
-       icon: 'none',
-       duration: 2000
-     })
-   }, */
+  onUnload: function (e) {//对应删除该用户的openid
+    /* wx.showToast({
+      title: '您已退出讨论！',
+      icon: 'none',
+      duration: 2000
+    }) */
+    this.setData({
+      allTime: false
+    })
+  },
 
 })

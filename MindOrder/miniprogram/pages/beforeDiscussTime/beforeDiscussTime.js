@@ -43,7 +43,8 @@ Page({
    */
   onReady: function () {
     let that = this;
-    let counts = that.data.counts;
+    /*  let counts = that.data.counts; */
+    let counts = 5;
     let inter = setInterval(function () {
       counts--;
       let second = String(counts % 60).padStart(2, 0);
