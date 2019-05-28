@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/try/try",
     "pages/index/index",
+    "pages/try/try",
     "pages/report/report",
     "pages/about/about",
     "pages/show/show",

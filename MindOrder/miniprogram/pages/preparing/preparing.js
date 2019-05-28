@@ -58,7 +58,7 @@ Page({//
           return
         }
         let roomMaster = data.roomMaster;
-        if (roomMaster === app.globalData.selfOpenId) {//如果房主链接进来，join重新赋值为0；
+        if (roomMaster.openid === app.globalData.selfOpenId) {//如果房主链接进来，join重新赋值为0；
           join = 0;
         }
         let buttonText = join === 0 ? '开始讨论' : '准备';
@@ -67,7 +67,7 @@ Page({//
         inputMsg.text = data.title;
         app.globalData.title = data.title;//无论是谁，刚进来都要全局初始化
         app.globalData.roomNum = inputMsg.roomNum;
-        app.globalData.roomMaster = data.roomMaster;
+        app.globalData.roomMaster = roomMaster.openid;
         app.globalData.roomId = data._id;
 
         //如果是新加进来的用户，还需把他的数据push到数据库更新数据
@@ -138,10 +138,10 @@ Page({//
     let that = this;
     if (!that.data.allTime) return;
     app.onQuery('rooms', { roomNum: app.globalData.roomNum },
-      { roommates: true, allset: true, preparingTime: true })
+      { roommates: true, allset: true, preparingTime: true ,roomMaster:true})
       .then(res => {
         let data = res.data[0];
-
+        app.globalData.roomMaster = data.roomMaster.openid;
         //console.log(typeof app.globalData.roomNum,'roomNum')
         //console.log(data,'666');
         that.setData({

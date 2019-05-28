@@ -2,20 +2,20 @@
 App({
   globalData: {
     roomId: '',
-    roomNum: '556677',
+    roomNum: '',
     userId: '',
     //selfOpenid: '',
-    roomMaster: "o6e-P4nvU2HvdRqKOZIwRsw_wgD8",//获取房主的openid
+    roomMaster: "",//获取房主的openid
     hasUserInfo: false,
     userInfo: {nickname:"zenyi"},//null,
     term: 1,              //轮数默认为1,再来一轮时累加
     nowPage: 0,          //判断当前页面状态，主要区分是书写(1)、点赞(2)、排行榜(3)
-    selfOpenId: "o6e-P4nvU2HvdRqKOZIwRsw_wgD8",
+    selfOpenId: "",
     minute: '',
     second: '',
     showMessage: [],
     pickMessage: [],
-    title: 'efwe如何科学养猪如何科学养猪如何科学养猪如何科学养猪如何科学养猪如何科学养猪如何科学养猪如何科学养猪如何科学养猪如何科学养猪',
+    title: '',
     UserData: []
   },
   onLaunch: function (path) {
