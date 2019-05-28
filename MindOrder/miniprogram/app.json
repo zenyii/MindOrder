@@ -1,17 +1,14 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/try/try",
     "pages/report/report",
     "pages/setTime/setTime",
-
-
     "pages/about/about",
     "pages/show/show",
-
     "pages/rank/rank",
     "pages/beforeDiscussTime/beforeDiscussTime",
     "pages/preparing/preparing",
-    "pages/try/try",
     "pages/myStar/myStar",
     "pages/myDiscuss/myDIscuss",
     "pages/setting/setting",

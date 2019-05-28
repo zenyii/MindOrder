@@ -23,32 +23,20 @@ Page({
     })
 
     //修改当前页面状态
-    if (app.globalData.nowPage == 2) {
+
       app.globalData.nowPage = 3;
       this.setData({
         term: app.globalData.term
       })
-    } else if (app.globalData.nowPage == 1) {
-      app.globalData.nowPage = 1;
-      this.setData({
-        term: app.globalData.term - 1
-      })
-    }
-    else {
-      app.globalData.nowPage = 3;
-      this.setData({
-        term: app.globalData.term
-      })
-    }
 
     var that = this;
     //从数据库获取数据
     const db = wx.cloud.database()
-    db.collection("words").where({
-      roomNum: app.globalData.roomNum,//app.globalData.roomNum,
-      term: that.data.term//that.data.term
-    }).field({
-      text: true,
+    db.collection("words").where({ 
+      roomNum: app.globalData.roomNum,
+      term: that.data.term
+    }).field({ 
+      text: true, 
       supportNum: true,
       supporter: true
     }).get().then(res => {

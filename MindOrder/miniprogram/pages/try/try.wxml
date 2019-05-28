@@ -47,14 +47,44 @@
   </view>
 </view>
 <!-- 下一张按钮 撤回前进按钮-->
-<button class='newPaper' bindtap='newpaper'>下一张 +</button>
-<view class='step'>
+  <button class='newPaper' bindtap='newpaper'>下一张 +</button>
+  <view class='step'>
 <image id='stepItem' src='../../icon/back2.png'></image><image  id='stepItem' src='../../icon/go2.png'></image>
-</view>
+  </view>
 <!--颜色板-->
+<<<<<<< HEAD
 <view animation="{{show}}" class='colorbroad'>
   <button class='coloritem' wx:for="{{color}}" wx:key="this" id="{{item}}" style='background:{{item}}' bindtap='selectColor' ></button>
 </view>
+=======
+  <view animation="{{show}}" class='colorbroad'>
+  <button class='coloritem' wx:for="{{color}}" id="{{item}}" style='background:{{item}}' bindtap='selectColor' ></button>
+  </view>
+>>>>>>> 791fe53af310765c7b0703a4c515138988d7dae4
 <!-- 更换颜色按钮 键盘按钮-->
-<image src='../../icon/colorChange.png' id='color' bindtap='changeColor'></image><image src='../../icon/keyBroad.png' id='keybroad' bindtap='inputWord'>键盘</image>
+  <image src='../../icon/colorChange.png' id='color' bindtap='changeColor'></image><image src='../../icon/keyBroad.png' id='keybroad' bindtap='inputWord'>键盘</image>
 </view>
+
+  <!--排行榜显示-->
+<view class="rank {{isRank?'goUp':'goDown'}}">
+  <!--收回按键-->
+  <view class='getBack' bindtap='getRank'><image id="up" src='../../icon/down.png'></image></view>
+  <view wx:for="{{rankMsg}}" wx:for-index="index" class="{{index<3?'MsgItemtop':'MsgItem'}}" >
+  <!--排行前三独立样式-->
+      <view class='num' wx:if="{{index < 3}}" style="background:{{rankColor[index]}}"><text id='num'>NO.{{index+1}}</text></view>
+      <view wx:if="{{index < 3}}" class='Message'>{{item.text}}</view>
+        <view wx:if="{{index < 3}}" class='goodItem'>
+            <image id='good' wx:if="{{!item.isGood}}" src='../../icon/good.png'></image>
+            <image id='good' wx:if="{{item.isGood}}" src='../../icon/gooded.png'></image>
+            <text>{{item.supportNum}}</text>
+          </view>
+    <!--排行大于三样式独立-->
+    <view class='num' wx:if="{{index > 2}}"></view>
+      <view wx:if="{{index > 2}}" class='Message'>{{item.text}}</view>
+      <view wx:if="{{index > 2}}" class='goodItem'>
+        <image id='good' wx:if="{{!item.isGood}}" src='../../icon/good.png'></image>
+        <image id='good' wx:if="{{item.isGood}}" src='../../icon/gooded.png'></image>
+        <text>{{item.supportNum}}</text>
+      </view>
+    </view>
+  </view>
