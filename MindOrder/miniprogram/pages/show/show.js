@@ -1,4 +1,4 @@
- // pages/show/show.js
+// pages/show/show.js
 
 var app = getApp();
 
@@ -8,16 +8,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userData:[],
-    allMessage:[],
-    showMessage:[],
-    userInfo:{},
+    userData: [],
+    allMessage: [],
+    showMessage: [],
+    userInfo: {},
     words: [],
     queryRes: null,//词条点赞者openID数组
     querywordsId: null,//点赞词条的_id
     color: ["#8AACFF", "#A6B1F0", "#9AE3F0", "#AEEDE1", "#F8DC2E"],
-    title:'',
-    timer:null
+    title: '',
+    timer: null
   },
 
   /**
@@ -37,16 +37,16 @@ Page({
     const db = wx.cloud.database();
     var that = this;
     db.collection('words').where({
-        roomNum:app.globalData.roomNum,
-        term:app.globalData.term   //根据轮数取出数据
-      }).get({
-      success(res){
+      roomNum: app.globalData.roomNum,
+      term: app.globalData.term   //根据轮数取出数据
+    }).get({
+      success(res) {
         console.log(res);
         that.setData({
-          showMessage:res.data,
-          title:app.globalData.title
+          showMessage: res.data,
+          title: app.globalData.title
         })
-        for(let x = 0;x < that.data.showMessage.length;x++){
+        for (let x = 0; x < that.data.showMessage.length; x++) {
           that.data.showMessage[x].isLike = false
         }
         //console.log(that.data.showMessage);
@@ -58,8 +58,8 @@ Page({
   },
 
   //点赞
-  like:function(e){
-    var count=0;
+  like: function (e) {
+    var count = 0;
     var id = e.currentTarget.id;
     var openId = app.globalData.selfOpenId;
     var length = this.data.showMessage[id].supporter.length;
@@ -175,7 +175,7 @@ Page({
     }
     return -1
   },
-  change(){
+  change() {
     wx.redirectTo({
       url: '../rank/rank',
     })
@@ -184,7 +184,7 @@ Page({
   /* 同步房间数据 */
   dataQuary: function () {
     let that = this;
-    app.onQuery('rooms', { roomNum: "565656" }, //app.globalData.roomNum },
+    app.onQuery('rooms', { roomNum: app.globalData.roomNum }, //app.globalData.roomNum },
       { again: true })
       .then(res => {
         let data = res.data[0];

@@ -20,9 +20,11 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transform:rotate(180deg);
 }
 
 
 .icon-youjiankuohao:before {
   content: '\e612';
+  
 }

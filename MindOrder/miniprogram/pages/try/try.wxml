@@ -53,7 +53,7 @@
 </view>
 <!--颜色板-->
 <view animation="{{show}}" class='colorbroad'>
-  <button class='coloritem' wx:for="{{color}}" id="{{item}}" style='background:{{item}}' bindtap='selectColor' ></button>
+  <button class='coloritem' wx:for="{{color}}" wx:key="this" id="{{item}}" style='background:{{item}}' bindtap='selectColor' ></button>
 </view>
 <!-- 更换颜色按钮 键盘按钮-->
 <image src='../../icon/colorChange.png' id='color' bindtap='changeColor'></image><image src='../../icon/keyBroad.png' id='keybroad' bindtap='inputWord'>键盘</image>

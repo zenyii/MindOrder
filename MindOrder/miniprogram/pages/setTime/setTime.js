@@ -22,12 +22,12 @@ Page({
         placeHolderWri:Number(options.placeHolderWri)
       })
     }
-    console.log(rank,'rank')
+    console.log(rank,'rank');
     let timeRangeWrite = [];
     let timeRangePrepare = [];
-    Array.from({ length: 13 }, (v, i) => {
-      timeRangeWrite.push(i + 1);
-      timeRangePrepare.push(i + 1);
+    Array.from({ length: 58 }, (v, i) => {
+      timeRangeWrite.push(i+1);
+      timeRangePrepare.push(i*5);
     });
     that.setData({
       rank: rank,

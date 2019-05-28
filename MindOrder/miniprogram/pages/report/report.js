@@ -4,11 +4,15 @@ Page({
   data: {
     rank:[],
     number:[ "一","二","三","四","五","六","七","八","九"],
-    show:false
+    list:[],
+    show:false,
+    rankbg:false,
+    tipsss:true
   },
 
   onLoad: function (options) {
     let that = this;
+    let list = [];
     wx.setNavigationBarTitle({
       title: '会议报告',
     });
@@ -36,22 +40,31 @@ Page({
           return 0;
         })
       })
-      that.setData({
-        rank:rank
+      
+      //console.log(rank,'rank');
+      rank.forEach((items,indexs)=>{
+        list[indexs]={};
+        let text = list[indexs].text = [];
+        items.forEach(item=>{
+          text.push(item.text);
+        })
       })
-      //console.log(rank,'rank')
+      //console.log(list,'list');
+      that.setData({
+        rank,
+        list
+      })
     })
     
-    console.log(that.data,'haha');
 
   },
   lunTimes:function(e){
-    let that = this;
+  /*   let that = this;
     let show = this.data.show;
     that.setData({
       show:!show
     })
-    console.log(this.data.show)
+    console.log(this.data.show) */
     //let id = e.currentTarget.id;
 
    /*  let lun = id.slice(4);
@@ -61,6 +74,38 @@ Page({
 
     //console.log(that.data,'dta')
   },
+
+  listTap:function(e){
+    let Index = e.currentTarget.dataset.parentindex,//获取点击的下标值
+    list = this.data.list;
+    list[Index].show = !list[Index].show || false;//变换其打开、关闭的状态
+  if (list[Index].show) {//如果点击后是展开状态，则让其他已经展开的列表变为收起状态
+    //this.packUp(list, Index);
+  }
+
+  this.setData({
+    list
+  });
+
+  },
+  listParentTap:function(e){
+    console.log(e,'e');
+    let that = this;
+    this.setData({
+      show:!that.data.show
+    })
+  },
+  checkboxChange:function(e){
+    let that = this;
+    this.setData({
+      tipsss:false,
+      show:!that.data.show,
+      rankbg:!that.data.rankbg
+    })
+  },
+  /* listItemTap:function(e){
+
+  }, */
 
   onReady: function () {
 

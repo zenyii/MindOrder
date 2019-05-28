@@ -125,9 +125,9 @@ Page({//
         that.resetSwiper();
 
         //开始不断加载数据
-    
-          that.dataQuary();
-        
+
+        that.dataQuary();
+
       }, err => {
         console.log('搜索失败')
       })
@@ -138,17 +138,16 @@ Page({//
     let that = this;
     if (!that.data.allTime) return;
     app.onQuery('rooms', { roomNum: app.globalData.roomNum },
-      { roommates: true, allset: true, preparingTime: true ,roomMaster:true})
+      { roommates: true, allset: true, preparingTime: true, roomMaster: true })
       .then(res => {
         let data = res.data[0];
         app.globalData.roomMaster = data.roomMaster.openid;
         //console.log(typeof app.globalData.roomNum,'roomNum')
-        //console.log(data,'666');
+        console.log(data.preparingTime,'prepaeitime');
         that.setData({
           userInfo: data.roommates,
           allset: data.allset
         })
-        //console.log("test")
         if (!that.data.allset) {
           setTimeout(function () {
             //要延时执行的代码
@@ -157,7 +156,7 @@ Page({//
             console.log(that.data.allset, 'that.data.allset')
             that.dataQuary();
 
-          }, 4000) //延迟时间
+          }, 1000) //延迟时间
         } else {//房主已经设置开始了,传入准备时间
           if (that.data.join === 1) {//如果是成员，接收到allset后直接跳转到准备时间页面
             wx.redirectTo({
@@ -240,19 +239,28 @@ Page({//
     let id = e.target.id;
     //console.log(e);
     //console.log(id, 'id');
-    if (id.indexOf('delete') !== -1) {
-      let index = id[id.length - 1];
-      // console.log(index, 'index');
-      let userInfo = that.data.userInfo;
-      let deleted = userInfo.splice(index, 1);//被删除的用户数据
-      //console.log(deleted, 'deleted')
-      that.setData({
-        userInfo: userInfo
-      })
-      //console.log(this.data.userInfo, 'userinfo')
-    }
-    this.deletePerson(that.data.userInfo);
-    this.resetSwiper();
+    wx.showModal({
+      title: '提示',
+      content: '您确定要踢掉该用户？',
+      success: function (res) {
+        if (res.confirm) {
+          if (id.indexOf('delete') !== -1) {
+            let index = id[id.length - 1];
+            // console.log(index, 'index');
+            let userInfo = that.data.userInfo;
+            let deleted = userInfo.splice(index, 1);//被删除的用户数据
+            //console.log(deleted, 'deleted')
+            that.setData({
+              userInfo: userInfo
+            })
+            //console.log(this.data.userInfo, 'userinfo')
+          }
+          this.deletePerson(that.data.userInfo);
+          this.resetSwiper();
+        }
+
+      }
+    })
 
   },
 
@@ -414,7 +422,7 @@ Page({//
             that.deletePerson(that.data.userInfo);
             //that.resetSwiper();
           }
-          console.log(that.data.allTime,'quityAllTime')
+          console.log(that.data.allTime, 'quityAllTime')
           wx.redirectTo({
             url: '../index/index',
             success: function () {

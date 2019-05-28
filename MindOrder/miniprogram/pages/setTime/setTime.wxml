@@ -1,13 +1,13 @@
 <form bindsubmit='formSubmit' action='' method='post'>
     <view wx:if="{{rank==0}}" class='outer'>
-        <label>准备时长</label>
+        <label>准备时长(秒)</label>
         <picker class="inputGradient" bindchange="bindPickerChangeP" value="{{timePreparing}}" range='{{timeRangePrepare}}'>
             <!-- <text id="prepareTime" value="{{timeRangePrepare[timePreparing]}}"></text> -->
             <view  id="prepareTime" class="{{placeHolderPre? 'placeHolderPre' :''}}">{{timeRangePrepare[timePreparing]}}</view>
         </picker>
     </view>
     <view class="outer">
-        <label>头脑书写时长</label>
+        <label>头脑书写时长(分钟)</label>
         <picker class="inputGradient" bindchange="bindPickerChangeW" value="{{timeHold}}" range='{{timeRangeWrite}}'>
             <!-- <input placeholder="请设置头脑书写时长" name='writeTime' type="number" id="writeTime" value="{{timeRangeWrite[timeHold]}}" />
              -->

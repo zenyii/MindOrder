@@ -2,9 +2,12 @@
   "pages": [
     "pages/index/index",
     "pages/report/report",
+    "pages/setTime/setTime",
+
+
     "pages/about/about",
     "pages/show/show",
-    "pages/setTime/setTime",
+
     "pages/rank/rank",
     "pages/beforeDiscussTime/beforeDiscussTime",
     "pages/preparing/preparing",
