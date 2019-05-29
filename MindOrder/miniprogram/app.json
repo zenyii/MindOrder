@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/selectWords/selectWords",
     "pages/index/index",
+    "pages/selectWords/selectWords",
     "pages/try/try",
     "pages/report/report",
     "pages/about/about",
@@ -14,6 +14,7 @@
     "pages/myDiscuss/myDIscuss",
     "pages/setting/setting",
     "pages/advice/advice",
+    "pages/wirtePlan/writePlan",
     "pages/homePage/homePage",
     "pages/invite/invite",
     "pages/buildRooming/buildRooming",

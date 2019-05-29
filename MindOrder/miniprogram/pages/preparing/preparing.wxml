@@ -24,9 +24,9 @@
                   <block wx:for="{{outerItem}}" wx:key="" wx:for-index="innerIndex" wx:for-item="innerItem">
                     <view class="peopleItem" id="{{innerIndex}}">
                       <!-- <view wx:if="{{ innerIndex ===0 && outerIndex === 0 }}" class="houseHolder" style='background:url(../../icon/roomowner.png) no-repeat ;background-size: 100%;'></view> -->
-                      <view class="imgPart">
+                      <view class="imgPart" data-parentIndex="{{outerIndex}}" data-index = "{{innerIndex}}">
                         <image src='{{innerItem.avatarUrl}}' class="headImg" />
-                        <view wx:if="{{!innerItem.ready && innerIndex !==0 && outerIndex !== 0}}" class="map"></view>
+                        <view wx:if="{{!innerItem.ready && innerIndex != 0}}" class="map"></view>
                         <view wx:if="{{ innerIndex ===0 && outerIndex === 0 }}" class="houseHolder" style='background:url(../../icon/roomowner.png) no-repeat ;background-size: 100%;'></view>
                         <image wx:if="{{join===0}}" class="{{ outerIndex === 0 ? (innerIndex === 0 ? 'hidden' : 'delete' ): 'delete'}}" id="delete{{outerIndex*8+innerIndex}}" src="../../icon/delete.png" />
                       </view>
@@ -57,6 +57,7 @@
     <view class="tab-bar-item bar1">
       <!-- <image class="image" src="../../icon/unBuild.png" bindtap='bindQuite'></image> -->
       <image class="image barson2" bindtap='bindQuite' src="../../icon/arrowbg.png"></image>
+      <view class="view">退出</view>
       <!-- <view class="view" style="color: {{selected === index ? selectedColor : color}};">
             {{item.text}}
         </view> -->

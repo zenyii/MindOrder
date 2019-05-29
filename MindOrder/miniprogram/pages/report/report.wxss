@@ -29,9 +29,6 @@ page {
     margin: 0 2px;
 }
 
-.titleMsg .title {
-    font-size: 18px;
-}
 
 .titleMsg .date {
     font-size: 14px;
@@ -131,6 +128,7 @@ page {
     right: -28px;
     font-size: 14px;
     color: #f6da2e;
+    bottom: 0;
     /*  margin-left: 2px; */
 }
 
@@ -144,8 +142,34 @@ page {
 } */
 
 .rank {
-    background: lightgray;
-    padding-bottom: 3px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.tipsss{
+    position: relative;
+}
+.tipsss::before{
+    content: ' 想导出此栏？请勾选。 ';
+    display: inline-block;
+    font-size: 10px;
+    background: #f6da2e;
+    border-radius: 10px;
+    position: absolute;
+    padding: 4px;
+    top: -25px;
+    left: 5px;
+}
+.tipsss::after{
+    content:'';
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-top:5px solid #f6da2e;
+    border-left: 5px solid transparent;
+    border-right:5px solid transparent;
+    left: 10px;
+    top: -5px;
 }
 
 .rank .rankHeader {
@@ -156,6 +180,7 @@ page {
     flex-direction: row;
     justify-content: space-between;
     font-size: 16px;
+    transition: all .1s;
 }
 
 .outerArr {
@@ -170,11 +195,24 @@ page {
 
 /*checkbox 整体大小  */
 
-checkbox {
+
+.checkbox {
     width: 40rpx;
     height: 40rpx;
-    padding: 0 5px;
+    padding-left: 5px;
+    margin-right: 2px;
+    padding-bottom: 1px;
     box-sizing: border-box;
+    position: relative;
+}
+
+.checkbox::before{
+    content: '所有排行榜';
+    position: absolute;
+    display: inline-block;
+    width: 180rpx;
+    left: 100%;
+    top: -4px;
 }
 
 /*checkbox 选项框大小  */
@@ -207,19 +245,24 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
 
 .checkbox .title {
     display: inline-block;
-    margin: 0 12px;
+    margin-left:0px;
 }
 
 .rankContent .innerHeader {
     /*       border: 1px solid black; */
     font-size: 14px;
     line-height: 25px;
-    padding-left: 30px;
+    height: 25px;
+    background: white;
+    transition: all .1s;
 }
 
 .innerArr {
     font-size: 12px;
     font-weight: bolder;
+    padding: 2px;
+    padding-right: 4px;
+    transform: rotate(0deg);
 }
 
 .rankContent .innerContent {
@@ -235,4 +278,24 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
     height: 0px;
     font-size: 0px;
     display: none;
+}
+.iconLeftRight:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(90deg);
+}
+.iconUpDown:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(180deg);
+}
+.iconDownUp:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(0deg);
+}
+.iconRightLeft:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(0deg);
 }

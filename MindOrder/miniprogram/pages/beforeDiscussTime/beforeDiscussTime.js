@@ -16,7 +16,7 @@ Page({
     let counts = options.timePreparing
     /*   let counts = 2; */
     that.setData({
-      counts: counts * 60,
+      counts,
       title: app.globalData.title
     })
 
@@ -43,23 +43,32 @@ Page({
    */
   onReady: function () {
     let that = this;
-    /*  let counts = that.data.counts; */
-    let counts = 5;
-    let inter = setInterval(function () {
-      counts--;
-      let second = String(counts % 60).padStart(2, 0);
-      let minute = String(Math.floor(counts / 60)).padStart(2, 0);
-      that.setData({
-        seconds: second,
-        minutes: minute
-      });
-      if (counts === 0) {
-        clearInterval(inter);
-        wx.redirectTo({
-          url: '../try/try'
-        })
-      }
-    }, 1000)
+    let counts = that.data.counts;
+    console.log(typeof counts,'counts')
+    // let counts = 5;
+    if (Number(counts) === 0) {
+      console.log('counts===0')
+      wx.redirectTo({
+        url: '../try/try'
+      })
+    } else {
+      let inter = setInterval(function () {
+        counts--;
+        let second = String(counts % 60).padStart(2, 0);
+        let minute = String(Math.floor(counts / 60)).padStart(2, 0);
+        that.setData({
+          seconds: second,
+          minutes: minute
+        });
+        if (counts === 0) {
+          clearInterval(inter);
+          wx.redirectTo({
+            url: '../try/try'
+          })
+        }
+      }, 1000)
+    }
+
   },
 
   /**
