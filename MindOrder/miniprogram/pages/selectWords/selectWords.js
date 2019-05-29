@@ -10,7 +10,9 @@ Page({
     rankMsg:[],         //根据轮数分好后存储数据并显示
     termArr:[],              //获取总轮数数据，方便前端显示，转化为数组
     rankColor: ['#F05959', '#F6DA2E', '#AEEDE1'],
-    lastPlan:[]                //选择的有效方案
+    lastPlan:[],                //选择的有效方案
+    isroomMaster:false          //判断是否为房主
+
   },
 
   /**
@@ -18,6 +20,13 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
+    //判断是否为房主
+    if (app.globalData.selfOpenId == app.globalData.roomMaster){
+      this.setData({
+        isroomMaster:true
+      })
+    }
+
 
     //获取轮数并转化成数组
     for(let z = 0;z < app.globalData.term ;z++){
@@ -26,7 +35,6 @@ Page({
     this.setData({
       termArr:that.data.termArr
     })
-    console.log(that.data.termArr)
     
 
     //拉取该房间内所有词条
@@ -55,7 +63,6 @@ Page({
         }
       }
       
-        console.log(that.data.allMsg);
 
       //初始化rankMsg数组
       for(let x = 0;x < app.globalData.term; x++){
@@ -73,7 +80,6 @@ Page({
       that.setData({
         rankMsg: that.data.rankMsg
       })
-      console.log(that.data.rankMsg);
 
     })
   },
@@ -117,6 +123,11 @@ Page({
         value: that.data.lastPlan
       }
     })
+
+    wx.redirectTo({
+      url: '../report/report',
+    })
+
   },
 
   /**

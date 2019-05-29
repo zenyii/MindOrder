@@ -355,6 +355,7 @@ page{
   position: absolute;
   top:100%;
   z-index: 5;
+  background: #F2F2F2;
   transition: 1s;
 }
 .MsgItem{

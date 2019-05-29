@@ -215,12 +215,12 @@ Page({
           roomNum: app.globalData.roomNum,              //所属房间
           text: obj.word,                               //词条内容
           backColor: that.data.backColor,               //词条背景颜色
-          title: app.globalData.title,   //词条作者名称
-          avatarUrl:app.globalData.userInfo.avatarUrl,
+          title: app.globalData.title,                 //词条作者名称
+          avatarUrl:app.globalData.userInfo.avatarUrl, //词条作者头像
           term: app.globalData.term,          //轮数记录
           supporter: [],                        //点赞者存放数组
           supportNum: 0,                          //存取点赞数  
-          openid:app.globalData.selfOpenId   //词条作者的openid
+          openid:app.globalData.selfOpenId,   //词条作者的openid
         }
       })
       //若有openId属性重复的，则只插入词条数据

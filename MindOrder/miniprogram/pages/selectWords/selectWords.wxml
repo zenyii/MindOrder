@@ -4,11 +4,11 @@
   <!--循环多个轮数界面-->
   <block>
   <checkbox-group bindchange="checkboxChange">
-  <swiper-item class="swiperItem" wx:for="{{termArr}}" wx:for-item="termArr">
+  <swiper-item class="swiperItem" wx:for="{{termArr}}" wx:for-item="termArr" wx:key="this">
       <view class='termTitle'>第{{termArr+1}}轮(右滑查看下一轮)</view>
       <view class='rank' >
-      <view wx:for="{{rankMsg[termArr]}}" wx:for-item="Msg" wx:for-index="index" class="{{index<3?'MsgItemtop':'MsgItem'}}" >
-      <checkbox value='{{Msg.text}}'></checkbox>
+      <label wx:for="{{rankMsg[termArr]}}" wx:key="this" wx:for-item="Msg" wx:for-index="index" class="{{index<3?'MsgItemtop':'MsgItem'}}" >
+      <checkbox wx:if="{{isroomMaster}}" value='{{Msg.text}}'></checkbox>
         <!--排行前三独立样式-->
         <view class='num' wx:if="{{index < 3}}" style="background:{{rankColor[index]}}"><text id='num'>NO.{{index+1}}</text></view>
         <view wx:if="{{index < 3}}" class='Message'>{{Msg.text}}</view>
@@ -25,9 +25,9 @@
       <image id='good' wx:if="{{item.isGood}}" src='../../icon/gooded.png'></image>
       <text>{{item.supportNum}}</text>
       </view>
-    </view>
+    </label>
   </view>
-    <button id='insure' bindtap='insure'>确定</button>
+    <button wx:if="{{isroomMaster}}" id='insure' bindtap='insure'>确定</button>
   </swiper-item>
   </checkbox-group>
   </block>

@@ -64,7 +64,7 @@
 <view class="rank {{isRank?'goUp':'goDown'}}">
   <!--收回按键-->
   <view class='getBack' bindtap='getRank'><image id="up" src='../../icon/down.png'></image></view>
-  <view wx:for="{{rankMsg}}" wx:for-index="index" class="{{index<3?'MsgItemtop':'MsgItem'}}" >
+  <view wx:for="{{rankMsg}}" wx:key="this" wx:for-index="index" class="{{index<3?'MsgItemtop':'MsgItem'}}" >
   <!--排行前三独立样式-->
       <view class='num' wx:if="{{index < 3}}" style="background:{{rankColor[index]}}"><text id='num'>NO.{{index+1}}</text></view>
       <view wx:if="{{index < 3}}" class='Message'>{{item.text}}</view>

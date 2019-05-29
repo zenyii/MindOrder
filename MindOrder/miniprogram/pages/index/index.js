@@ -24,23 +24,6 @@ Page({
 
   onLoad: function (e) {
     let that =this;
-    /* const db = wx.cloud.database()
-    db.collection('rooms').doc('f4b905395cee728807c17dbb6d461566').get({
-      success: res => {
-        console.log(res.data[0].startTime,'start')
-        that.setData({
-          startTime: res.data[0].startTime,
-        })
-        //console.log('[数据库] [查询记录] 成功: ', res.data.length)
-        //console.log('生成的房号是: ', that.data.roomNum)
-        //console.log('test：', that.data.queryRes)
-      }
-    }) */
-    app.onQuery('rooms',{_id:'f4b905395cee728807c17dbb6d461566'},{startTime:true}).then(res=>{
-      let data = res.data[0];
-      console.log(res.data[0].startTime,'start')
-    })
-
     //console.log(e.selected);
     app.globalData.userInfo = wx.getStorageSync('userInfo');
     app.globalData.selfOpenId = wx.getStorageSync('selfOpenId');
