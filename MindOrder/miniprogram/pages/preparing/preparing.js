@@ -29,8 +29,8 @@ Page({//
     let join = Number(e.join);
     /*  let join = 1; */
 
-
     inputMsg.roomNum = e.roomNum;
+    app.globalData.roomNum = inputMsg.roomNum;//初始化app.js的房号
     //console.log(inputMsg.roomNum)
     //console.log(inputMsg, 'inputMsg')
     /* 查找数据库的记录 */
@@ -66,7 +66,6 @@ Page({//
         let allset = data.allset;
         inputMsg.text = data.title;
         app.globalData.title = data.title;//无论是谁，刚进来都要全局初始化
-        app.globalData.roomNum = inputMsg.roomNum;
         app.globalData.roomMaster = roomMaster.openid;
         app.globalData.roomId = data._id;
 
@@ -83,7 +82,6 @@ Page({//
           };
           userInfo.push(newPerson);
           /* 数据库更新 */
-
           wx.cloud.callFunction({
             name: 'updateMsg',
             data: {
@@ -123,11 +121,8 @@ Page({//
         });
         console.log(userInfo, 'onloadUser')
         that.resetSwiper();
-
         //开始不断加载数据
-
         that.dataQuary();
-
       }, err => {
         console.log('搜索失败')
       })
@@ -143,28 +138,46 @@ Page({//
         let data = res.data[0];
         app.globalData.roomMaster = data.roomMaster.openid;
         //console.log(typeof app.globalData.roomNum,'roomNum')
-        console.log(data.preparingTime,'prepaeitime');
-        that.setData({
-          userInfo: data.roommates,
-          allset: data.allset
-        })
-        if (!that.data.allset) {
-          setTimeout(function () {
-            //要延时执行的代码
-            that.resetSwiper();/////////////////
-            console.log(that.data.userInfo, 'that.data.userInfo');//深拷贝？
-            console.log(that.data.allset, 'that.data.allset')
-            that.dataQuary();
+        let roommates = data.roommates;
+        let kitOut = roommates.some(element => element.openid === app.globalData.selfOpenId);//如果没有找到openid，返回false
+        if (!kitOut) {
+          wx.showToast({
+            title: '您已被房主踢出，返回主页中...',
+            icon: 'none',
+            duration: 2000,
+            success: function () {
+              setTimeout(function () {
+                //要延时执行的代码
+                wx.redirectTo({
+                  url: '../index/index'
+                });
+              }, 2000) //延迟时间
+            }
+          })
+          return
+        } else {
+          console.log(data.preparingTime, 'prepaeitime');
+          that.setData({
+            userInfo: data.roommates,
+            allset: data.allset
+          })
+          if (!that.data.allset) {
+            setTimeout(function () {
+              //要延时执行的代码
+              that.resetSwiper();/////////////////
+              that.dataQuary();
 
-          }, 1000) //延迟时间
-        } else {//房主已经设置开始了,传入准备时间
-          if (that.data.join === 1) {//如果是成员，接收到allset后直接跳转到准备时间页面
-            wx.redirectTo({
-              url: `../beforeDiscussTime/beforeDiscussTime?timePreparing=${data.preparingTime}`
-            })
+            }, 1000) //延迟时间
+          } else {//房主已经设置开始了,传入准备时间
+            if (that.data.join === 1) {//如果是成员，接收到allset后直接跳转到准备时间页面
+              wx.redirectTo({
+                url: `../beforeDiscussTime/beforeDiscussTime?timePreparing=${data.preparingTime}`
+              })
+            }
+
           }
-
         }
+
       })
   },
 
@@ -202,6 +215,7 @@ Page({//
   },
   /* 转发 */
   onShareAppMessage: function (ops) {
+    let that = this;
     console.log(ops, '转发')
     if (ops.form === 'button') {
       console.log(ops.target, 'button');
@@ -211,7 +225,7 @@ Page({//
       title: this.data.inputMsg.inputTitle,
       desc: '快来加入我们的头脑风暴吧！',
       imageUrl: '../../icon/bg2.png',
-      path: '/pages/preparing/preparing?join=1',//传入房间号，在后台查找进入房间
+      path: `/pages/preparing/preparing?join=1&roomNum=${that.data.inputMsg.roomNum}`,//传入房间号，在后台查找进入房间
       success: function (e) {
         console.log('转发成功' + JSON.stringify(e));
         var shareTickets = res.shareTickets;

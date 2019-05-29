@@ -7,7 +7,7 @@ App({
     //selfOpenid: '',
     roomMaster: "",//获取房主的openid
     hasUserInfo: false,
-    userInfo: {nickname:"zenyi"},//null,
+    userInfo: null,//null,
     term: 1,              //轮数默认为1,再来一轮时累加
     nowPage: 0,          //判断当前页面状态，主要区分是书写(1)、点赞(2)、排行榜(3)
     selfOpenId: "",
@@ -37,6 +37,8 @@ App({
     let redirect_url = '';
     let userInfo = wx.getStorageSync('userInfo');
     let selfOpenId = wx.getStorageSync('selfOpenId');
+    let text = undefined;
+    
     //解析url中是否带有参数，若有则拼接成字符串
     for (let i in path.query) {
       if (i) {
@@ -48,7 +50,7 @@ App({
     } else {
       redirect_url = path.path;
     }
-    if (!selfOpenId || !userInfo) {
+    if (!selfOpenId || !userInfo.avatarUrl) {
       wx.reLaunch({
         url: 'pages/login/login?redirect_url=' + encodeURIComponent(`/${redirect_url}`),
       })
