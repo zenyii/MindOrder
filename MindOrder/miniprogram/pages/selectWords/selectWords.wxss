@@ -1,0 +1,143 @@
+/* miniprogram/pages/selectWords/selectWords.wxss */
+/* miniprogram/pages/rank/rank.wxss */
+
+page{
+  background: rgb(221, 223, 222);
+  width: 100%;
+  height: 100%;
+}
+.swiper{
+  width: 100%;
+  height: 100%;
+}
+.swiperItem{
+  width: 100%;
+  height: 100%;
+}
+.rank{
+  width: 100%;
+  height: 100%;
+}
+.MsgItem{
+  width: 100%;
+  min-height: 10%;
+  background: white;
+  display: flex;
+  align-items: center;
+  margin: 5rpx auto;
+  border-bottom: 5rpx solid rgb(205, 209, 212);
+  font-size: 30rpx;
+  position: relative;
+}
+
+.Message{
+  width: 74%;
+  margin-left: 20rpx;
+  word-break: break-all;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+  text-indent:30rpx;
+}
+
+.MsgItemtop{
+  width: 100%;
+  min-height: 10%;
+  background: white;
+  display: flex;
+  align-items: center;
+  margin: 0rpx auto;
+  margin-bottom: 10rpx;
+  border-bottom: 5rpx solid rgb(205, 209, 212);
+  font-size: 30rpx;
+  position: relative;
+}
+
+#good{
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.num{
+  width: 100%;
+  height: 50rpx;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top:0;
+  font-size: 20rpx;
+  color: white;
+  clip-path: polygon(0% 0%,100% 0%,100% 10%,10% 10%,7% 100%,0% 100%);
+}
+
+#num{
+  margin-left: 5rpx;
+}
+
+.goodItem{
+  width: 40rpx;
+  word-break: break-all;
+  text-align: center;
+  margin-left: 50rpx;
+  font-size: 20rpx;
+}
+
+.bottom{
+  width: 100%;
+  height: 10%;
+  bottom: 0;
+  position: fixed;
+  background: white;
+  display: flex;
+  align-items: center;
+}
+
+#again{
+  width: 30%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rpx;
+  margin-left: 50rpx;
+  font-size: 30rpx;
+  color: white;
+  background: #4880FF;
+}
+
+#report{
+  width: 30%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rpx;
+  margin-left: 200rpx;
+  font-size: 30rpx;
+  color: white;
+  background: #55DBBF;
+}
+
+#insure{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  color: #4880FF;
+}
+.termTitle{
+  width: 100%;
+  background: #4880FF;
+  text-align: center;
+  font-size: 30rpx;
+  color: white;
+}
+
+checkbox{
+  margin-left: 10rpx;
+  width: 30rpx;
+  height: 30rpx;
+}
+
+checkbox .wx-checkbox-input {
+  width: 30rpx;
+  height: 30rpx;
+}

@@ -1,0 +1,33 @@
+/* miniprogram/pages/myStar/myStar.wxss */
+/* miniprogram/pages/myDiscuss/myDIscuss.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  background: rgb(221, 223, 222);
+}
+.allTheme{
+  margin-top: 50rpx;
+}
+
+.titleItem{
+  width: 95%;
+  min-height: 100rpx;
+  display: flex;
+  align-items: center;
+  background: white;
+  margin: auto;
+  margin-bottom: 5rpx;
+  border: 2rpx solid rgb(205, 209, 212);
+  font-size: 30rpx;
+  border-radius: 10rpx;
+}
+
+#text{
+  width: 650rpx;
+  margin-left: 30rpx;
+}
+
+#more{
+  width: 50rpx;
+  height: 50rpx;
+}

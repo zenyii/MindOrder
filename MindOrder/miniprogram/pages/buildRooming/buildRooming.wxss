@@ -1,0 +1,248 @@
+page{
+  background: #f2f2f2;
+}
+image{
+  display:inline-block;
+  width: 100px;
+  height: 100px;
+}
+input{
+  outline: 0;
+  -web-kit-appearance:none;
+  -moz-appearance: none;
+}
+.redBorder{
+  border:1px soild red;
+}
+.header {
+  width: 100vw;
+  height: 20vh;
+  text-align: center;
+  background-size: 100% 100%;
+}
+
+.header image {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+}
+
+.main {
+  height: 65vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+form{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 80px 0;
+}
+
+.inputGradient{
+  width: 60vw;
+  height: 45px;
+  border-radius: 5px;
+  background:linear-gradient(to right ,#4880ff,#0fccA6);
+  padding: 2px;
+  box-sizing: border-box;
+  position: relative;
+  margin: 10px 0;
+}
+.inputGradient::before{
+  content: '主 题 ';
+  position: absolute;
+  display: inline-block;
+  top: 0;
+  left: -45px;
+  font-size: 15px;
+  line-height: 45px;
+}
+.roomId{
+  padding: 2px;
+  box-sizing: border-box;
+  position: relative;
+  margin: 10px 0;
+  width: 60vw;
+  height: 45px;
+}
+#roomId{
+  width: 100%;
+  height: 41px;
+  padding:0 5px;
+  font-size: 16px;
+  min-height: 41px;
+}
+.roomId::before{
+  content: '房 号 :';
+  position: absolute;
+  display: inline-block;
+  top: 0;
+  left: -45px;
+  font-size: 15px;
+  line-height: 45px;
+}
+#inputTitle{
+  width: 100%;
+  height: 41px;
+  border-radius: 5px;
+  border: 2px soild transparent;
+  background-color: white;
+  padding:0 5px;
+  box-sizing: border-box;
+  font-size: 15px;
+  min-height: 41px;
+}
+
+
+.buildRoom{
+  width: 60vw;
+  height:45px;
+  line-height: 45px;
+  margin: 50px 0;
+  color: white;
+  font-size: 14px;
+  letter-spacing: 2px;
+  background-color: #4880ff;
+  box-shadow: 4px 6px 10px -4px #6188ff;
+}
+button,#roomId,#inputTitle{
+  letter-spacing: 2px;
+}
+button::after {
+  border: none;
+}
+
+
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: white;
+  display: flex;
+  padding-bottom: env(safe-area-inset-bottom);
+  overflow: visible;
+  padding-top: 5px;
+  border-top: #f2f2f2;
+}
+
+
+.tab-bar-item,.bar1 {
+  overflow: visible;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.tab-bar-item .image {
+  width: 20px;
+  height: 20px;
+  overflow: visible;
+}
+
+
+.bar1 .image {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
+  bottom: 22px;
+  z-index: 2;
+}
+/* .bar1 .image::after,.bar1 .image::before {
+  content: '';
+  display: inline-block;
+  width:  1px;
+  height: 38px;
+  position: absolute;
+  z-index: -1;
+} */
+ /* transform: rotate(45deg); */
+  /* border-style: solid;
+  border-width: 20px;
+  border-color: transparent transparent transparent transparent; */
+/* .bar1 .image::after{
+  height: 38px;
+  right: 44px;
+  transform: rotate(35deg);
+  box-shadow: 40px 0px 6px  #06023f;
+  bottom: 19px; 
+}
+.bar1 .image::before{
+  height: 40px;
+  left: 38px;
+  transform: rotate(-35deg);
+  box-shadow: -30px 0px 5px  #06023f;
+  bottom: 9px; 
+} */
+.tab-bar-item .view {
+  margin: 5px 0;
+  font-size: 10px;
+}
+
+.barson1,.barson2 {
+  position: relative;
+}
+
+.barson1::before,.barson2::before {
+  content: "";
+  width: 7px;
+  height: 30px;
+  position: absolute;
+  z-index: 3;
+  top: 14px;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+}
+
+.barson1:after,.barson2::after {
+  content: "";
+  height: 7px;
+  position: absolute;
+  top: 25px;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+  width: 30px;
+  z-index: 3;
+}
+.barson1::before,.barson1:after{
+  background: #4880ff;
+}
+
+.barson2::before,.barson2::after{
+  background:#f05959;
+  transform: rotate(45deg);
+  transition: all .5s;
+}
+
+@media(min-width:768px){
+  .inputGradient{
+      height: 1.51rem;
+  }
+  .inputGradient::before{
+      line-height: 1.51rem;
+  }
+  #inputTitle,#roomId{
+      height: 1.4rem;
+      font-size: 18px;
+  }
+  .buildRoom,.roomId{
+      height:1.51rem;
+      line-height: 1.51rem;
+      font-size: 16px;
+  } 
+  .roomId::before{
+    line-height: 1.51rem;
+  }
+}

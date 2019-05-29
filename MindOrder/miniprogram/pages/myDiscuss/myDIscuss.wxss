@@ -1,0 +1,24 @@
+/* miniprogram/pages/myDiscuss/myDIscuss.wxss */
+.allTheme{
+  width: 100%;
+  height: 100%;
+}
+
+.titleItem{
+  min-height: 100rpx;
+  display: flex;
+  align-items: center;
+  margin: auto 10rpx;
+  border-bottom: 5rpx solid rgb(205, 209, 212);
+  font-size: 30rpx;
+}
+
+#text{
+  width: 650rpx;
+  margin-left: 30rpx;
+}
+
+#more{
+  width: 50rpx;
+  height: 50rpx;
+}

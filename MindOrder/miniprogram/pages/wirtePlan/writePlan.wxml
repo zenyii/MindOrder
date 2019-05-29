@@ -1,0 +1,13 @@
+<!--miniprogram/pages/wirtePlan/writePlan.wxml-->
+<!--排行榜显示-->
+
+<!--方案书写-->
+<view class='inputPanel'>
+  <textarea placeholder='写出你认为好的方案' value='{{end}}' bindinput='editPlan'></textarea><button bindtap='surePlan'>确认</button>
+</view>
+
+<!--方案展示区-->
+<view class='display' wx:for="{{Plan}}">{{item.content}}</view>
+
+<button bindtap='nextPage'>下一页</button>
+

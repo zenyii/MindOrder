@@ -1,0 +1,9 @@
+<!--miniprogram/pages/advice/advice.wxml-->
+ <!-- 中间编辑便签界面-->
+<view class='paperback'>
+  <view class='paper'>
+    <textarea placeholder='请填写您的意见' bindinput="addWord" id='word' focus='{{isActive}}' value='{{end}}'></textarea>
+  </view>
+</view>
+
+<button class='submit'  bindtap='inputAdvice' >提交反馈</button>

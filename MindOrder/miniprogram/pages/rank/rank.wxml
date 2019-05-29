@@ -1,0 +1,27 @@
+<!--miniprogram/pages/rank/rank.wxml-->
+<view class='rank'>
+  <view wx:for="{{rankMsg}}" wx:for-index="index" class="{{index<3?'MsgItemtop':'MsgItem'}}" >
+  <!--排行前三独立样式-->
+      <view class='num' wx:if="{{index < 3}}" style="background:{{rankColor[index]}}"><text id='num'>NO.{{index+1}}</text></view>
+      <view wx:if="{{index < 3}}" class='Message'>{{item.text}}</view>
+        <view wx:if="{{index < 3}}" class='goodItem'>
+            <image id='good' wx:if="{{!item.isGood}}" src='../../icon/good.png'></image>
+            <image id='good' wx:if="{{item.isGood}}" src='../../icon/gooded.png'></image>
+            <text>{{item.supportNum}}</text>
+          </view>
+    <!--排行大于三样式独立-->
+    <view class='num' wx:if="{{index > 2}}"></view>
+      <view wx:if="{{index > 2}}" class='Message'>{{item.text}}</view>
+      <view wx:if="{{index > 2}}" class='goodItem'>
+        <image id='good' wx:if="{{!item.isGood}}" src='../../icon/good.png'></image>
+        <image id='good' wx:if="{{item.isGood}}" src='../../icon/gooded.png'></image>
+        <text>{{item.supportNum}}</text>
+      </view>
+  </view>
+
+  <!--房主视角按钮-->
+  <view class='bottom' wx:if="{{isroomMaster}}">
+    <view id="again" bindtap='again'><text id="btnText">继续讨论</text></view>
+    <view id='report' bindtap='goReport'><text id="btnText">生成报告</text></view>
+  </view>
+</view>

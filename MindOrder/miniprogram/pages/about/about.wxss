@@ -1,0 +1,52 @@
+/* miniprogram/pages/about/about.wxss */
+page{
+  background: rgb(221, 223, 222);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.banner{
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  margin-top: 50rpx;
+}
+
+.logo{
+  margin-top: 50rpx;
+  text-align: center;
+  background: white;
+  border-radius: 10rpx;
+}
+
+.logo image{
+  width: 100rpx;
+  height: 100rpx;
+}
+
+#green{
+  color: #55DBBF;
+}
+
+.text{
+  width: 100%;
+  font-size:30rpx;
+  color:rgb(119, 118, 118);
+  background: white;
+  margin: auto;
+  word-break: break-all;
+  margin-top: 10rpx;
+  margin-bottom: 50rpx;
+}
+
+#title{
+  text-align: center;
+  color: #4880FF
+}
+
+.content{
+  margin: 10rpx 30rpx;
+  font-size: 25rpx;
+  line-height:50rpx;
+}
