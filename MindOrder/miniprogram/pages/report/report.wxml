@@ -1,0 +1,57 @@
+<!-- miniprogram/pages/report/report.wxml -->
+<view class="header">
+    <view class="titleMsg">
+        <image src="../../icon/stared.png" />
+        <span class="title">主题: XXXXX</span>
+        <view class="date">日期: XX</view>
+        <view class="date">时长: XXX</view>
+        <view class="button">
+            导出
+            <span class="iconfont icon-youjiankuohao"></span>
+        </view>
+    </view>
+    <view class="display">
+        <view class="circle" style="background-image:url(../../icon/circle.png)">
+            <view class="text">本次有效方案数</view>
+            <view class="text">{{}}个</view>
+        </view>
+    </view>
+</view>
+<view class="contain">
+    <view class="markKing">
+        <view class="avatar">
+            <image src="../../icon/bg.jpg" />
+            <view class="map" style="background-image:url(../../icon/zanKing.png)"></view>
+        </view>
+        <view class="tips">
+            本次获赞王
+            <span class="nums">+47{{}}</span>
+        </view>
+    </view>
+    <view class="rank">
+        <view class="rankHeader">
+            <checkbox-group bindchange="checkboxChange">
+                <label class="checkbox">
+                    <checkbox value="{{item.name}}" checked="{{item.checked}}" />
+                    <span class="title">所有排行榜</span>
+                </label>
+            </checkbox-group>
+            <view class="iconfont icon-youjiankuohao outerArr"></view>
+        </view>
+    </view>
+    <view class="rankContent">
+        <block wx:for="{{rank}}" wx:key="" wx:for-index="outerIndex" wx:for-item="outerItem">
+            <view>
+                <view class="innerHeader"  data-show="show{{outerIndex}}" bindtap="lunTimes" id="lun-{{outerIndex}}">
+                    <span class="iconfont icon-youjiankuohao innerArr"></span>
+                    <span class="rankName">第{{number[outerIndex]}}轮</span>
+                </view>
+                <view class="innerContent {{show ? '':'hide'}}" style="">
+                    <block wx:for="{{outerItem}}" wx:key="" wx:for-item="innerItem" wx:for-index="innerIndex">
+                        <view class="innerText">{{innerIndex+1}}. {{innerItem.text}}</view>
+                    </block>
+                </view>
+            </view>
+        </block>
+    </view>
+</view>

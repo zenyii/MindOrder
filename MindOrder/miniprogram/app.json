@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/selectWords/selectWords",
+    "pages/index/index",
+    "pages/try/try",
+    "pages/report/report",
+    "pages/about/about",
+    "pages/show/show",
+    "pages/setTime/setTime",
+    "pages/rank/rank",
+    "pages/beforeDiscussTime/beforeDiscussTime",
+    "pages/preparing/preparing",
+    "pages/myStar/myStar",
+    "pages/myDiscuss/myDIscuss",
+    "pages/setting/setting",
+    "pages/advice/advice",
+    "pages/homePage/homePage",
+    "pages/invite/invite",
+    "pages/buildRooming/buildRooming",
+    "pages/databaseGuide/databaseGuide",
+    "pages/logs/logs",
+    "pages/inputRoomId/inputRoomId",
+    "pages/login/login",
+    "pages/showPlan/showPlan"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#02063f",
+    "navigationBarTitleText": "头脑智序",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#ffffff",
+    "borderStyle": "black",
+    "selectedColor": "#4880ff",
+    "list": [
+      {
+        "selectedIconPath": "icon/indexChecked.png",
+        "iconPath": "icon/index.png",
+        "pagePath": "pages/logs/logs",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "icon/mineChecked.png",
+        "iconPath": "icon/mine.png",
+        "pagePath": "pages/logs/logs",
+        "text": "我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

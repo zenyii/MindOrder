@@ -1,0 +1,12 @@
+<!--pages/show/show.wxml-->
+<view class='theme'><text>主题:{{title}}</text></view>
+
+<view class='messageBack'>
+<view class='message' wx:for='{{showMessage}}' wx:key="" wx:for-index='index' wx:key='item'  style='background:{{item.backColor}}'>
+    <view id='content'>{{item.text}}</view> 
+      <image class='love' id='{{index}}' bindtap='like' wx:if='{{!item.isgood}}' src='../../icon/good2.png'></image>
+      <image class='love' id='{{index}}' bindtap='like' wx:if='{{item.isgood}}' src='../../icon/gooded2.png'></image>
+</view>
+</view>
+
+<view class='bottom'><button class='insure' bindtap='change'>前往排行榜 ></button></view>
