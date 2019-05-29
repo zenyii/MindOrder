@@ -8,7 +8,7 @@ page{
   letter-spacing:5rpx;
   color: rgb(83, 87, 124);
   background: rgb(190, 218, 255);
-  overflow: scroll;
+    overflow: scroll;
   text-overflow:clip;
   white-space: nowrap;
 }

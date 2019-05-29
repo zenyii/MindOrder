@@ -220,7 +220,7 @@ Page({
           term: app.globalData.term,          //轮数记录
           supporter: [],                        //点赞者存放数组
           supportNum: 0,                          //存取点赞数  
-          openid:app.globalData.selfOpenId   //词条作者的openid
+          openid:app.globalData.selfOpenId,   //词条作者的openid
         }
       })
       //若有openId属性重复的，则只插入词条数据

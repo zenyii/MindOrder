@@ -72,6 +72,26 @@ Page({
     this.dataQuary();
   
   },
+  //排行榜排序方法
+  orderwords: function () {
+    //let temp, temp1, temp2,i,j
+    var arr = this.data.rankMsg
+    arr.sort(function (a, b) { //自定义函数排序
+      var a1 = a.supportNum;
+      var b1 = b.supportNum;
+      if (a1 < b1) {
+        return 1;
+      } else if (a1 > b1) {
+        return -1;
+      }
+      return 0;
+    }
+    )
+    this.setData({
+      rankMsg: arr
+    })
+    //console.log(this.data.rankMsg)
+  },
 
   /* 同步房间数据 */
   dataQuary: function () {

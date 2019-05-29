@@ -1,10 +1,11 @@
 {
   "pages": [
-    "pages/show/show",
-    "pages/try/try",
     "pages/index/index",
+    "pages/selectWords/selectWords",
+    "pages/try/try",
     "pages/report/report",
     "pages/about/about",
+    "pages/show/show",
     "pages/setTime/setTime",
     "pages/rank/rank",
     "pages/beforeDiscussTime/beforeDiscussTime",

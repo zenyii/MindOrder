@@ -8,7 +8,7 @@ App({
     roomMaster: "",//获取房主的openid
     hasUserInfo: false,
     userInfo: null,
-    term: 2,              //轮数默认为1,再来一轮时累加
+    term: 1,              //轮数默认为1,再来一轮时累加
     nowPage: 0,          //判断当前页面状态，主要区分是书写(1)、点赞(2)、排行榜(3)
     selfOpenId: "",
     minute: '',

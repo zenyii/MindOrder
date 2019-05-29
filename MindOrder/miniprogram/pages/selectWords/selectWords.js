@@ -12,6 +12,7 @@ Page({
     rankColor: ['#F05959', '#F6DA2E', '#AEEDE1'],
     lastPlan:[],                //选择的有效方案
     isroomMaster:false          //判断是否为房主
+
   },
 
   /**
@@ -26,6 +27,7 @@ Page({
       })
     }
 
+
     //获取轮数并转化成数组
     for(let z = 0;z < app.globalData.term ;z++){
       that.data.termArr.push(z);
@@ -33,13 +35,13 @@ Page({
     this.setData({
       termArr:that.data.termArr
     })
-    //console.log(that.data.termArr)
     
 
     //拉取该房间内所有词条
     const db = wx.cloud.database();
     db.collection('words').where({
       roomNum:app.globalData.roomNum
+
     }).field({ 
       text:true,
       term:true,
@@ -62,13 +64,11 @@ Page({
         }
       }
       
-        //console.log(that.data.allMsg);
 
       //初始化rankMsg数组
       for(let x = 0;x < app.globalData.term; x++){
         that.data.rankMsg[x] = [];
       }
-      //console.log(that.data.rankMsg);
       //将词条按照轮数分类
       for (let y = 0; y < that.data.allMsg.length; y++) {
           let obj = {
@@ -81,7 +81,6 @@ Page({
       that.setData({
         rankMsg: that.data.rankMsg
       })
-      //console.log(that.data.rankMsg);
 
     })
   },
@@ -129,6 +128,7 @@ Page({
     wx.redirectTo({
       url: '../report/report',
     })
+
   },
 
   /**

@@ -16,7 +16,7 @@ Page({
     queryRes: null,//词条点赞者openID数组
     querywordsId: null,//点赞词条的_id
     color: ["#8AACFF", "#A6B1F0", "#9AE3F0", "#AEEDE1", "#F8DC2E"],
-    title:'tghrtdfhrtfhsdrfghrtsgdrgtrtshsrfthgfrtstgrtsgtshrtyhrtyhrtyhrtyhrth',
+    title:'',
     timer:null
   },
 
@@ -165,6 +165,26 @@ Page({
         //that.getRandomInt(100000, 999999)
       }
     })
+  },
+  //排行榜排序方法
+  orderwords: function () {
+    //let temp, temp1, temp2,i,j
+    var arr = this.data.rankMsg
+    arr.sort(function (a, b) { //自定义函数排序
+      var a1 = a.supportNum;
+      var b1 = b.supportNum;
+      if (a1 < b1) {
+        return 1;
+      } else if (a1 > b1) {
+        return -1;
+      }
+      return 0;
+    }
+    )
+    this.setData({
+      rankMsg: arr
+    })
+    //console.log(this.data.rankMsg)
   },
   inarray: function (index, array) {
     let i
