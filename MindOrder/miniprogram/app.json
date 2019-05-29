@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/report/report",
     "pages/selectWords/selectWords",
     "pages/try/try",
-    "pages/report/report",
     "pages/about/about",
     "pages/show/show",
     "pages/setTime/setTime",

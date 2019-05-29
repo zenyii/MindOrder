@@ -121,7 +121,6 @@ Page({//
         });
         console.log(userInfo, 'onloadUser')
         that.resetSwiper();
-
         //开始不断加载数据
         that.dataQuary();
       }, err => {
@@ -216,9 +215,7 @@ Page({//
   },
   /* 转发 */
   onShareAppMessage: function (ops) {
-
     let that = this;
-
     console.log(ops, '转发')
     if (ops.form === 'button') {
       console.log(ops.target, 'button');
@@ -257,12 +254,12 @@ Page({//
     //console.log(e);
     //console.log(id, 'id');
 
-    wx.showModal({
-      title: '提示',
-      content: '您确定要踢掉该用户？',
-      success: function (res) {
-        if (res.confirm) {
-          if (id.indexOf('delete') !== -1) {
+    if (id.indexOf('delete') !== -1) {
+      wx.showModal({
+        title: '提示',
+        content: '您确定要踢掉该用户？',
+        success: function (res) {
+          if (res.confirm) {
             let index = id[id.length - 1];
             // console.log(index, 'index');
             let userInfo = that.data.userInfo;
@@ -271,15 +268,14 @@ Page({//
             that.setData({
               userInfo: userInfo
             })
+            this.deletePerson(that.data.userInfo);
+            this.resetSwiper();
             //console.log(this.data.userInfo, 'userinfo')
           }
-          this.deletePerson(that.data.userInfo);
-          this.resetSwiper();
+
         }
-
-      }
-    })
-
+      })
+    }
   },
 
   deletePerson: function (userInfo) {

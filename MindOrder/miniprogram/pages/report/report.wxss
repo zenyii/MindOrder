@@ -132,16 +132,8 @@ page {
     /*  margin-left: 2px; */
 }
 
-/* .tip::after{
-    content: "";
-    position: absolute;
-    right: -5px;
-    font-size: 14px;
-    color: #f6da2e;
-    bottom: 0;
-} */
 
-.rank {
+.rank,.personal {
     padding-bottom: 4px;
     border-bottom: 1px solid #f2f2f2;
 }
@@ -172,7 +164,7 @@ page {
     top: -5px;
 }
 
-.rank .rankHeader {
+.rank .rankHeader ,.personal .personalHeader{
     width: 100%;
     height: 30px;
     line-height: 30px;
@@ -196,7 +188,7 @@ page {
 /*checkbox 整体大小  */
 
 
-.checkbox {
+.checkbox,.personalCheckbox {
     width: 40rpx;
     height: 40rpx;
     padding-left: 5px;
@@ -205,14 +197,21 @@ page {
     box-sizing: border-box;
     position: relative;
 }
-
-.checkbox::before{
-    content: '所有排行榜';
+.checkbox::before,.personalCheckbox::before{
     position: absolute;
     display: inline-block;
     width: 180rpx;
     left: 100%;
     top: -4px;
+}
+
+
+.checkbox::before{
+    content: '所有排行榜';
+}
+
+.personalCheckbox::before{
+    content: '个人记录';
 }
 
 /*checkbox 选项框大小  */
@@ -248,13 +247,13 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
     margin-left:0px;
 }
 
-.rankContent .innerHeader {
-    /*       border: 1px solid black; */
+.rankContent .innerHeader,.personalContent .innerHeader {
     font-size: 14px;
     line-height: 25px;
     height: 25px;
     background: white;
     transition: all .1s;
+    padding-left: 18px;
 }
 
 .innerArr {
@@ -265,11 +264,11 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
     transform: rotate(0deg);
 }
 
-.rankContent .innerContent {
+.rankContent .innerContent ,.personalContent .innerContent{
     font-size: 14px;
 }
 
-.rankContent .innerText {
+.rankContent .innerText,.personalContent .innerText {
     line-height: 22px;
     margin-left: 55px;
 }
@@ -295,6 +294,29 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
     transform:rotate(0deg);
 }
 .iconRightLeft:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(0deg);
+}
+
+
+
+.personalLeftRight:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(90deg);
+}
+.personalUpDown:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(180deg);
+}
+.personalDownUp:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(0deg);
+}
+.personalRightLeft:before{
     display: inline-block;
     transition: all 0.1s;
     transform:rotate(0deg);

@@ -48,7 +48,7 @@ App({
     } else {
       redirect_url = path.path;
     }
-    if (!selfOpenId || !userInfo) {
+    if (!selfOpenId || !userInfo.avatarUrl) {
       wx.reLaunch({
         url: 'pages/login/login?redirect_url=' + encodeURIComponent(`/${redirect_url}`),
       })

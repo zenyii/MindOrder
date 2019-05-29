@@ -24,24 +24,7 @@ form{
     box-sizing: border-box;
     position: relative;
 }
-/* .inputGradient::before{
->>>>>>> 66eb74bfdcd11256933b1a8b118474d76f1bac37
-    content: '分 钟';
-    position: absolute;
-    display: inline-block;
-    top: 0;
-    right: -40px;
-    font-size: 15px;
-    line-height: 45px;
-<<<<<<< HEAD
-}
-#prepareTime,#writeTime{
-    position: relative;
-    width: 49vw;
-    height: 41px;
-    border-radius: 5px;
-=======
-} */
+
 #prepareTime,#writeTime{
     position: relative;
     width: 58.8vw;
@@ -96,11 +79,6 @@ button::after {
         width: 60vw;
         height: 1.51rem;
     }
-    /* .inputGradient::before{
-        line-height: 1.51rem;
-        font-size: 16px;
-        right: -50px;
-    } */
     #prepareTime,#writeTime{
         width: 59.4vw;
         height: 1.4rem;

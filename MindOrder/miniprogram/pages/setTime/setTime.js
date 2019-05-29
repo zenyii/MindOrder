@@ -7,27 +7,27 @@ Page({
     timeHold: '',
     timePrepare: '',
     rank: 0,
-    placeHolderWri:1,
-    placeHolderPre:1
+    placeHolderWri: 1,
+    placeHolderPre: 1,
+    startTime:0
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     let that = this;
     let rank = options.rank;
-    if(options.placeHolderWri){
+    if (options.placeHolderWri) {
       that.setData({
-        placeHolderWri:Number(options.placeHolderWri)
+        placeHolderWri: Number(options.placeHolderWri)
       })
     }
-    console.log(rank,'rank');
+    console.log(rank, 'rank');
     let timeRangeWrite = [];
     let timeRangePrepare = [];
     Array.from({ length: 58 }, (v, i) => {
-      timeRangeWrite.push(i+1);
-      timeRangePrepare.push(i*5);
+      timeRangeWrite.push(i + 1);
+      timeRangePrepare.push(i * 5);
     });
     that.setData({
       rank: rank,
@@ -39,20 +39,20 @@ Page({
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       timeHold: e.detail.value,
-      placeHolderWri:0
+      placeHolderWri: 0
     })
   },
   bindPickerChangeP(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       timePreparing: e.detail.value,
-      placeHolderPre:0
+      placeHolderPre: 0
     })
   },
-  bindfocus:function(){
+  bindfocus: function () {
     console.log('焦点时间')
   },
-  bindblus:function(){
+  bindblus: function () {
     console.log('失焦事件')
   },
   formSubmit: function () {
@@ -63,7 +63,7 @@ Page({
     app.globalData.second = `60`;
     //console.log(app.globalData.minute, 'minute')
     //console.log(app.globalData.second, 'second')
-    console.log(that.data.rank,'rank')
+    console.log(that.data.rank, 'rank')
     if (that.data.rank == 0) {//初次
       var timeRangePrepare = that.data.timeRangePrepare;
       var timePreparing = timeRangePrepare[that.data.timePreparing];//获取时间值
@@ -71,32 +71,54 @@ Page({
         .then(res => {
           console.log('更新准备时间成功');
         })
+        that.startTimeTamp();
+
     }
-    
+
     app.onUpdate('rooms', app.globalData.roomId, 'meetingTime', timeHold)
-        .then(res => {
-          if(that.data.rank==0){
-            wx.redirectTo({
-              url: `../beforeDiscussTime/beforeDiscussTime?timePreparing=${timePreparing}&timeHold=${timeHold}`,
-              success: function () {
-                app.onUpdate('rooms', app.globalData.roomId, 'allset', true);
-                console.log('房主设置时间成功！allset设为true')
-              }
-            })
-          }else{
-            app.onUpdate('rooms', app.globalData.roomId, 'again', true)
-            wx.redirectTo({
-              url: `../try/try`,
-            })
-          }
-         
-        })
+      .then(res => {
+        if (that.data.rank == 0) {
+          wx.redirectTo({
+            url: `../beforeDiscussTime/beforeDiscussTime?timePreparing=${timePreparing}&timeHold=${timeHold}`,
+            success: function () {
+              app.onUpdate('rooms', app.globalData.roomId, 'allset', true);
+              console.log('房主设置时间成功！allset设为true')
+            }
+          })
+        } else {
+          app.onUpdate('rooms', app.globalData.roomId, 'again', true)
+          wx.redirectTo({
+            url: `../try/try`,
+          })
+        }
+
+      })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
 
+  },
+  //计时开始方法
+  startTimeTamp: function () {
+    let that = this;
+    //获取当前时间戳
+    this.setData({
+      startTime: Date.parse(new Date()) / 1000
+    })
+    //保存时间戳作为房间开始时刻
+    const db = wx.cloud.database()
+    db.collection('rooms').doc(app.globalData.roomId).update({
+      data: {
+        //设置开始时间的时间戳
+        startTime: that.data.startTime
+      },
+      success: res => {
+
+      }
+    })
+    console.log(that.data.startTime,'startTime');
   },
 
   /**

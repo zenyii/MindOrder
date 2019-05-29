@@ -215,10 +215,12 @@ Page({
           roomNum: app.globalData.roomNum,              //所属房间
           text: obj.word,                               //词条内容
           backColor: that.data.backColor,               //词条背景颜色
-          nickName: app.globalData.userInfo.nickName,   //词条作者名称
+          title: app.globalData.title,   //词条作者名称
+          avatarUrl:app.globalData.userInfo.avatarUrl,
           term: app.globalData.term,          //轮数记录
           supporter: [],                        //点赞者存放数组
-          supportNum: 0                          //存取点赞数  
+          supportNum: 0,                          //存取点赞数  
+          openid:app.globalData.selfOpenId   //词条作者的openid
         }
       })
       //若有openId属性重复的，则只插入词条数据
@@ -372,7 +374,7 @@ Page({
   getRank:function(){
     var that = this;
     //若第一轮或上一轮没有数据则不跳转页面
-    if(app.globalData.term<2 || this.data.rankMsg.length){
+    if(app.globalData.term<2 || !this.data.rankMsg.length){
       wx.showToast({
         title: '无数据',
         duration: 1000,

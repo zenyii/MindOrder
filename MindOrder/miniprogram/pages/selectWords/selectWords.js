@@ -32,7 +32,7 @@ Page({
     //拉取该房间内所有词条
     const db = wx.cloud.database();
     db.collection('words').where({
-      roomNum:app.globalData.roomNum7
+      roomNum:app.globalData.roomNum
     }).field({ 
       text:true,
       term:true,

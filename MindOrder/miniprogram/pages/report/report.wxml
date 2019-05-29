@@ -2,9 +2,9 @@
 <view class="header">
     <view class="titleMsg">
         <image src="../../icon/stared.png" />
-        <span class="title">主题: XXXXX</span>
-        <view class="date">日期: XX</view>
-        <view class="date">时长: XXX</view>
+        <span class="title">主题: {{king.title}}</span>
+        <view class="date">日期: {{king.date}}</view>
+        <view class="date">时长: {{king.totalTime}} 分钟</view>
         <view class="button">
             导出
             <span class="iconfont icon-youjiankuohao"></span>
@@ -20,39 +20,69 @@
 <view class="contain">
     <view class="markKing">
         <view class="avatar">
-            <image src="../../icon/bg.jpg" />
+            <image src="{{king.avatarUrl}}" />
             <view class="map" style="background-image:url(../../icon/zanKing.png)"></view>
         </view>
         <view class="tips">
             本次获赞王
-            <span class="nums">+47{{}}</span>
+            <span class="nums">+{{king.supportNum}}</span>
         </view>
     </view>
-    <view class="rank {{tipsss&&'tipsss'}}" style="background:{{rankbg?'#6188ff':'white'}};color:{{rankbg?'white':'black'}}">
-        <view class="rankHeader" id="rankHeader" catchtap="listParentTap">
-            <checkbox-group bindchange="checkboxChange">
-                <label class="checkbox" id="checkbox">
-                    <checkbox value="{{item.name}}" checked="{{item.checked}}" />
-                </label>
-                <!-- <span class="title">所有排行榜</span> -->
-            </checkbox-group>
-            
-            <view class="iconfont icon-youjiankuohao outerArr {{show?'iconUpDown':'iconDownUp'}}"></view>
-        </view>
-    </view>
-    <view class="rankContent" wx:if='{{show}}'>
-        <block wx:for="{{list}}" wx:key="this" wx:for-index="parentIndex" wx:for-item="parentItem">
-            <view style="border-bottom:1px solid #F2F2F2;">
-                <view class="innerHeader" data-parentindex="{{parentIndex}}" bindtap="listTap" style="background:{{parentItem.show?'#6188ff':'white'}};color:{{parentItem.show?'white':'black'}}">
-                    <span class="iconfont icon-youjiankuohao innerArr {{parentItem.show?'iconLeftRight':'iconRightLeft'}}"></span>
-                    <span class="rankName">第{{number[parentIndex]}}轮</span>
-                </view>
-                <view class="innerContent" style="" data-parentindex="{{parentIndex}}" wx:if='{{parentItem.show}}'>
-                    <block wx:for="{{parentItem.text}}" wx:key="this" wx:for-item="Item" wx:for-index="Index">
-                        <view class="innerText">{{Index+1}}. {{Item}}</view>
-                    </block>
-                </view>
+    <view>
+        <view class="rank {{tipsss&&'tipsss'}}" style="background:{{rankbg?'#BDDAFF':'white'}};color:{{rankbg?'white':'black'}}">
+            <view class="rankHeader" id="rankHeader" catchtap="listParentTap">
+                <checkbox-group bindchange="checkboxChange">
+                    <label class="checkbox" id="checkbox">
+                        <checkbox value="{{item.name}}" checked="{{item.checked}}" />
+                    </label>
+                    <!-- <span class="title">所有排行榜</span> -->
+                </checkbox-group>
+                <view class="iconfont icon-youjiankuohao outerArr {{show?'iconUpDown':'iconDownUp'}}"></view>
             </view>
-        </block>
+        </view>
+        <view class="rankContent" wx:if='{{show}}'>
+            <block wx:for="{{list}}" wx:key="this" wx:for-index="parentIndex" wx:for-item="parentItem">
+                <view style="border-bottom:1px solid #F2F2F2;">
+                    <view class="innerHeader" data-parentindex="{{parentIndex}}" bindtap="listTap" style="background:{{parentItem.show?'#BDDAFF':'white'}};color:{{parentItem.show?'white':'black'}}">
+                        <span class="iconfont icon-youjiankuohao innerArr {{parentItem.show?'iconLeftRight':'iconRightLeft'}}"></span>
+                        <span class="rankName">第{{number[parentIndex]}}轮</span>
+                    </view>
+                    <view class="innerContent" style="" data-parentindex="{{parentIndex}}" wx:if='{{parentItem.show}}'>
+                        <block wx:for="{{parentItem.text}}" wx:key="this" wx:for-item="Item" wx:for-index="Index">
+                            <view class="innerText">{{Index+1}}. {{Item}}</view>
+                        </block>
+                    </view>
+                </view>
+            </block>
+        </view>
     </view>
+    <view>
+        <view class="personal" style="background:{{personalbg?'#55DBBF':'white'}};color:{{personalbg?'white':'black'}}">
+            <view class="personalHeader" id="personalHeader" catchtap="personalListParentTap">
+                <checkbox-group bindchange="personalCheckboxChange">
+                    <label class="personalCheckbox" id="personalCheckbox">
+                        <checkbox value="{{item.name}}" checked="{{item.checked}}" />
+                    </label>
+                    <!-- <span class="title">所有排行榜</span> -->
+                </checkbox-group>
+                <view class="iconfont icon-youjiankuohao outerArr {{personalShow?'personalUpDown':'personalDownUp'}}"></view>
+            </view>
+        </view>
+        <view class="personalContent" wx:if='{{personalShow}}'>
+            <block wx:for="{{personalList}}" wx:key="this" wx:for-index="parentIndex" wx:for-item="parentItem">
+                <view style="border-bottom:1px solid #F2F2F2;">
+                    <view class="innerHeader" data-parentindex="{{parentIndex}}" bindtap="personalListTap" style="background:{{parentItem.personalShow?'#55DBBF':'white'}};color:{{parentItem.personalShow?'white':'black'}}">
+                        <span class="iconfont icon-youjiankuohao innerArr {{parentItem.personalShow?'personalLeftRight':'personalRightLeft'}}"></span>
+                        <span class="rankName">第{{number[parentIndex]}}轮</span>
+                    </view>
+                    <view class="innerContent" style="" data-parentindex="{{parentIndex}}" wx:if='{{parentItem.personalShow}}'>
+                        <block wx:for="{{parentItem.text}}" wx:key="this" wx:for-item="Item" wx:for-index="Index">
+                            <view class="innerText">{{Index+1}}. {{Item}}</view>
+                        </block>
+                    </view>
+                </view>
+            </block>
+        </view>
+    </view>
+     
 </view>

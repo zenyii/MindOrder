@@ -17,7 +17,7 @@ Page({
     querywordsId: null,//点赞词条的_id
     color: ["#8AACFF", "#A6B1F0", "#9AE3F0", "#AEEDE1", "#F8DC2E"],
     title:'',
-    timer:null
+    timer:true
   },
 
   /**
@@ -184,6 +184,7 @@ Page({
   /* 同步房间数据 */
   dataQuary: function () {
     let that = this;
+    if(!that.data.timer) return
     app.onQuery('rooms', { roomNum: app.globalData.roomNum },
       { again: true })
       .then(res => {
@@ -194,10 +195,10 @@ Page({
         })
         //console.log("test")
         if (!data.again) {
-          that.data.timer = setTimeout(function () {
+          setTimeout(function () {
             //要延时执行的代码
             that.dataQuary();
-          }, 4000) //延迟时间
+          }, 1000) //延迟时间
         } else {//房主已经设置开始了,传入准备时间
           if (that.data.isAgain) {//如果是成员，接收到allset后直接跳转到准备时间页面
             wx.redirectTo({
@@ -233,7 +234,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    clearTimeout(this.data.timer);
+    this.setData({
+      timer:false
+    })
   },
 
   /**
