@@ -23,6 +23,7 @@
     "pages/inputRoomId/inputRoomId",
     "pages/login/login",
     "pages/showPlan/showPlan"
+
   ],
   "window": {
     "backgroundTextStyle": "light",

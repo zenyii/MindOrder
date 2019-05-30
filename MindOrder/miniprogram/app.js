@@ -80,4 +80,30 @@ App({
     })
   },
 
+    /* 更改二条记录 */
+    onUpdateTwo: function (collect, where, data, value,data1,value1) {
+      const db = wx.cloud.database()
+      return db.collection(collect).doc(where).update({
+        data: {
+          [data]: value,
+          [data1]:value1
+        }
+  
+      })
+    },
+
+   /* 更改三条记录 */
+   onUpdateThree: function (collect, where, data, value ,data1,value1,data2,value2) {
+    const db = wx.cloud.database()
+    return db.collection(collect).doc(where).update({
+      data: {
+        [data]: value,
+        [data1]:value1,
+        [data2]:value2
+      }
+
+    })
+  },
+
+
 })

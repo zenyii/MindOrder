@@ -66,7 +66,10 @@ Page({
         validPlan:[],
         startTime:0,
         totalTime:'',
-        date:''
+        date:'',
+        hasRank:false,
+        hasPersonal:false,
+        reportAgain:false
       })
       .then(res => {
         console.log(res);

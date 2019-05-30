@@ -2,18 +2,18 @@
 <view class="header">
     <view class="titleMsg">
         <image src="../../icon/stared.png" />
-        <span class="title">主题: {{king.title}}</span>
-        <view class="date">日期: {{king.date}}</view>
-        <view class="date">时长: {{king.totalTime}} 分钟</view>
-        <view class="button">
-            导出
+        <span class="title">主题: {{title}}</span>
+        <view class="date">日期: {{date}}</view>
+        <view class="date">时长: {{totalTime}}</view>
+        <view class="button" bindtap="{{isRoomMaster?'export':'generate'}}">
+            {{isRoomMaster&&!reportAgain?'导出':'生成'}}
             <span class="iconfont icon-youjiankuohao"></span>
         </view>
     </view>
     <view class="display">
         <view class="circle" style="background-image:url(../../icon/circle.png)">
             <view class="text">本次有效方案数</view>
-            <view class="text">{{}}个</view>
+            <view class="text">{{validPlan.length}}个</view>
         </view>
     </view>
 </view>
@@ -28,22 +28,23 @@
             <span class="nums">+{{king.supportNum}}</span>
         </view>
     </view>
-    <view>
-        <view class="rank {{tipsss&&'tipsss'}}" style="background:{{rankbg?'#BDDAFF':'white'}};color:{{rankbg?'white':'black'}}">
+    <view wx:if="{{isRoomMaster||hasRank}}">
+        <view class="rank {{tipsss&&isRoomMaster&&'tipsss'}}" style="background:{{rankbg?'#BDDAFF':'white'}};color:{{rankbg?'white':'black'}}">
             <view class="rankHeader" id="rankHeader" catchtap="listParentTap">
-                <checkbox-group bindchange="checkboxChange">
+                <checkbox-group wx:if="{{isRoomMaster&&!reportAgain}}" bindchange="checkboxChange">
                     <label class="checkbox" id="checkbox">
-                        <checkbox value="{{item.name}}" checked="{{item.checked}}" />
+                        <checkbox value="rank" checked="" />
                     </label>
                     <!-- <span class="title">所有排行榜</span> -->
                 </checkbox-group>
+                <span wx:else class="exportTitle">所有排行榜</span>
                 <view class="iconfont icon-youjiankuohao outerArr {{show?'iconUpDown':'iconDownUp'}}"></view>
             </view>
         </view>
         <view class="rankContent" wx:if='{{show}}'>
             <block wx:for="{{list}}" wx:key="this" wx:for-index="parentIndex" wx:for-item="parentItem">
                 <view style="border-bottom:1px solid #F2F2F2;">
-                    <view class="innerHeader" data-parentindex="{{parentIndex}}" bindtap="listTap" style="background:{{parentItem.show?'#BDDAFF':'white'}};color:{{parentItem.show?'white':'black'}}">
+                    <view class="innerHeader" data-parentindex="{{parentIndex}}" bindtap="listTap" style="background:{{parentItem.colorShow&&parentItem.show?'#BDDAFF':'white'}};color:{{parentItem.colorShow&&parentItem.show?'white':'black'}}">
                         <span class="iconfont icon-youjiankuohao innerArr {{parentItem.show?'iconLeftRight':'iconRightLeft'}}"></span>
                         <span class="rankName">第{{number[parentIndex]}}轮</span>
                     </view>
@@ -56,22 +57,23 @@
             </block>
         </view>
     </view>
-    <view>
+    <view wx:if="{{isRoomMaster||hasPersonal}}">
         <view class="personal" style="background:{{personalbg?'#55DBBF':'white'}};color:{{personalbg?'white':'black'}}">
             <view class="personalHeader" id="personalHeader" catchtap="personalListParentTap">
-                <checkbox-group bindchange="personalCheckboxChange">
+                <checkbox-group wx:if="{{isRoomMaster&&!reportAgain}}" bindchange="personalCheckboxChange">
                     <label class="personalCheckbox" id="personalCheckbox">
-                        <checkbox value="{{item.name}}" checked="{{item.checked}}" />
+                        <checkbox class="personalCB" value="personal" checked="" />
                     </label>
-                    <!-- <span class="title">所有排行榜</span> -->
+                    <!-- <span class="title"></span> -->
                 </checkbox-group>
+                <span wx:else class="exportTitle">个人记录</span>
                 <view class="iconfont icon-youjiankuohao outerArr {{personalShow?'personalUpDown':'personalDownUp'}}"></view>
             </view>
         </view>
         <view class="personalContent" wx:if='{{personalShow}}'>
             <block wx:for="{{personalList}}" wx:key="this" wx:for-index="parentIndex" wx:for-item="parentItem">
                 <view style="border-bottom:1px solid #F2F2F2;">
-                    <view class="innerHeader" data-parentindex="{{parentIndex}}" bindtap="personalListTap" style="background:{{parentItem.personalShow?'#55DBBF':'white'}};color:{{parentItem.personalShow?'white':'black'}}">
+                    <view class="innerHeader" data-parentindex="{{parentIndex}}" bindtap="personalListTap" style="background:{{parentItem.personalColorShow && parentItem.personalShow?'#55DBBF':'white'}};color:{{parentItem.personalColorShow&&parentItem.personalShow?'white':'black'}}">
                         <span class="iconfont icon-youjiankuohao innerArr {{parentItem.personalShow?'personalLeftRight':'personalRightLeft'}}"></span>
                         <span class="rankName">第{{number[parentIndex]}}轮</span>
                     </view>
@@ -84,5 +86,20 @@
             </block>
         </view>
     </view>
-     
+    <view class="validPlan">
+        <block wx:for="{{validPlan}}" wx:key="this">
+            <view class="plan">
+                <span>方案{{number[index]}}:</span>
+                <text class="planConten">{{item}}</text>
+            </view>
+        </block>
+    </view>
+   <!--  <view class='imagePathBox' hidden="{{maskHidden == false}}">
+        <image src="{{imagePath}}" class='shengcheng'></image>
+        <button class='baocun' bindtap='baocun'>保存到相册</button>
+    </view>
+    <view hidden="{{maskHidden == false}}" class="mask"></view> -->
+   <!--  <view class="canvas-box" style="width:100vw;height:100vh;display:flex;justify-content:center;position:fixed;top:0;left:0;background:rgba(0,0,0,.7)">
+        <canvas style="width: {{375*ratio}}px;height: {{2000*ratio}}px;position:fixed;top:5px,left:0px;" canvas-id="mycanvas" />
+    </view> -->
 </view>

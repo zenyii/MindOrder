@@ -122,7 +122,10 @@ Page({//
         console.log(userInfo, 'onloadUser')
         that.resetSwiper();
         //开始不断加载数据
-        that.dataQuary();
+        setTimeout(function(){
+          that.dataQuary();
+        },200)
+        
       }, err => {
         console.log('搜索失败')
       })

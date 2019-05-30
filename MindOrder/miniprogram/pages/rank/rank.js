@@ -14,7 +14,7 @@ Page({
     timer: true,                   //计时器
     startTime: 0,
     endTime: 0,
-    totalTime:''
+    totalTime: ''
   },
 
   /**
@@ -35,47 +35,47 @@ Page({
     var that = this;
     //从数据库获取数据
     const db = wx.cloud.database()
-    db.collection("words").where({ 
+    db.collection("words").where({
       roomNum: app.globalData.roomNum,
       term: that.data.term
-    }).field({ 
-      text: true, 
+    }).field({
+      text: true,
       supportNum: true,
-      supporter:true
+      supporter: true
     }).get().then(res => {
-        that.setData({
-          rankMsg: res.data
-        })
+      that.setData({
+        rankMsg: res.data
+      })
       console.log(that.data.rankMsg);
       that.orderwords();
-      }
-    ).then(()=>{
-      for(let x = 0; x < that.data.rankMsg.length;x++){
+    }
+    ).then(() => {
+      for (let x = 0; x < that.data.rankMsg.length; x++) {
         that.data.rankMsg[x].isGood = false
         //判断support数组中是否含自己openid，如果有则改变isGood属性
-        for (let y = 0; y < that.data.rankMsg[x].supporter.length;y++){
-          if (that.data.rankMsg[x].supporter[y]==app.globalData.selfOpenId){
-              that.data.rankMsg[x].isGood = true;
+        for (let y = 0; y < that.data.rankMsg[x].supporter.length; y++) {
+          if (that.data.rankMsg[x].supporter[y] == app.globalData.selfOpenId) {
+            that.data.rankMsg[x].isGood = true;
           }
         }
       }
       that.setData({
-        rankMsg:that.data.rankMsg
+        rankMsg: that.data.rankMsg
       })
       console.log(that.data.rankMsg);
     })
 
     //如果是房主则将索引值改为true且当前页面为排行榜
 
-    if (app.globalData.selfOpenId == app.globalData.roomMaster &&app.globalData.nowPage==3){
+    if (app.globalData.selfOpenId == app.globalData.roomMaster && app.globalData.nowPage == 3) {
       this.setData({
-        isroomMaster:true
+        isroomMaster: true
       })
     }
 
     //实时获取数据
     this.dataQuary();
-  
+
   },
   //排行榜排序方法
   orderwords: function () {
@@ -101,7 +101,7 @@ Page({
   /* 同步房间数据 */
   dataQuary: function () {
     let that = this;
-    if(!that.data.timer) return
+    if (!that.data.timer) return
     app.onQuery('rooms', { roomNum: app.globalData.roomNum },
       { again: true })
       .then(res => {
@@ -127,7 +127,7 @@ Page({
       })
   },
 
-  again:function(){
+  again: function () {
     app.globalData.term++;
     wx.redirectTo({
       url: '../setTime/setTime?rank=1&placeHolderWri=1',
@@ -135,13 +135,11 @@ Page({
   },
 
   goReport: function () {//房主视角决定总时间，会不会有人提前生成报告而无法取得时间？
-    let totalTime = this.data.totalTime;
+    this.countAllTime();
     let date = new Date();
     let time = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
     //console.log(time,'time')
-    app.onUpdate('rooms', app.globalData.roomId, 'totalTime', totalTime).then(res => {
-      console.log("保存总时间成功")
-    })
+
     app.onUpdate('rooms', app.globalData.roomId, 'date', time).then(res => {
       console.log("保存日期成功")
     })
@@ -175,10 +173,14 @@ Page({
       let mins = Math.floor(remain / 60)
       //计算秒数
       let secs = remain % 60;
-      let totalTime =  mins + ":" + secs
+      let totalTime = mins + ":" + secs
       console.log("结束时的时间戳", this.data.endTime)
       console.log("结束时的开始时间戳", this.data.startTime)
-      console.log("总花费时间", totalTime)
+      console.log("总花费时间", totalTime);
+      app.onUpdate('rooms', app.globalData.roomId, 'totalTime', totalTime).then(res => {
+        console.log("保存总时间成功");
+        console.log(totalTime,'totalTime');
+      })
       //return temp;
       that.setData({
         totalTime      //保存时间差
@@ -211,7 +213,7 @@ Page({
    */
   onUnload: function () {
     this.setData({
-      timer:false
+      timer: false
     })
   },
 
