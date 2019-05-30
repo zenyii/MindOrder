@@ -119,7 +119,7 @@ Page({
         } else {//房主已经设置开始了,传入准备时间
           if (that.data.isAgain) {//如果是成员，接收到allset后直接跳转到准备时间页面
             wx.redirectTo({
-              url: '../try/try'
+              url: '/pages/try/try'
             })
           }
 
@@ -130,7 +130,7 @@ Page({
   again: function () {
     app.globalData.term++;
     wx.redirectTo({
-      url: '../setTime/setTime?rank=1&placeHolderWri=1',
+      url: '/pages/setTime/setTime?rank=1&placeHolderWri=1',
     })
   },
 
@@ -144,7 +144,7 @@ Page({
       console.log("保存日期成功")
     })
     wx.redirectTo({
-      url: '../selectWords/selectWords'
+      url: '/pages/selectWords/selectWords'
     })
   },
 

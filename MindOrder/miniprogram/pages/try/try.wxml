@@ -13,11 +13,11 @@
     <!--进度条-->
     <view class='progresstimer'></view>
   <view style='animation-duration:{{timer}}s' class='progress'></view>
-  <!--遮罩层，方便编辑便签后回到主页面-->
+  <!--遮罩层，方便填写便签后回到主页面-->
   <view wx:if="{{isCheck}}" class='editBack' bindtap='cancelCheck'></view>
     <!--查看单个便签的滚动栏-->
     <scroll-view scroll-x="true" class='scrollText' wx:if="{{isCheck}}" bindscroll="scrollSelect">
-      <view wx:for="{{upDateUser[0].words}}" wx:for-item="words" wx:key="id" class="{{words.select?'selectItem':'scrollTextItem'}}"  style='background:{{words.backColor}}' ><input value='{{words.word}}' focus='{{words.isModify}}' bindinput="addWord"></input>
+      <view wx:for="{{upDateUser[0].words}}" wx:for-item="words" wx:key="id" class="{{words.select?'selectItem':'scrollTextItem'}}"  style='background:{{words.backColor}}' ><input id="showItem" value='{{words.word}}' focus='{{words.isModify}}' bindinput="addWord"></input>
         </view>
     </scroll-view>
     <button wx:if="{{isCheck}}" class='newPaper' bindtap='insure'>确定修改</button>
@@ -36,23 +36,26 @@
     <image  wx:if="{{!isEdit && !isCheck}}" bindtap='goEdit' class='addPaper' src='../../icon/addPaper.png'></image>
   </view>
 </view>
-<!--编辑界面后的遮罩层,用于取消填写便签-->
+<!--填写界面后的遮罩层,用于取消填写便签-->
 <view class='editBack' wx:if="{{isEdit}}" bindtap='cancelEdit'></view>
-<!-- 整体编辑界面-->
+<!-- 整体填写便签界面-->
 <view class='edit' wx:if="{{isEdit}}">
- <!-- 中间编辑便签界面-->
+ <!-- 中间填写便签界面-->
 <view class='paperback'>
   <view bindtap='inputWord' class='paper' style='background:{{backColor}}'>
-    <input placeholder='请输入你的想法' bindinput="addWord" id='word' focus='{{isActive}}' value='{{end}}'></input>
+    <input placeholder='请输入你的想法' bindinput="addWord" id='word' focus='{{isActive}}' value='{{end}}'></input> 
   </view>
 </view>
 <!-- 下一张按钮 撤回前进按钮-->
   <button class='newPaper' bindtap='newpaper'>下一张 +</button>
   <view class='step'>
-<image id='stepItem' src='../../icon/back2.png'></image><image  id='stepItem' src='../../icon/go2.png'></image>
+  <image bindtap='goBack' wx:if="{{ifBack}}" id='stepItem' src='../../icon/back.png'></image>
+  <image wx:if="{{!ifBack}}" id='stepItem' src='../../icon/back2.png'></image>
+  <image bindtap='goHead' wx:if="{{ifGo}}" id='stepItem' src='../../icon/go.png'></image>
+  <image wx:if="{{!ifGo}}" id='stepItem' src='../../icon/go2.png'></image>
   </view>
 <!--颜色板-->
-<view animation="{{show}}" class='colorbroad'>
+<view wx:if="{{colorRender}}" animation="{{show}}" class='colorbroad'>
   <button class='coloritem' wx:for="{{color}}" wx:key="this" id="{{item}}" style='background:{{item}}' bindtap='selectColor' ></button>
 </view>
 

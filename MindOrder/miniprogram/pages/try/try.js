@@ -18,7 +18,7 @@ Page({
     minute:'',
     second:'',
     timer:0,
-    position:[],
+    position:[],                         
     totalHeight:0,
     windowWidth:0,
     windowHeight: 0,
@@ -37,6 +37,10 @@ Page({
     isAgain: false,                //判断是否继续讨论
     timer: null,                   //计时器
     isRank:false,                  //判断是否查看排行榜
+    colorRender:false,             //色板是否渲染
+    step:0,                        //记录当前便签内容每一输入操作的位置
+    ifBack:false,                 //是否能进行后退操作
+    isGo:false,                   //是否能进行前进操作
     title:'',
     }, 
 
@@ -139,8 +143,78 @@ Page({
   addWord: function(e) {
    //console.log(e.detail.value);
     this.data.value.push(e.detail.value);
+    this.setData({
+      end:e.detail.value
+    })
+    if(this.data.value.length&&this.data.step){
+      this.setData({
+        ifBack:true,
+        step:this.data.value.length-1
+      })
+    }
+    else if(!this.data.step){
+      this.setData({
+        ifBack: true,
+        step: this.data.value.length - 1
+      })
+    }
+    
+    //console.log(this.data.value);
   },
 
+  //退回上一步的操作
+  goBack:function(){
+    this.data.step--;
+    if(this.data.step>=0){
+      let changeWord = this.data.value[this.data.step];
+      this.setData({
+        end: changeWord
+      })
+    }
+    //回退后检查是否可以再回退
+    if(this.data.step<0){
+      this.setData({
+        ifBack:false,
+        end:""
+      })
+    }
+    //回退后步骤检查是否可以前进
+    if(this.data.step <this.data.value.length- 1){
+      this.setData({
+      ifGo: true,
+    })
+    }
+    else{
+      this.setData({
+      ifGo: false,
+    })
+  }
+  },
+
+  //前进一步操作
+  goHead:function(){
+    this.data.step++;
+    if(this.data.step<=this.data.value.length-1){
+      let changeWord = this.data.value[this.data.step];
+      this.setData({
+        end: changeWord,
+        ifBack:true
+      })
+    }   
+    //前进后步骤检查是否可以前进
+    if (this.data.step < this.data.value.length - 1) {
+      this.setData({
+        ifGo: true,
+      })
+    }
+    else {
+      this.setData({
+        ifGo: false,
+      })
+    }
+  },
+
+  //控制编辑版面出现
   goEdit:function(){
     this.setData({
       isEdit:true
@@ -149,6 +223,19 @@ Page({
 
   //点击换颜色后色板弹出动画
   changeColor:function(){
+    var that = this;
+      let render = that.data.colorRender ? false : true;
+      if(!render){
+        setTimeout(function () {
+          that.setData({
+          colorRender: render
+          })
+        },1000)}
+      else{
+        this.setData({
+          colorRender:render
+        })
+      }
     var temp = this.data.ifColor?false:true;
     this.setData({
       ifColor:temp
@@ -168,6 +255,7 @@ Page({
       animation.translateY(30).translateX(-70).opacity(0).scale(1,1).step();
       this.setData({ show: animation.export() })
     }
+
   },
 
   selectColor:function(e){
@@ -190,6 +278,7 @@ Page({
     //发送后输入框清空
       this.setData({
         end: '',
+        value:[]
       })
 
    //将新建对象存入UserData数组中
@@ -320,8 +409,10 @@ Page({
       res(systemInfo.windowWidth);
     })
       .then((windowWidth) => {
+        if (that.data.selectedIndex >= 0 && that.data.selectedIndex < that.data.upDateUser[0].words.length){
         if (remainWidth < 0.8 * windowWidth) {
-        this.data.upDateUser[0].words[this.data.selectedIndex].select = true;
+          that.data.upDateUser[0].words[that.data.selectedIndex].select = true;
+        }
       }
       //console.log(selectedIndex,remainWidth, windowWidth)
       this.setData({
@@ -391,7 +482,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-    countDown(this,1);
+    countDown(this);
   },
 
   /**

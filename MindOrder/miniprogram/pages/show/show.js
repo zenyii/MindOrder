@@ -197,7 +197,7 @@ Page({
   },
   change(){
     wx.redirectTo({
-      url: '../rank/rank',
+      url: '/pages/rank/rank',
     })
   },
 
@@ -222,7 +222,7 @@ Page({
         } else {//房主已经设置开始了,传入准备时间
           if (that.data.isAgain) {//如果是成员，接收到allset后直接跳转到准备时间页面
             wx.redirectTo({
-              url: '../try/try'
+              url: '/pages/try/try'
             })
           }
 
