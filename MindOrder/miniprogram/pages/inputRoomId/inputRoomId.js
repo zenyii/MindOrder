@@ -13,7 +13,6 @@ Page({
 
   },
   inputMsg: function (e) {
-    //console.log(e.detail.value)
     this.setData({
       value: e.detail.value
     })
@@ -33,12 +32,10 @@ Page({
       wx.showLoading({
         title: '加载中',
       })
-      console.log(roomNums, 'value');
       app.globalData.roomNum = roomNums;
       app.onQuery('rooms', { roomNum: roomNums }, { roomNum: true, roomMaster: true, })
         .then(res => {
           let data = res.data[0];
-          //console.log(data, 'data')
           if (!data) {
             wx.hideLoading();
             wx.showToast({
@@ -47,11 +44,7 @@ Page({
               duration: 2000
             })
           } else {
-
-            // console.log('form发生了submit事件，携带数据为：', that.data.inputValue)
             that.goToBuild(data.roomNum);
-            console.log('goto')
-
           }
 
 

@@ -2,16 +2,21 @@
 <view class="header">
     <view class="titleMsg">
         <image src="../../icon/stared.png" />
-        <span class="title">主题: {{title}}</span>
+        <span class="zhuti">主题:</span>
+        <span class="title">{{title}}</span>
         <view class="date">日期: {{date}}</view>
         <view class="date">时长: {{totalTime}}</view>
-        <view class="button" bindtap="{{isRoomMaster?'export':'generate'}}">
-            {{isRoomMaster&&!reportAgain?'导出':'生成'}}
+        <view class="button gene" bindtap="{{!reportAgain?'export':'generate'}}">
+            {{!reportAgain?'导出':'生成'}}
+            <span class="iconfont icon-youjiankuohao"></span>
+        </view>
+        <view wx:if="{{reportAgain}}" class="button goIndex" bindtap="goIndex">
+            主页
             <span class="iconfont icon-youjiankuohao"></span>
         </view>
     </view>
     <view class="display">
-        <view class="circle" style="background-image:url(../../icon/circle.png)">
+        <view class="circle" style="background-image:url('https://dmt-web-1257360276.cos.ap-guangzhou.myqcloud.com/%E5%A4%B4%E8%84%91%E6%99%BA%E5%BA%8F/circle.png')">
             <view class="text">本次有效方案数</view>
             <view class="text">{{validPlan.length}}个</view>
         </view>
@@ -21,17 +26,17 @@
     <view class="markKing">
         <view class="avatar">
             <image src="{{king.avatarUrl}}" />
-            <view class="map" style="background-image:url(../../icon/zanKing.png)"></view>
+            <view class="map" style="background-image:url('https://dmt-web-1257360276.cos.ap-guangzhou.myqcloud.com/%E5%A4%B4%E8%84%91%E6%99%BA%E5%BA%8F/zanKing.png')"></view>
         </view>
         <view class="tips">
             本次获赞王
             <span class="nums">+{{king.supportNum}}</span>
         </view>
     </view>
-    <view wx:if="{{isRoomMaster||hasRank}}">
-        <view class="rank {{tipsss&&isRoomMaster&&'tipsss'}}" style="background:{{rankbg?'#BDDAFF':'white'}};color:{{rankbg?'white':'black'}}">
+    <view wx:if="{{!reportAgain||hasRank}}">
+        <view class="rank {{tipsss&&!reportAgain&&'tipsss'}}" style="background:{{rankbg?'#BDDAFF':'white'}};color:{{rankbg?'white':'black'}}">
             <view class="rankHeader" id="rankHeader" catchtap="listParentTap">
-                <checkbox-group wx:if="{{isRoomMaster&&!reportAgain}}" bindchange="checkboxChange">
+                <checkbox-group wx:if="{{!reportAgain}}" bindchange="checkboxChange">
                     <label class="checkbox" id="checkbox">
                         <checkbox value="rank" checked="" />
                     </label>
@@ -57,10 +62,10 @@
             </block>
         </view>
     </view>
-    <view wx:if="{{isRoomMaster||hasPersonal}}">
+    <view wx:if="{{!reportAgain||hasPersonal}}">
         <view class="personal" style="background:{{personalbg?'#55DBBF':'white'}};color:{{personalbg?'white':'black'}}">
             <view class="personalHeader" id="personalHeader" catchtap="personalListParentTap">
-                <checkbox-group wx:if="{{isRoomMaster&&!reportAgain}}" bindchange="personalCheckboxChange">
+                <checkbox-group wx:if="{{!reportAgain}}" bindchange="personalCheckboxChange">
                     <label class="personalCheckbox" id="personalCheckbox">
                         <checkbox class="personalCB" value="personal" checked="" />
                     </label>
@@ -92,14 +97,18 @@
                 <span>方案{{number[index]}}:</span>
                 <text class="planConten">{{item}}</text>
             </view>
+         <!--    <hr style="height:1px;width:100%;display:inline-block;background:#f2f2f2;" /> -->
         </block>
     </view>
-   <!--  <view class='imagePathBox' hidden="{{maskHidden == false}}">
-        <image src="{{imagePath}}" class='shengcheng'></image>
-        <button class='baocun' bindtap='baocun'>保存到相册</button>
+    <view class='imagePathBox' hidden="{{maskHidden == false}}" id="imagePathBox" bindtap="hideCanvas">
+        <image src="{{imagePath}}" class='shengcheng' mode="aspectFit" id="canvasImg"></image>
+        <view class="btnGroup">
+            <button class='baocun' bindtap='saveImg'>保存</button>
+            <button class='cancel' bindtap='cancel'>取消</button>
+        </view>
     </view>
-    <view hidden="{{maskHidden == false}}" class="mask"></view> -->
-   <!--  <view class="canvas-box" style="width:100vw;height:100vh;display:flex;justify-content:center;position:fixed;top:0;left:0;background:rgba(0,0,0,.7)">
-        <canvas style="width: {{375*ratio}}px;height: {{2000*ratio}}px;position:fixed;top:5px,left:0px;" canvas-id="mycanvas" />
-    </view> -->
+    <view hidden="{{maskHidden == false}}" class="mask"></view>
+    <view class="canvas-box">
+        <canvas style="width: {{375*ratio}}px;height: {{canvasHeight*ratio}}px;position:fixed;top:99999px;" canvas-id="mycanvas" />
+    </view>
 </view>

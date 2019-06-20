@@ -19,6 +19,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    wx.setNavigationBarTitle({
+      title: '请选择最终有效方案',
+    })
     var that = this;
     //判断是否为房主
     if (app.globalData.selfOpenId == app.globalData.roomMaster){
@@ -51,7 +55,6 @@ Page({
         allMsg:res.data
       })
       that.orderwords();
-      //console.log(res.data);
     }).then(()=>{
       for (let x = 0; x < that.data.allMsg.length; x++) {
         that.data.allMsg[x].isGood = false
@@ -62,8 +65,6 @@ Page({
           }
         }
       }
-      
-
       //初始化rankMsg数组
       for(let x = 0;x < app.globalData.term; x++){
         that.data.rankMsg[x] = [];
@@ -82,6 +83,26 @@ Page({
       })
 
     })
+    that.dataQuary();
+  },
+
+  //同步数据函数
+  dataQuary:function(){
+    var that = this;
+    app.onQuery('rooms', { roomNum: app.globalData.roomNum }, { goReport: true }).then(res => {
+      let data = res.data[0];
+      let goReport = data.goReport;
+      if(!goReport){
+        setTimeout(function(){
+          that.dataQuary();
+        },1000)
+      }
+      else{
+        wx.redirectTo({
+          url: '../report/report'
+        })
+      }
+    }) 
   },
 
   //排行榜排序方法
@@ -102,16 +123,13 @@ Page({
     this.setData({
       allMsg: arr
     })
-    //console.log(this.data.rankMsg)
   },
   checkboxChange:function(e){
-    console.log(e.detail.value);
     this.setData({
       lastPlan: e.detail.value
     })
   },
   insure:function(){
-    console.log(this.data.lastPlan)
     var that = this;
     //将选择的方案作为有效方案
     wx.cloud.callFunction({
@@ -124,9 +142,7 @@ Page({
       }
     })
 
-    wx.redirectTo({
-      url: '../report/report',
-    })
+    app.onUpdate('rooms',app.globalData.roomId,'goReport',true)
 
   },
 

@@ -27,32 +27,42 @@ Page({
     db.collection('users').where({
       _openid: selfOpenId
     }).get().then(res => {
-      console.log(res);
       that.setData({
         star: res.data[0].star
       })
-      //console.log(that.data.star)
     }).then(()=>{
+      if(that.data.star.length){
       //根据拉取到的已收藏房间号从rooms表中拉取数据
       for (let x = 0; x < that.data.star.length; x++) {
         var roomnum = that.data.star[x];
-        //console.log(star);
         db.collection('rooms').where({
           roomNum: roomnum
         }).get().then(res => {
-          console.log(res.data);
           starRoomMsg.push(res.data[0]);
           that.data.titleMsg.push(res.data[0].title);
           that.setData({
             titleMsg: that.data.titleMsg
           })
-          //console.log(starRoomMsg);
           wx.setStorage({
             key: 'starRoomMsg',
             data: starRoomMsg
             })
         })
       }
+      }
+      else{
+        wx.showToast({
+          title: '暂无收藏',
+          duration: 1000
+        })
+      }
+    })
+  },
+  goReport: function (e) {
+    let index = e.currentTarget.dataset.index;
+    app.globalData.roomnum = this.data.hisRoom[index];
+    wx.navigateTo({
+      url: '/pages/report/report',
     })
   },
   /**

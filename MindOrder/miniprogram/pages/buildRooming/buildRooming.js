@@ -21,7 +21,6 @@ Page({
       //传入roomid,主题
       url: `../invite/invite?roomNum=${that.data.inputValue.roomNum}&text=${that.data.inputValue.text}`
     })
-    //console.log('goto')
   },
 
   /* button开启房间 */
@@ -29,8 +28,6 @@ Page({
     let that = this;
     let userInfo = wx.getStorageSync('userInfo');
     let selfOpenId = wx.getStorageSync('selfOpenId');
-    //console.log(userInfo,'user')
-    //console.log(values.detail.value.text,'values')
     if (values.detail.value.text === "") {
       wx.showToast({
         title: '主题不能为空！',
@@ -41,7 +38,6 @@ Page({
     }
     app.globalData.userInfo = userInfo;
     app.globalData.selfOpenId = selfOpenId;
-    console.log( selfOpenId,'openid');
     let inputValue = values.detail.value;//获取表单信息
     //inputValue.userIdArr = [app.globalData.selfOpenid];//获取用户自己的openid
     app.globalData.roomMaster = selfOpenId;//设置房主openid
@@ -69,17 +65,15 @@ Page({
         date:'',
         hasRank:false,
         hasPersonal:false,
-        reportAgain:false
+        reportAgain:false,
+        goReport:false,
+        goSelect:false
       })
       .then(res => {
-        console.log(res);
-        console.log('[数据库] [新增room记录] 成功，记录 _id: ', res._id)
         app.globalData.roomId = res._id,
         that.setData({
           inputValue: inputValue
         })
-        console.log(app.globalData.roomId,'roomId');
-        console.log('form发生了submit事件，携带数据为：', that.data.inputValue);
       }, err => {
         console.error('[数据库] [新增room记录] 失败：', err)
       })
@@ -114,9 +108,6 @@ Page({
           that.setData({
             queryRes: res.data.length,
           })
-          //console.log('[数据库] [查询记录] 成功: ', res.data.length)
-          //console.log('生成的房号是: ', that.data.roomNum)
-          //console.log('test：', that.data.queryRes)
           resolve();
         }
       })
@@ -124,15 +115,12 @@ Page({
     getRoomNum.then(function () {
       //房号唯一，返回生成的房号
       if (that.data.queryRes == 0) {
-        //console.log('返回房间号是：', that.data.roomNum)
         that.setData({
           roomId: that.data.inputValue.roomNum
         })
-        //console.log('返回唯一房间号：', that.data.roomNum)
       }
       else {
         //房号不唯一，递归调用
-        //console.log('查到了重复！重置房间号')
         that.getRandomInt(100000, 999999)
       }
     })

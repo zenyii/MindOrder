@@ -27,38 +27,39 @@ Page({
     db.collection('users').where({
       _openid:selfOpenId
     }).get().then(res=>{
-        //console.log(res);
         that.setData({
           hisRoom: res.data[0].hisRoom
         })
-        //console.log(that.data.hisRoom)
       }
     ).then(() => {
-      //console.log(that.data.hisRoom)
       //根据拉取到的历史房间号从rooms表中拉取数据
       for (let x = 0; x < that.data.hisRoom.length; x++) {
         var roomnum = that.data.hisRoom[x];
-        console.log(roomnum,'roomNum');
         db.collection('rooms').where({
           roomNum: roomnum
         }).get().then(res => { 
-            //console.log(res.data);
-          hisroomMsg.push(res.data[0]);
-            that.data.titleMsg.push(res.data[0].title);
+          var obj={
+            title: res.data[0].title,
+            id:res.data[0]._id
+          }
+            that.data.titleMsg.push(obj);
             that.setData({
               titleMsg:that.data.titleMsg
             })
-          wx.setStorage({
-            key: 'hisroomMsg',
-            data: hisroomMsg
-            })
-          })
-        }
+        })
       }
-    )
-
-    
-
+    })
+  },
+  goReport:function(e){
+    let index = e.currentTarget.dataset.index;
+    app.globalData.roomNum = this.data.hisRoom[index];
+    app.globalData.roomId = this.data.titleMsg[index].id;
+    console.log(app.globalData.roomId);
+    app.onUpdate('rooms',app.globalData.roomId,'reportAgain',false).then(()=>{
+      wx.navigateTo({
+        url: '/pages/report/report',
+      })
+    })
   },
 
   /**

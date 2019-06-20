@@ -8,12 +8,17 @@ export function countDown(that){
     minute = parseInt(that.data.minute);
     second = parseInt(that.data.second);
     if(second>=0){
-    timer = setTimeout(function(){
-      that.setData({
-        second:that.data.second-1,
-      })
-      countDown(that);
-    },1000);
+    return new Promise(function(res,rej){
+      timer = setTimeout(function () {
+        that.setData({
+          second: that.data.second - 1,
+        })
+        countDown(that);
+      }, 1000)
+    })
+    .then(()=>{
+      clearTimeout(timer);
+    })
     }
     if(second<0){
       if(minute>0){
@@ -24,7 +29,6 @@ export function countDown(that){
         countDown(that);
       }
       else{
-        console.log("空")
       }
     }
     app.globalData.minute=that.data.minute;
@@ -38,7 +42,7 @@ export function countDown(that){
       success: function (res) {
         if (res.confirm) {
           wx.redirectTo({
-            url: '../show/show',
+            url: '/pages/show/show',
            })
           }
         }

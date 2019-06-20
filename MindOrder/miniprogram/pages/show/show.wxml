@@ -1,4 +1,5 @@
 <!--pages/show/show.wxml-->
+<view class='container' style='"min-height":{{windowHeight}}px'>
 <view class='theme'><text>主题:{{title}}</text></view>
 
 <view class='messageBack'>
@@ -6,6 +7,7 @@
     <view id='content'>{{item.text}}</view> 
       <image class='love' id='{{index}}' bindtap='like' wx:if='{{!item.isgood}}' src='../../icon/good2.png'></image>
       <image class='love' id='{{index}}' bindtap='like' wx:if='{{item.isgood}}' src='../../icon/gooded2.png'></image>
+</view>
 </view>
 </view>
 

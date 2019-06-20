@@ -1,6 +1,6 @@
 <!--miniprogram/pages/myStar/myStar.wxml-->
 <view class='allTheme'>
-  <view class='titleItem' wx:for="{{titleMsg}}" wx:key="">
+  <view class='titleItem'  bindtap='goReport' wx:for="{{titleMsg}}" wx:for-index="index"  data-index="{{index}}" wx:key="">
       <view id='text'>主题：{{item}}</view>
       <image id="more" src='../../icon/more.png'></image>
   </view>

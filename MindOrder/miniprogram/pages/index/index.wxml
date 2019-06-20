@@ -1,5 +1,5 @@
 <view class="index" wx:if="{{selected!==2}}">
-    <view class='header' style="background-image:url(../../icon/bg1.png) ;">
+<view class='header' style="background-image:url('https://dmt-web-1257360276.cos.ap-guangzhou.myqcloud.com/%E5%A4%B4%E8%84%91%E6%99%BA%E5%BA%8F/bg2.png') ;">
         <image src="../../icon/logo.png" />
     </view>
     <view class="main">

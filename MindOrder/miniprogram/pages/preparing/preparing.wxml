@@ -1,4 +1,4 @@
-<view class="container" style='background:url(../../icon/bg1.png) repeat-x;background-size:100% auto;'>
+<view class="container" style="background:url('https://dmt-web-1257360276.cos.ap-guangzhou.myqcloud.com/%E5%A4%B4%E8%84%91%E6%99%BA%E5%BA%8F/bg1.png') repeat-x;background-size:100% auto;">
   <view style="width:100%">
     <block>
       <view class='header'>
@@ -27,13 +27,13 @@
                       <view class="imgPart" data-parentIndex="{{outerIndex}}" data-index = "{{innerIndex}}">
                         <image src='{{innerItem.avatarUrl}}' class="headImg" />
                         <view wx:if="{{!innerItem.ready && innerIndex != 0}}" class="map"></view>
-                        <view wx:if="{{ innerIndex ===0 && outerIndex === 0 }}" class="houseHolder" style='background:url(../../icon/roomowner.png) no-repeat ;background-size: 100%;'></view>
+                       <view wx:if="{{ innerIndex ===0 && outerIndex === 0 }}" class="houseHolder" style="background:url('https://dmt-web-1257360276.cos.ap-guangzhou.myqcloud.com/%E5%A4%B4%E8%84%91%E6%99%BA%E5%BA%8F/roomowner.png') no-repeat ;background-size: 100%;"></view>
                         <image wx:if="{{join===0}}" class="{{ outerIndex === 0 ? (innerIndex === 0 ? 'hidden' : 'delete' ): 'delete'}}" id="delete{{outerIndex*8+innerIndex}}" src="../../icon/delete.png" />
                       </view>
                       <view class="nickName">{{innerItem.nickName}}</view>
                     </view>
                   </block>
-                  <button wx:if="{{outerIndex===userInfoSwiper.length-1}}" class="invite" open-type='share' style="background:url('../../icon/join.png');background-size:100%"></button>
+                 <button wx:if="{{outerIndex===userInfoSwiper.length-1}}" class="invite" open-type='share' style="background:url('https://dmt-web-1257360276.cos.ap-guangzhou.myqcloud.com/%E5%A4%B4%E8%84%91%E6%99%BA%E5%BA%8F/join.png');background-size:100%"></button>
                 </swiper-item>
               </block>
             </swiper>

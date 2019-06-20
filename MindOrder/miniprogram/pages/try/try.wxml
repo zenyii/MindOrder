@@ -20,7 +20,7 @@
       <view wx:for="{{upDateUser[0].words}}" wx:for-item="words" wx:key="id" class="{{words.select?'selectItem':'scrollTextItem'}}"  style='background:{{words.backColor}}' ><input id="showItem" value='{{words.word}}' focus='{{words.isModify}}' bindinput="addWord"></input>
         </view>
     </scroll-view>
-    <button wx:if="{{isCheck}}" class='newPaper' bindtap='insure'>确定修改</button>
+      <view class='insureWrap' bindtap='insure'><button wx:if="{{isCheck}}" class='newPaper'>确定修改</button></view>
     <image wx:if="{{isCheck}}" bindtap='deleteWord' id="bin" src='../../icon/bin.png'></image>
     <image wx:if="{{isCheck}}" bindtap='EditWord' id="edit" src='../../icon/edit.png'></image>
   <!--每轮标签集合可移动-->
@@ -47,7 +47,7 @@
   </view>
 </view>
 <!-- 下一张按钮 撤回前进按钮-->
-  <button class='newPaper' bindtap='newpaper'>下一张 +</button>
+  <view class='insureWrap' bindtap='newpaper'><button class='newPaper'>下一张 +</button></view>
   <view class='step'>
   <image bindtap='goBack' wx:if="{{ifBack}}" id='stepItem' src='../../icon/back.png'></image>
   <image wx:if="{{!ifBack}}" id='stepItem' src='../../icon/back2.png'></image>
@@ -55,12 +55,13 @@
   <image wx:if="{{!ifGo}}" id='stepItem' src='../../icon/go2.png'></image>
   </view>
 <!--颜色板-->
-<view wx:if="{{colorRender}}" animation="{{show}}" class='colorbroad'>
+<view disabled="{{colorRender}}" animation="{{show}}" class='colorbroad'>
   <button class='coloritem' wx:for="{{color}}" wx:key="this" id="{{item}}" style='background:{{item}}' bindtap='selectColor' ></button>
 </view>
 
 <!-- 更换颜色按钮 键盘按钮-->
-  <image src='../../icon/colorChange.png' id='color' bindtap='changeColor'></image><image src='../../icon/keyBroad.png' id='keybroad' bindtap='inputWord'>键盘</image>
+  <view id='color' bindtap='changeColor'><image src='../../icon/colorChange.png' ></image></view>
+<view id='keybroad' bindtap='inputWord'><image src='../../icon/keyBroad.png'>键盘</image></view>
 </view>
 
   <!--排行榜显示-->

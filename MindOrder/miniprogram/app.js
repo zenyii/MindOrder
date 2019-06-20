@@ -32,7 +32,6 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-    console.log(path, 'path')
     let query = '';
     let redirect_url = '';
     let userInfo = wx.getStorageSync('userInfo');

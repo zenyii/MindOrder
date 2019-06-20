@@ -12,7 +12,6 @@ Page({
     if (app.globalData.selfOpenId == app.globalData.roomMaster) {//房主更新会议时间
       app.onUpdate('rooms', app.globalData.roomId, 'meetingTime', Number(options.timeHold))//更新会议时间
     }
-    //console.log(options.timePreparing,'indexP')
     let counts = options.timePreparing
     /*   let counts = 2; */
     that.setData({
@@ -21,7 +20,6 @@ Page({
     })
 
     let hisRooms;
-    console.log(app.globalData.selfOpenId, 'id')
     app.onQuery('users', { openid: app.globalData.selfOpenId }, { hisRoom: true }).then(res => {
       let data = res.data[0];
       hisRooms = data.hisRoom;
@@ -34,7 +32,7 @@ Page({
           key: 'hisRoom',
           value: hisRooms
         }
-      }).then(console.log('更新成功！'))
+      })
     })
   },
 
@@ -44,10 +42,8 @@ Page({
   onReady: function () {
     let that = this;
     let counts = that.data.counts;
-    console.log(typeof counts,'counts')
     // let counts = 5;
     if (Number(counts) === 0) {
-      console.log('counts===0')
       wx.redirectTo({
         url: '../try/try'
       })

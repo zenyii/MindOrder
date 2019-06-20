@@ -4,7 +4,7 @@ Page({
   data: {
     rank: [],
     personal: [],
-    number: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十","十一","十二","十三","十四","十五","十六","十七","十八","十九","二十"],
+    number: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十"],
     list: [],
     personalList: [],
     show: false,
@@ -16,7 +16,8 @@ Page({
     hasPersonal: false,
     isRoomMaster: false,
     reportAgain: false,
-    maskHidden: true,
+    maskHidden: false,
+
   },
 
   onLoad: function (options) {
@@ -24,6 +25,11 @@ Page({
     let that = this;
     let list = [];
     let personalList = [];
+    if (options.reportAgain) {
+      that.setData({
+        reportAgain: true
+      })
+    }
     wx.setNavigationBarTitle({
       title: '会议报告',
     });
@@ -42,23 +48,18 @@ Page({
       rank[i] = [];
       personal[i] = [];
     })
-    app.onQuery('rooms', { roomNum: app.globalData.roomNum }, { roomMaster: true, title: true, date: true, totalTime: true, validPlan: true, hasPersonal: true, hasRank: true, reportAgain: true }).then(res => {
-      let data = res.data[0];
-      let roomMasterId = data.roomMaster.openid;
-      //console.log(data, 'rooms')
-      let title = data.title;
-      let date = data.date;
-      let totalTime = data.totalTime;
-      let validPlan = data.validPlan;
-      let hasPersonal = data.hasPersonal;
-      let hasRank = data.hasRank;
-      let reportAgain = data.reportAgain;
-      if (roomMasterId === app.globalData.selfOpenId && !reportAgain) {//判断房主app.globalData.selfOpenId
-        that.setData({
-          isRoomMaster: true,
-        })
-      }
-      setTimeout(function () {
+    app.onQuery('rooms', { roomNum: app.globalData.roomNum }, { roomMaster: true, title: true, date: true, totalTime: true, validPlan: true, hasPersonal: true, hasRank: true })
+      .then(res => {
+        let data = res.data[0];
+        let roomMasterId = data.roomMaster.openid;
+        let title = data.title;
+        //console.log(typeof title,'title11')
+        let date = data.date;
+        let totalTime = data.totalTime;
+        let validPlan = data.validPlan;
+        let hasPersonal = data.hasPersonal;
+        let hasRank = data.hasRank;
+
         that.setData({
           title,
           date,
@@ -66,91 +67,109 @@ Page({
           validPlan,
           hasPersonal,
           hasRank,
-          reportAgain
         })
-      }, 200)
-    })
-    //排序轮数排行榜数据 
-    app.onQuery('words', { roomNum: app.globalData.roomNum }, { term: true, supportNum: true, text: true, openid: true, avatarUrl: true })
-      .then(res => {
-        let data = res.data;
-        king = data[0];
-        //console.log(data, 'data')
-        data.forEach((item, index) => {
-          if (item.supportNum >= king.supportNum) king = item;
-          rank[item.term - 1].push(item);
-          if (item.openid === app.globalData.selfOpenId) {//属于自己的词条//app.globalData.selfOpenId
-            personal[item.term - 1].push(item);
-          }
-        })
-        //console.log(personal,'personal');
-        rank.forEach(item => {
-          item.sort((a, b) => {
-            let a1 = a.supportNum;
-            let b1 = b.supportNum;
-            if (a1 < b1) {
-              return 1;
-            } else if (a1 > b1) {
-              return -1;
+      }).then(res => {
+        //排序轮数排行榜数据 
+        app.onQuery('words', { roomNum: app.globalData.roomNum }, { term: true, supportNum: true, text: true, openid: true, avatarUrl: true })
+          .then(res => {
+            if(res.data.length==0){
+              wx.showToast({
+                title: '无数据',
+                duration:1000
+              })
             }
-            return 0;
-          })
+            let data = res.data;
+            king = data[0];
+            data.forEach((item, index) => {
+              if (item.supportNum >= king.supportNum) king = item;
+              rank[item.term - 1].push(item);
+              if (item.openid === app.globalData.selfOpenId) {//属于自己的词条//app.globalData.selfOpenId
+                personal[item.term - 1].push(item);
+              }
+            })
+            rank.forEach(item => {
+              item.sort((a, b) => {
+                let a1 = a.supportNum;
+                let b1 = b.supportNum;
+                if (a1 < b1) {
+                  return 1;
+                } else if (a1 > b1) {
+                  return -1;
+                }
+                return 0;
+              })
 
-        })
-        personal.forEach(item => {
-          item.sort((a, b) => {
-            let a1 = a.supportNum;
-            let b1 = b.supportNum;
-            if (a1 < b1) {
-              return 1;
-            } else if (a1 > b1) {
-              return -1;
+            })
+            personal.forEach(item => {
+              item.sort((a, b) => {
+                let a1 = a.supportNum;
+                let b1 = b.supportNum;
+                if (a1 < b1) {
+                  return 1;
+                } else if (a1 > b1) {
+                  return -1;
+                }
+                return 0;
+              })
+
+            })
+            //console.log(rank,'rank');
+            rank.forEach((items, indexs) => {
+              list[indexs] = {};
+              let text = list[indexs].text = [];
+              items.forEach(item => {
+                text.push(item.text);
+              })
+            })
+            personal.forEach((items, indexs) => {
+              personalList[indexs] = {};
+              let text = personalList[indexs].text = [];
+              items.forEach(item => {
+                text.push(item.text);
+              })
+            })
+
+            that.setData({
+              rank,
+              list,
+              personal,
+              personalList,
+              king
+            })
+            that.getImgTempPath(king.avatarUrl, 'kingImg');//
+            //console.log(list, 'list');
+            //console.log(personalList, 'person')
+            //console.log(king, 'king');
+            console.log('then2')
+          }).then(res => {
+            //绘制canvas生成图
+            //初始化图片临时路径
+            that.getImgTempPath('https://dmt-web-1257360276.cos.ap-guangzhou.myqcloud.com/%E5%A4%B4%E8%84%91%E6%99%BA%E5%BA%8F/stared.png', 'star')
+            that.getImgTempPath('https://dmt-web-1257360276.cos.ap-guangzhou.myqcloud.com/%E5%A4%B4%E8%84%91%E6%99%BA%E5%BA%8F/circle.png', 'circle')
+
+            that.getImgTempPath('https://dmt-web-1257360276.cos.ap-guangzhou.myqcloud.com/%E5%A4%B4%E8%84%91%E6%99%BA%E5%BA%8F/zanKing.png', 'kingCircle')
+            //console.log(star,'star')     
+            //console.log(that.data, 'data')
+            console.log('then3')
+          }).then(res => {
+            if (that.data.reportAgain) {
+              setTimeout(function () {
+                that.drawCanvas();
+                console.log('then4')
+              }, 2000)
             }
-            return 0;
           })
-
-        })
-        //console.log(rank,'rank');
-        rank.forEach((items, indexs) => {
-          list[indexs] = {};
-          let text = list[indexs].text = [];
-          items.forEach(item => {
-            text.push(item.text);
-          })
-        })
-        personal.forEach((items, indexs) => {
-          personalList[indexs] = {};
-          let text = personalList[indexs].text = [];
-          items.forEach(item => {
-            text.push(item.text);
-          })
-        })
-
-        that.setData({
-          rank,
-          list,
-          personal,
-          personalList,
-          king
-        })
-        this.getImgTempPath(king.avatarUrl, 'kingImg');//
-        console.log(list, 'list');
-        //console.log(personalList, 'person')
-        //console.log(king, 'king');
       })
+  },
 
-    //绘制canvas生成图
-    //初始化图片临时路径
-/*     this.getImgTempPath('https://dmt-web-1257360276.cos.ap-guangzhou.myqcloud.com/%E5%A4%B4%E8%84%91%E6%99%BA%E5%BA%8F/stared.png', 'star')
-    this.getImgTempPath('https://dmt-web-1257360276.cos.ap-guangzhou.myqcloud.com/%E5%A4%B4%E8%84%91%E6%99%BA%E5%BA%8F/circle.png', 'circle')
-
-    this.getImgTempPath('https://dmt-web-1257360276.cos.ap-guangzhou.myqcloud.com/%E5%A4%B4%E8%84%91%E6%99%BA%E5%BA%8F/zanKing.png', 'kingCircle')
-    //console.log(star,'star')     
-    console.log(that.data, 'data')
-    setTimeout(function () {
-      that.drawCanvas();
-    }, 1500)
- */
+  hideCanvas: function (e) {
+    let that = this;
+    console.log(e);
+    if (e.target.id === 'imagePathBox') {
+      that.setData({
+        maskHidden: false
+      })
+    }
   },
 
   //将网络图片转成临时路径
@@ -177,16 +196,17 @@ Page({
     let circle = that.data.circle;
     let kingImg = that.data.kingImg;
     let kingCircle = that.data.kingCircle;
-    let lineCha = 22 * ratio;
     let ratio = that.data.ratio;
+    let lineCha = 22 * Number(ratio);
     //console.log(ratio*375,'radio')
     context.setFillStyle("#ffffff");
     //context.setGlobalAlpha(0.8)
-    context.fillRect(0, 0, 375 * ratio, 2000 * ratio);
+    context.fillRect(0, 0, 375 * ratio, 5000 * ratio);
     //h绘制header
     context.drawImage(star, 5 * ratio, 10 * ratio, 18 * ratio, 18 * ratio);//星星
-
-    let title = this.canvasWorkBreak(300 * ratio, 16 * ratio, that.data.title);
+    //console.log(lineCha,'ratio')
+    let title = that.canvasWorkBreak(300 * ratio, 16 * ratio, that.data.title);
+    //console.log(that.data.title,'title')
     context.setFontSize(16 * ratio);
     context.setFillStyle('#000000');
     context.fillText(`主题:`, 25 * ratio, 25 * ratio);//主题
@@ -200,6 +220,7 @@ Page({
       height += 20 * ratio;
     })
     context.stroke();
+
 
     context.setFontSize(14 * ratio);//日期
     context.setFillStyle('gray');
@@ -235,48 +256,151 @@ Page({
 
     context.setFillStyle('#f2f2f2');
     context.fillRect(0, 375 * ratio - lineCha, 375 * ratio, 4 * ratio);
-    //rank
-    context.setFillStyle('#6188ff');
-    context.fillRect(0, 380 * ratio - lineCha, 375 * ratio, 25 * ratio);
 
-    context.setFontSize(16 * ratio);//所有排行榜
-    context.setFillStyle('white');
-    context.fillText(`所有排行榜`, 15 * ratio, 398 * ratio - lineCha);
-    context.stroke();
-    let list = that.data.list;
-    list.forEach((item, index) => {
-      if (index === 0) {
+    if (this.data.hasRank) {
+
+      //rank
+      context.setFillStyle('#8AACFF');
+      context.fillRect(0, 380 * ratio - lineCha, 375 * ratio, 25 * ratio);
+
+      context.setFontSize(16 * ratio);//所有排行榜
+      context.setFillStyle('white');
+      context.fillText(`所有排行榜`, 15 * ratio, 399 * ratio - lineCha);
+      context.stroke();
+      let list = that.data.list;
+
+      var rankH = 450 * ratio - lineCha;
+      list.forEach((item, index) => {
         context.setFontSize(14 * ratio);//轮次
         context.setFillStyle('black');
-        context.fillText(`第${that.data.number[index]}轮`, 25 * ratio, 400 * ratio - lineCha + 23 * (index + 1));
+        context.fillText(`第${that.data.number[index]}轮`, 25 * ratio, rankH - 50 * ratio + 23 * (index + 1));
         context.stroke();
-
         context.setFillStyle('#f2f2f2');
-        context.fillRect(0, 405 * ratio - lineCha + 24 * (index + 1), 375 * ratio, 1 * ratio);//线条
-
-        let rankH = 450 * ratio - lineCha;
+        context.fillRect(0, rankH - 45 * ratio + 24 * (index + 1), 375 * ratio, 1 * ratio);//线条
         item.text.forEach((innerItem, innerIndex) => {//rankn内容
-          /* context.setFontSize(14 * ratio);//轮次
+          context.setFontSize(14 * ratio);//轮次
           context.setFillStyle('black');
-          context.fillText(`${innerIndex}. ${innerItem}`, 35 * ratio, 420 * ratio - lineCha + 24 * (index + 1));
-          context.stroke(); */
+          context.fillText(`${innerIndex + 1}.`, 40 * ratio, rankH + index * 20 * ratio);
 
-          let rankContent = that.canvasWorkBreakNornal(300 * ratio, 14 * ratio, innerItem);
-          console.log(rankContent, 'rankContent')
+          let rankContent = that.canvasWorkBreakNornal(350 * ratio, 14 * ratio, innerItem);
+          //console.log(rankContent, 'rankContent')
           //循环绘制主题内容
           rankContent.forEach((rankItem, rankIndex) => {
             context.setFontSize(14 * ratio);
             context.setFillStyle("#000000");
-            context.fillText(`${rankItem}`, 35 * ratio, rankH);
+            context.fillText(`${rankItem}`, 55 * ratio, rankH + index * 20 * ratio);
             rankH += 20 * ratio;
           })
+          context.setFillStyle('#f2f2f2');
+          context.fillRect(0, rankH - 16 * ratio + 20 * ratio * index, 375 * ratio, 1 * ratio);//线条
           context.stroke();
         })
-      }
+        rankH += 10 * ratio;
+      })
 
+    } else {
+      var rankH = 380 * ratio - lineCha;
+    }
+    if (this.data.hasPersonal) {
+      //personal
+      context.setFillStyle('#9AE3F0');
+      context.fillRect(0, rankH, 375 * ratio, 25 * ratio);//380 * ratio - lineCha
+
+      context.setFontSize(16 * ratio);//所有排行榜
+      context.setFillStyle('white');
+      context.fillText(`个人记录`, 15 * ratio, rankH + 19 * ratio);
+      context.stroke();
+      let personalList = that.data.personalList;
+
+      var rankP = rankH + 70 * ratio;
+      personalList.forEach((item, index) => {
+        context.setFontSize(14 * ratio);//轮次
+        context.setFillStyle('black');
+        context.fillText(`第${that.data.number[index]}轮`, 25 * ratio, rankP - 50 * ratio + 23 * (index + 1));
+        context.stroke();
+        context.setFillStyle('#f2f2f2');
+        context.fillRect(0, rankP - 45 * ratio + 24 * (index + 1), 375 * ratio, 1 * ratio);//线条
+        item.text.forEach((innerItem, innerIndex) => {//rankn内容
+          context.setFontSize(14 * ratio);//轮次
+          context.setFillStyle('black');
+          context.fillText(`${innerIndex + 1}.`, 40 * ratio, rankP + index * 20 * ratio);
+
+          let rankContent = that.canvasWorkBreakNornal(350 * ratio, 14 * ratio, innerItem);
+          //console.log(rankContent, 'rankContent')
+          //循环绘制主题内容
+          rankContent.forEach((rankItem, rankIndex) => {
+            context.setFontSize(14 * ratio);
+            context.setFillStyle("#000000");
+            context.fillText(`${rankItem}`, 55 * ratio, rankP + index * 20 * ratio);
+            rankP += 20 * ratio;
+          })
+          context.setFillStyle('#f2f2f2');
+          context.fillRect(0, rankP - 16 * ratio + 20 * ratio * index, 375 * ratio, 1 * ratio);//线条
+          context.stroke();
+        })
+        rankP += 10 * ratio;
+      })
+
+    } else {
+      var rankP = rankH;
+    }
+    //console.log(rankP,'rankP')
+    //console.log(lineCha,'linecha')
+    context.setFillStyle('#A6B1F0');
+    context.fillRect(0, rankP, 375 * ratio, 25 * ratio);//380 * ratio - lineCha
+
+    context.setFontSize(16 * ratio);//所有排行榜
+    context.setFillStyle('white');
+    context.fillText(`筛选方案`, 15 * ratio, rankP + 18 * ratio);
+    context.stroke();
+    //方案
+    let validPlan = this.data.validPlan;
+    validPlan.forEach((innerItem, innerIndex) => {//rankn内容
+      context.setFontSize(16 * ratio);//轮次
+      context.setFillStyle('black');
+      context.fillText(`方案${this.data.number[innerIndex]}:`, 25 * ratio, rankP + 48 * ratio);
+
+      let rankContent = that.canvasWorkBreakNornal(250 * ratio, 16 * ratio, innerItem);
+      //console.log(rankContent, 'rankContent')
+      //循环绘制主题内容
+      rankContent.forEach((rankItem, rankIndex) => {
+        context.setFontSize(16 * ratio);
+        context.setFillStyle("#000000");
+        context.fillText(`${rankItem}`, 82 * ratio, rankP + 47 * ratio);
+        rankP += 22 * ratio;
+        //console.log(rankP,'rankP')
+      })
+
+      context.setFillStyle('#f2f2f2');
+      context.fillRect(0, rankP + 33 * ratio, 375 * ratio, 1 * ratio);//线条
+      context.stroke();
+      rankP += 8 * ratio;
     })
 
+
+    that.setData({
+      canvasHeight: rankP + 30 * ratio
+    })
+    //console.log(that.data.canvasHeight, 'rankP');
+
     context.draw();
+
+    //将生成好的图片保存到本地，需要延迟一会，绘制期间耗时
+    setTimeout(function () {
+      wx.canvasToTempFilePath({
+        canvasId: 'mycanvas',
+        success: function (res) {
+          var tempFilePath = res.tempFilePath;
+          that.setData({
+            imagePath: tempFilePath,
+            canvasHidden: true
+          });
+        },
+        fail: function (res) {
+          console.log(res);
+        }
+      });
+    }, 300);
   },
 
   circleImg: function (ctx, img, x, y, r) {
@@ -290,7 +414,7 @@ Page({
     ctx.restore();
   },
 
-  canvasWorkBreak: function (maxWidth, fontSize, text) {
+  canvasWorkBreak: function (maxWidth, fontSize, text) {//!!!!!!!!!!!!!!!!!!!!!!
     const maxLength = maxWidth / fontSize
     const textLength = text.length;
     let textRowArr = []
@@ -327,88 +451,36 @@ Page({
     }
   },
 
-
-  //将canvas转换为图片保存到本地，然后将图片路径传给image图片的src
-  createNewImg: function () {
-    var that = this;
-    var context = wx.createCanvasContext('mycanvas');
-    let star = that.data.circle;
-    let circle = that.data.circle;
-    //let kingImg = that.data.kingImg;
-    let kingCircle = that.data.kingCircle;
-    context.setFillStyle("#ffe200")
-    context.fillRect(0, 0, 375, 667)
-
-    //将模板图片绘制到canvas,在开发工具中drawImage()函数有问题，不显示图片
-    //不知道是什么原因，手机环境能正常显示
-    context.drawImage(star, 0, 0, 375, 183);
-
-    //将模板图片绘制到canvas,在开发工具中drawImage()函数有问题，不显示图片
-    context.drawImage(circle, 126, 186, 120, 120);
-    //不知道是什么原因，手机环境能正常显示
-    // context.save(); // 保存当前context的状态
-
-    var name = that.data.name;
-    //绘制名字
-    context.setFontSize(24);
-    context.setFillStyle('#333333');
-    context.setTextAlign('center');
-    context.fillText(name, 185, 340);
-    context.stroke();
-    //绘制一起吃面标语
-    context.setFontSize(14);
-    context.setFillStyle('#333333');
-    context.setTextAlign('center');
-    context.fillText("邀请你一起去吃面", 185, 370);
-    context.stroke();
-    //绘制验证码背景
-    //context.drawImage(kingImg, 48, 390, 280, 84);
-    //绘制code码
-    context.setFontSize(40);
-    context.setFillStyle('#ffe200');
-    context.setTextAlign('center');
-    context.fillText(that.data.code, 185, 435);
-    context.stroke();
-    //绘制左下角文字背景图
-    context.drawImage(kingCircle, 25, 520, 184, 82);
-    context.setFontSize(12);
-    context.setFillStyle('#333');
-    context.setTextAlign('left');
-    context.fillText("进入小程序输入朋友的邀请", 35, 540);
-    context.stroke();
-    context.setFontSize(12);
-    context.setFillStyle('#333');
-    context.setTextAlign('left');
-    context.fillText("码，朋友和你各自获得通用", 35, 560);
-    context.stroke();
-    context.setFontSize(12);
-    context.setFillStyle('#333');
-    context.setTextAlign('left');
-    context.fillText("优惠券1张哦~", 35, 580);
-    context.stroke();
-    //绘制右下角扫码提示语
-    //绘制头像
-    context.arc(186, 246, 50, 0, 2 * Math.PI) //画出圆
-    context.strokeStyle = "#ffe200";
-    context.clip(); //裁剪上面的圆形
-    context.draw();
-    //将生成好的图片保存到本地，需要延迟一会，绘制期间耗时
-    setTimeout(function () {
-      wx.canvasToTempFilePath({
-        canvasId: 'mycanvas',
-        success: function (res) {
-          var tempFilePath = res.tempFilePath;
-          that.setData({
-            imagePath: tempFilePath,
-            canvasHidden: true
-          });
-        },
-        fail: function (res) {
-          console.log(res);
-        }
-      });
-    }, 200);
+  //点击保存到相册
+  saveImg: function () {
+    var that = this
+    wx.saveImageToPhotosAlbum({
+      filePath: that.data.imagePath,
+      success(res) {
+        wx.showModal({
+          content: '图片已保存到相册!',
+          showCancel: false,
+          confirmText: '好的',
+          confirmColor: '#333',
+          success: function (res) {
+            if (res.confirm) {
+              console.log('用户点击确定');
+              /* 该隐藏的隐藏 */
+              that.setData({
+                maskHidden: false
+              })
+            }
+          }, fail: function (res) {
+            console.log(11111)
+            that.setData({
+              maskHidden: false
+            })
+          }
+        })
+      }
+    })
   },
+
 
   listTap: function (e) {
     let Index = e.currentTarget.dataset.parentindex,//获取点击的下标值
@@ -503,62 +575,41 @@ Page({
     let that = this;
     app.onUpdateThree('rooms', app.globalData.roomId, 'hasRank', that.data.hasRank, 'hasPersonal', that.data.hasPersonal, 'reportAgain', true)
       .then(res => {
-        console.log('设置hasRank成功！')
+        //console.log('设置hasRank成功！')
         wx.redirectTo({
-          url: `../report/report`
+          url: `../report/report?reportAgain=true`
         })
       })
-
-
   },
   generate: function () {
-    console.log('生成啦')
+    console.log('生成啦');
+    let that = this;
+    this.setData({
+      maskHidden: false
+    });
+    wx.showToast({
+      title: '生成中...',
+      icon: 'loading',
+      duration: 1000
+    });
+    setTimeout(function () {
+      wx.hideToast()
+
+      that.setData({
+        maskHidden: true
+      });
+    }, 1000)
   },
 
-
-  onReady: function () {
-
+  goIndex: function () {
+    wx.redirectTo({
+      url: '../index/index'
+    })
+  },
+  cancel: function () {
+    this.setData({
+      maskHidden: false
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

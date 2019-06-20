@@ -13,8 +13,6 @@ cloud.init()
  * 
  */
 exports.main = (event, context) => {
-  console.log(event)
-  console.log(context)
 
   // 可执行其他自定义逻辑
   // consol发云函数调用日志查看

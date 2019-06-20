@@ -9,7 +9,7 @@ Page({
     rankMsg: [],
     rankColor: ['#F05959', '#F6DA2E', '#AEEDE1'],
     isroomMaster: false,
-    term: 0,                     //当前页面获取数据轮数
+    term: 1,                     //当前页面获取数据轮数
     isAgain: false,                //判断是否继续讨论
     timer: true,                   //计时器
     startTime: 0,
@@ -46,7 +46,6 @@ Page({
       that.setData({
         rankMsg: res.data
       })
-      console.log(that.data.rankMsg);
       that.orderwords();
     }
     ).then(() => {
@@ -62,8 +61,8 @@ Page({
       that.setData({
         rankMsg: that.data.rankMsg
       })
-      console.log(that.data.rankMsg);
     })
+
 
     //如果是房主则将索引值改为true且当前页面为排行榜
 
@@ -95,7 +94,6 @@ Page({
     this.setData({
       rankMsg: arr
     })
-    //console.log(this.data.rankMsg)
   },
 
   /* 同步房间数据 */
@@ -103,26 +101,28 @@ Page({
     let that = this;
     if (!that.data.timer) return
     app.onQuery('rooms', { roomNum: app.globalData.roomNum },
-      { again: true })
+      { 
+        again: true,
+        goSelect:true
+       })
       .then(res => {
         let data = res.data[0];
-        console.log(res.data[0]);
-        that.setData({
-          isAgain: data.again,
-        })
-        //console.log("test")
-        if (!data.again) {
+        if (!data.again&&!data.goSelect) {
           setTimeout(function () {
             //要延时执行的代码
             that.dataQuary();
           }, 1000) //延迟时间
-        } else {//房主已经设置开始了,传入准备时间
-          if (that.data.isAgain) {//如果是成员，接收到allset后直接跳转到准备时间页面
+        } 
+        else if(data.again) {
+            app.globalData.term++;
             wx.redirectTo({
               url: '/pages/try/try'
             })
           }
-
+        else if(data.goSelect){
+          wx.redirectTo({
+            url: '/pages/selectWords/selectWords'
+          })
         }
       })
   },
@@ -138,14 +138,11 @@ Page({
     this.countAllTime();
     let date = new Date();
     let time = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-    //console.log(time,'time')
 
     app.onUpdate('rooms', app.globalData.roomId, 'date', time).then(res => {
-      console.log("保存日期成功")
     })
-    wx.redirectTo({
-      url: '/pages/selectWords/selectWords'
-    })
+    app.onUpdate('rooms',app.globalData.roomId,'goSelect',true)
+
   },
 
   //计算总时方法
@@ -161,10 +158,8 @@ Page({
       that.setData({
         startTime: data.startTime,
       })
-      console.log(data.startTime, 'start')
       //得出总时间
       let timediff = this.data.endTime - this.data.startTime
-      console.log(timediff, '时间差总秒数')
       //计算小时数
       let remain = timediff % 86400
       //let hours = Math.floor(remain / 3600)
@@ -174,12 +169,7 @@ Page({
       //计算秒数
       let secs = remain % 60;
       let totalTime = mins + ":" + secs
-      console.log("结束时的时间戳", this.data.endTime)
-      console.log("结束时的开始时间戳", this.data.startTime)
-      console.log("总花费时间", totalTime);
       app.onUpdate('rooms', app.globalData.roomId, 'totalTime', totalTime).then(res => {
-        console.log("保存总时间成功");
-        console.log(totalTime,'totalTime');
       })
       //return temp;
       that.setData({
@@ -221,7 +211,45 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    // 显示顶部刷新图标  
+    wx.showNavigationBarLoading();
+    wx.startPullDownRefresh();
+    var that = this;
+    const db = wx.cloud.database()
+    db.collection("words").where({
+      roomNum: app.globalData.roomNum,
+      term: that.data.term
+    }).field({
+      text: true,
+      supportNum: true,
+      supporter: true
+    }).get().then(res => {
+      that.setData({
+        rankMsg: res.data
+      })
+      that.orderwords();
+    }
+    ).then(() => {
+      for (let x = 0; x < that.data.rankMsg.length; x++) {
+        that.data.rankMsg[x].isGood = false
+        //判断support数组中是否含自己openid，如果有则改变isGood属性
+        for (let y = 0; y < that.data.rankMsg[x].supporter.length; y++) {
+          if (that.data.rankMsg[x].supporter[y] == app.globalData.selfOpenId) {
+            that.data.rankMsg[x].isGood = true;
+          }
+        }
+      }
+      that.setData({
+        rankMsg: that.data.rankMsg
+      })
+    })
 
+    setTimeout(function () {
+      // 隐藏导航栏加载框  
+      wx.hideNavigationBarLoading();
+      // 停止下拉动作  
+      wx.stopPullDownRefresh();
+    }, 2000);
   },
 
   /**

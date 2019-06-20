@@ -37,28 +37,22 @@ Page({
     /* 转发 */
     onShareAppMessage: function (ops) {
       let that = this;
-      console.log(ops,'转发')
       if (ops.form === 'button') {
-        console.log(ops.target, 'button');
       }
-      //console.log(ops.target);
       return {
         title: that.data.inputMsg.inputTitle,
         desc: '快来加入我们的头脑风暴吧！',
-        imageUrl:'../../icon/bg2.png',
+        imageUrl: 'https://dmt-web-1257360276.cos.ap-guangzhou.myqcloud.com/%E5%A4%B4%E8%84%91%E6%99%BA%E5%BA%8F/share.png',
         path: `/pages/preparing/preparing?join=1&roomNum=${that.data.inputMsg.roomNum}`,//传入房间号，在后台查找进入房间
         success: function (e) {
-          console.log('转发成功' + JSON.stringify(e));
           var shareTickets = res.shareTickets;
            if (shareTickets.length == 0) {
-             console.log(shareTickets,'shareTickets')
              return false;
            }
            //可以获取群组信息
            wx.getShareInfo({
              shareTicket: shareTickets[0],
              success: function (res) {
-               console.log(res)
              }
            })
         },

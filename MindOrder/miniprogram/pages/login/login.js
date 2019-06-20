@@ -34,8 +34,6 @@ Page({
       name: 'login',
       data: {},
       success: res => {
-        console.log('[云函数] [login] user openid: ', res.result.openid)
-        console.log(userInfo,'userInfo')
         app.globalData.selfOpenId = res.result.openid;
         wx.setStorageSync('userInfo', userInfo);//本地缓存用户信息
         wx.setStorageSync('selfOpenId', res.result.openid);
@@ -45,12 +43,10 @@ Page({
         });
 
         if (that.data.redirect_url) {
-          //console.log('重定向！')
           wx.reLaunch({
             url: that.data.redirect_url
           })
         } else {
-          //console.log('没有来源，默认index1')
           wx.reLaunch({
             url: 'pages/index/index'///!!!!
           })

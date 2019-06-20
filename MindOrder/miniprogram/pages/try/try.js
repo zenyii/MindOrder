@@ -70,17 +70,27 @@ Page({
     })
     
     //获取时间数据
-    this.setData({
-      minute:app.globalData.minute,
-      second:app.globalData.second
-    })
-    this.setData({
-      timer:parseInt(this.data.minute)*60+parseInt(this.data.second)
+    const db = wx.cloud.database();
+    db.collection('rooms').where({
+      roomNum: app.globalData.roomNum
+    }).field({
+      meetingTime: true
+    }).get().then(res => {
+      let minutes = res.data[0].meetingTime.toString();
+      that.setData({
+        minute: minutes,
+        second: '0'
+      });
+    }).then(() => {
+      that.setData({
+        timer: parseInt(that.data.minute) * 60 + parseInt(that.data.second)
+      })
+      countDown(that);
     })
 
     var that = this;
     //从数据库获取数据
-    const db = wx.cloud.database()
+    if(this.data.term>1){
     db.collection("words").where({
       roomNum: app.globalData.roomNum,
       term: that.data.term-1
@@ -92,7 +102,6 @@ Page({
       that.setData({
         rankMsg: res.data
       })
-      console.log(that.data.rankMsg);
       that.orderwords();
     }
     ).then(() => {
@@ -108,8 +117,10 @@ Page({
       that.setData({
         rankMsg: that.data.rankMsg
       })
-      console.log(that.data.rankMsg);
     })
+    }
+    //更改再次讨论变量，方便复用
+    app.onUpdate('rooms', app.globalData.roomId, 'again', false);
   },
   //排行榜排序方法
   orderwords: function () {
@@ -129,7 +140,6 @@ Page({
     this.setData({
       rankMsg: arr
     })
-    //console.log(this.data.rankMsg)
   },
 
   //点击键盘按钮出发输入框
@@ -141,7 +151,6 @@ Page({
 
   //双向绑定输入词条数据
   addWord: function(e) {
-   //console.log(e.detail.value);
     this.data.value.push(e.detail.value);
     this.setData({
       end:e.detail.value
@@ -159,7 +168,6 @@ Page({
       })
     }
     
-    //console.log(this.data.value);
   },
 
   //退回上一步的操作
@@ -224,18 +232,6 @@ Page({
   //点击换颜色后色板弹出动画
   changeColor:function(){
     var that = this;
-      let render = that.data.colorRender ? false : true;
-      if(!render){
-        setTimeout(function () {
-          that.setData({
-          colorRender: render
-          })
-        },1000)}
-      else{
-        this.setData({
-          colorRender:render
-        })
-      }
     var temp = this.data.ifColor?false:true;
     this.setData({
       ifColor:temp
@@ -255,6 +251,10 @@ Page({
       animation.translateY(30).translateX(-70).opacity(0).scale(1,1).step();
       this.setData({ show: animation.export() })
     }
+    let render = that.data.colorRender ? false : true;
+      this.setData({
+        colorRender: render
+      })
 
   },
 
@@ -278,7 +278,8 @@ Page({
     //发送后输入框清空
       this.setData({
         end: '',
-        value:[]
+        ifBack:false,
+        ifGo:false
       })
 
    //将新建对象存入UserData数组中
@@ -293,7 +294,9 @@ Page({
         isModify:false
       }
       obj.word = this.data.value[this.data.value.length - 1];
-      this.data.value=[];
+      this.setData({
+        value : []
+      })
       newUser.words.push(obj);
       var checkNum = 0;
       //将新增词条写入数据库
@@ -328,8 +331,6 @@ Page({
       this.setData({
         upDateUser: this.data.upDateUser,
       });
-      //console.log(this.data.upDateUser);
-      //}
     }
     
   },
@@ -364,14 +365,11 @@ Page({
             upDateUser: that.data.upDateUser
           })
           var get = new Promise(function (resolve, reject) {
-            //console.log(delword);
             db.collection('words').where({
               text: delword
             }).get({
               success: function (res) {
-                //console.log(res);
                 textId = res.data[0]._id;
-                //console.log(textId);
                 resolve();
               }
             })
@@ -414,16 +412,13 @@ Page({
           that.data.upDateUser[0].words[that.data.selectedIndex].select = true;
         }
       }
-      //console.log(selectedIndex,remainWidth, windowWidth)
       this.setData({
         upDateUser: this.data.upDateUser,
         selectedIndex:this.data.selectedIndex
       })
-      //console.log(this.data.upDateUser[0].words);
     })
   },
   EditWord:function(){
-    //console.log(this.data.selectedIndex);
     var that = this;
     return new Promise(function(res,rej){
       for (var i = 0; i < that.data.upDateUser[0].words; i++) {

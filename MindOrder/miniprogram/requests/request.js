@@ -17,18 +17,10 @@ function request(url, data, method,header) {
         'Content-Type':header
       },
       success: function (res) {
-        console.log('请求成功')
         resolve(res.data);
-       /*  if (res.statusCode == 200) {
-          resolve(res.data);//对应(data)=>{ }
-        } else
-          reject(res.data);
-          console.log('请求已发送但响应失败')
-          wx.hideNavigationBarLoading() */
       },
       error:function(res){
         reject('网络出错！')
-        console.log('请求失败')
         wx.hideNavigationBarLoading()
       }
     });
