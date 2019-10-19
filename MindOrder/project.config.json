@@ -9,7 +9,7 @@
 		"newFeature": true,
 		"autoAudits": false,
 		"checkInvalidKey": true,
-		"checkSiteMap": true,
+		"checkSiteMap": false,
 		"uploadWithSourceMap": true,
 		"babelSetting": {
 			"ignore": [],
@@ -18,7 +18,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.0",
+	"libVersion": "2.8.3",
 	"appid": "wxf093ced586835f28",
 	"projectname": "MindOrder",
 	"debugOptions": {

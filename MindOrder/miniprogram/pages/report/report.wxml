@@ -33,10 +33,12 @@
             <span class="nums">+{{king.supportNum}}</span>
         </view>
     </view>
+    <!-- hasRank是要用户点击了多选按钮才有的，所以这里是说只要是导出页面（reportAgain=false）或者有 hasRank且为true 则进入 -->
     <view wx:if="{{!reportAgain||hasRank}}">
         <view class="rank {{tipsss&&!reportAgain&&'tipsss'}}" style="background:{{rankbg?'#BDDAFF':'white'}};color:{{rankbg?'white':'black'}}">
             <view class="rankHeader" id="rankHeader" catchtap="listParentTap">
                 <checkbox-group wx:if="{{!reportAgain}}" bindchange="checkboxChange">
+                    <!-- 选择导出页面才有多选按钮 -->
                     <label class="checkbox" id="checkbox">
                         <checkbox value="rank" checked="" />
                     </label>
@@ -46,6 +48,7 @@
                 <view class="iconfont icon-youjiankuohao outerArr {{show?'iconUpDown':'iconDownUp'}}"></view>
             </view>
         </view>
+        <!-- 点击展示列表 -->
         <view class="rankContent" wx:if='{{show}}'>
             <block wx:for="{{list}}" wx:key="this" wx:for-index="parentIndex" wx:for-item="parentItem">
                 <view style="border-bottom:1px solid #F2F2F2;">
@@ -91,15 +94,17 @@
             </block>
         </view>
     </view>
+    <!-- 方案展示区 -->
     <view class="validPlan">
         <block wx:for="{{validPlan}}" wx:key="this">
             <view class="plan">
                 <span>方案{{number[index]}}:</span>
                 <text class="planConten">{{item}}</text>
             </view>
-         <!--    <hr style="height:1px;width:100%;display:inline-block;background:#f2f2f2;" /> -->
+            <!-- <hr style="height:1px;width:100%;display:inline-block;background:#f2f2f2;" /> -->
         </block>
     </view>
+    <!-- canvas绘图区 -->
     <view class='imagePathBox' hidden="{{maskHidden == false}}" id="imagePathBox" bindtap="hideCanvas">
         <image src="{{imagePath}}" class='shengcheng' mode="aspectFit" id="canvasImg"></image>
         <view class="btnGroup">

@@ -57,7 +57,7 @@ Page({
 
     var obj={
       content: context,
-      nickName: "zenyi"//app.globalData.userInfo.nickName
+      nickName: app.globalData.userInfo.nickName//app.globalData.userInfo.nickName
     };
     this.data.Plan.push(obj);
     this.setData({
@@ -67,7 +67,7 @@ Page({
     const db = wx.cloud.database();
     db.collection('scheme').add({
       data:{
-        author: "zenyi",  //app.globalData.userInfo.nickName
+        author: app.globalData.userInfo.nickName,  //app.globalData.userInfo.nickName
         content: context,
         roomNum:app.globalData.roomNum,
         supportNum:'',

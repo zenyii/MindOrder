@@ -51,9 +51,18 @@ Page({
       {
         title: inputValue.text,
         roomNum: String(inputValue.roomNum),
-        roomMaster: { openid: selfOpenId, avatarUrl: app.globalData.userInfo.avatarUrl, nickName: app.globalData.userInfo.nickName },
+        roomMaster: { 
+          openid: selfOpenId, 
+          avatarUrl: app.globalData.userInfo.avatarUrl, 
+          nickName: app.globalData.userInfo.nickName 
+        },
         readyArr: [],
-        roommates: [{ openid:selfOpenId, avatarUrl: app.globalData.userInfo.avatarUrl, nickName: app.globalData.userInfo.nickName , ready: false }],
+        roommates: [{ 
+            openid:selfOpenId, 
+            avatarUrl: app.globalData.userInfo.avatarUrl, 
+            nickName: app.globalData.userInfo.nickName , 
+            ready: false 
+          }],
         allset: false,
         inMeeting: false,
         preparingTime: 2,

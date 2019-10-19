@@ -7,54 +7,63 @@ Page({
   },
   handleLogin(res) {
     let data = res.detail;
-    //console.log(data,'data')
-    /* let iv = data.iv;
-    let encryptedData = data.encryptedData;
-    let code = this.data.code;
-    let rawData = data.rawData;
-    let signature = data.signature; */
     let userInfo = {};
     userInfo.avatarUrl = data.userInfo.avatarUrl;
-    userInfo.nickName=data.userInfo.nickName;
+    userInfo.nickName = data.userInfo.nickName;
     app.globalData.userInfo = userInfo;//全局储存用户信息
     let that = this;
-    /* if (this.data.loading) {
-      return
-    } */
-    //console.log(this.data.code, 'code');
-    //console.log(this.data.redirect_url, 'redirect_url')
     wx.showLoading({
       title: '加载中',
     })
     this.setData({
       loading: true,
     })
-     // 调用云函数
-     wx.cloud.callFunction({
+    // 调用云函数
+    wx.cloud.callFunction({
       name: 'login',
       data: {},
       success: res => {
-        app.globalData.selfOpenId = res.result.openid;
+        let openid = res.result.openid;
+        app.globalData.selfOpenId = openid;
         wx.setStorageSync('userInfo', userInfo);//本地缓存用户信息
-        wx.setStorageSync('selfOpenId', res.result.openid);
+        wx.setStorageSync('selfOpenId', openid);
         wx.hideLoading();
         that.setData({
           loading: false
         });
-
-        if (that.data.redirect_url) {
-          wx.reLaunch({
-            url: that.data.redirect_url
-          })
-        } else {
-          wx.reLaunch({
-            url: 'pages/index/index'///!!!!
-          })
-        }
+        //先查询是否有此用户记录，再创建users表
+        app.onQuery('users', { openid: openid }, { nickName: true }).then(res => {
+          let data = res.data;
+          if (data.length === 0) {//如果后台没有此用户记录，则加入
+            app.onAdd('users', {
+              avatarUrl: app.globalData.userInfo.avatarUrl,
+              hisRoom: [],
+              nickName: app.globalData.userInfo.nickName,
+              star: [],
+              userInfo: {},
+              openid: app.globalData.selfOpenId
+            }).then(()=>{
+              console.log('插入用户数据成功')
+            })
+          }else{
+            console.log('用户已有数据')
+          }
+          //开始跳转页面
+          if (that.data.redirect_url) {
+            console.log('跳转开始')
+            wx.redirectTo({
+              url: that.data.redirect_url
+            })
+          } else {
+            wx.redirectTo({
+              url: 'pages/index/index'///!!!!
+            })
+            return 
+          }
+        })  
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
-        
       }
     })
 

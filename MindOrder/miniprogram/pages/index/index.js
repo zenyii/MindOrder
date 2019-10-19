@@ -30,23 +30,6 @@ Page({
       selected: e.selected ? e.selected : 0,
       userInfo: app.globalData.userInfo
     })
-
-    //先查询是否有此用户记录，再创建users表
-    app.onQuery('users', { openid: app.globalData.selfOpenId }, { nickName: true }).then(res => {
-      let data = res.data;
-      if (data.length===0) {//如果后台没有此用户记录，则加入
-        app.onAdd('users', {
-          avatarUrl: app.globalData.userInfo.avatarUrl,
-          hisRoom: [],
-          nickName: app.globalData.userInfo.nickName,
-          star: [],
-          userInfo: {},
-          openid: app.globalData.selfOpenId
-        })
-      }
-    })
-
-
   },
 
   buildRoom: function () {

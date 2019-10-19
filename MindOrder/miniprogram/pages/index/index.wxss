@@ -4,11 +4,19 @@ page {
   background-color: #f2f2f2;
 }
 
+.index {
+  margin: 0;
+  padding: 0;
+}
+
 .header {
   width: 100%;
   height: 20vh;
+  margin: 0;
+  padding: 0;
   text-align: center;
   background-size: 100% 100%;
+  background-position: top left;
 }
 
 .header image {
@@ -95,10 +103,12 @@ image.url {
 .contentMine .set {
   margin: 5px 0;
 }
-.line{
+
+.line {
   position: relative;
 }
-.line span{
+
+.line span {
   width: 200px;
   position: absolute;
   left: 25px;
@@ -107,7 +117,7 @@ image.url {
 
 .contentMine .icon {
   display: inline-block;
-  position:absolute;
+  position: absolute;
   width: 16px;
   height: 16px;
   left: 0;
@@ -134,16 +144,15 @@ image.url {
     line-height: 80rpx;
     font-size: 16px;
   }
-  .line span{
+  .line span {
     width: 200px;
     position: absolute;
     left: 25px;
     line-height: 80rpx;
   }
-  
   .contentMine .icon {
     display: inline-block;
-    position:absolute;
+    position: absolute;
     width: 18px;
     height: 18px;
     left: 0;
@@ -190,27 +199,12 @@ image.url {
   z-index: 2;
 }
 
-/* .bar1 .image::after, .bar1 .image::before {
-  content: '';
-  display: inline-block;
-  width: 1px;
-  height: 38px;
-  position: absolute;
-  
-  z-index: -1;
-} */
 
-/* transform: rotate(45deg); */
-
-/* border-style: solid;
-    border-width: 20px;
-    border-color: transparent transparent transparent transparent; */
-
-.barson1,.barson2 {
+.barson1, .barson2 {
   position: relative;
 }
 
-.barson1::before,.barson2::before {
+.barson1::before, .barson2::before {
   content: "";
   width: 7px;
   height: 30px;
@@ -223,7 +217,7 @@ image.url {
   background: #4880ff;
 }
 
-.barson1:after,.barson2::after {
+.barson1:after, .barson2::after {
   content: "";
   height: 7px;
   position: absolute;
@@ -235,31 +229,16 @@ image.url {
   z-index: 3;
   background: #4880ff;
 }
+
 /* .barson1::before,.barson1:after{
  
 } */
 
-.barson2::before,.barson2::after{
-  background:#f05959;
+.barson2::before, .barson2::after {
+  background: #f05959;
   transform: rotate(-45deg);
   transition: all 1s;
 }
-
-/* .bar1 .image::after {
-  height: 38px;
-  right: 44px;
-  transform: rotate(35deg);
-  box-shadow: 40px 0px 6px #06023f;
-  bottom: 19px;
-}
-
-.bar1 .image::before {
-  height: 40px;
-  left: 38px;
-  transform: rotate(-35deg);
-  box-shadow: -30px 0px 5px #06023f;
-  bottom: 9px;
-} */
 
 .tab-bar-item .view {
   margin: 5px 0;
