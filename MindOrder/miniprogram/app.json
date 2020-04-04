@@ -1,32 +1,27 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/rank/rank",
     "pages/try/try",
-    "pages/setTime/setTime",
-    "pages/show/show",
-    "pages/setting/setting",
-    "pages/about/about",
-    "pages/advice/advice",
-    "pages/myStar/myStar",
     "pages/myDiscuss/myDIscuss",
-    "pages/wirtePlan/writePlan",
-    "pages/buildRooming/buildRooming",
-    "pages/homePage/homePage",
-    "pages/index/index",
-    "pages/userConsole/userConsole",
-    "pages/storageConsole/storageConsole",
-    "pages/databaseGuide/databaseGuide",
-    "pages/addFunction/addFunction",
-    "pages/deployFunctions/deployFunctions",
-    "pages/chooseLib/chooseLib",
+    "pages/setTime/setTime",
+    "pages/report/report",
+    "pages/myStar/myStar",
+    "pages/show/show",
+    "pages/selectWords/selectWords",
+    "pages/about/about",
+    "pages/beforeDiscussTime/beforeDiscussTime",
     "pages/preparing/preparing",
-    "pages/test/test",
-    "pages/index2/index2",
+    "pages/setting/setting",
+    "pages/advice/advice",
+    "pages/wirtePlan/writePlan",
+    "pages/invite/invite",
+    "pages/buildRooming/buildRooming",
     "pages/logs/logs",
-    "pages/mine/mine",
     "pages/inputRoomId/inputRoomId",
     "pages/login/login",
     "pages/showPlan/showPlan"
+
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -42,13 +37,13 @@
       {
         "selectedIconPath": "icon/indexChecked.png",
         "iconPath": "icon/index.png",
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/logs/logs",
         "text": "首页"
       },
       {
         "selectedIconPath": "icon/mineChecked.png",
         "iconPath": "icon/mine.png",
-        "pagePath": "pages/mine/mine",
+        "pagePath": "pages/logs/logs",
         "text": "我的"
       }
     ]

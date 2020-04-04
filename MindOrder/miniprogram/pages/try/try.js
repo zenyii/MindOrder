@@ -18,7 +18,7 @@ Page({
     minute:'',
     second:'',
     timer:0,
-    position:[],
+    position:[],                         
     totalHeight:0,
     windowWidth:0,
     windowHeight: 0,
@@ -31,6 +31,17 @@ Page({
     isCheck:false,
     selectedIndex: 0, 
     term: 0,              //轮数获取  
+    rankMsg: [],
+    rankColor: ['#F05959', '#F6DA2E', '#AEEDE1'],
+    isroomMaster: false,
+    isAgain: false,                //判断是否继续讨论
+    timer: null,                   //计时器
+    isRank:false,                  //判断是否查看排行榜
+    colorRender:false,             //色板是否渲染
+    step:0,                        //记录当前便签内容每一输入操作的位置
+    ifBack:false,                 //是否能进行后退操作
+    isGo:false,                   //是否能进行前进操作
+    title:'',
     }, 
 
   /**
@@ -53,20 +64,84 @@ Page({
         that.setData({
           windowWidth:res.windowWidth,
           windowHeight:res.windowHeight,
+          title:app.globalData.title
         })
       },
     })
-
+    
     //获取时间数据
-    this.setData({
-      minute:app.globalData.minute,
-      second:app.globalData.second
-    })
-    this.setData({
-      timer:parseInt(this.data.minute)*60+parseInt(this.data.second)
+    const db = wx.cloud.database();
+    db.collection('rooms').where({
+      roomNum: app.globalData.roomNum
+    }).field({
+      meetingTime: true
+    }).get().then(res => {
+      let minutes = res.data[0].meetingTime.toString();
+      that.setData({
+        minute: minutes,
+        second: '0'
+      });
+    }).then(() => {
+      that.setData({
+        timer: parseInt(that.data.minute) * 60 + parseInt(that.data.second)
+      })
+      countDown(that);
     })
 
+    var that = this;
+    //从数据库获取数据
+    if(this.data.term>1){
+    db.collection("words").where({
+      roomNum: app.globalData.roomNum,
+      term: that.data.term-1
+    }).field({
+      text: true,
+      supportNum: true,
+      supporter: true
+    }).get().then(res => {
+      that.setData({
+        rankMsg: res.data
+      })
+      that.orderwords();
+    }
+    ).then(() => {
+      for (let x = 0; x < that.data.rankMsg.length; x++) {
+        that.data.rankMsg[x].isGood = false
+        //判断support数组中是否含自己openid，如果有则改变isGood属性
+        for (let y = 0; y < that.data.rankMsg[x].supporter.length; y++) {
+          if (that.data.rankMsg[x].supporter[y] == app.globalData.selfOpenId) {
+            that.data.rankMsg[x].isGood = true;
+          }
+        }
+      }
+      that.setData({
+        rankMsg: that.data.rankMsg
+      })
+    })
+    }
+    //更改再次讨论变量，方便复用
+    app.onUpdate('rooms', app.globalData.roomId, 'again', false);
   },
+  //排行榜排序方法
+  orderwords: function () {
+    //let temp, temp1, temp2,i,j
+    var arr = this.data.rankMsg
+    arr.sort(function (a, b) { //自定义函数排序
+      var a1 = a.supportNum;
+      var b1 = b.supportNum;
+      if (a1 < b1) {
+        return 1;
+      } else if (a1 > b1) {
+        return -1;
+      }
+      return 0;
+    }
+    )
+    this.setData({
+      rankMsg: arr
+    })
+  },
+
   //点击键盘按钮出发输入框
   inputWord:function(){
     this.setData({
@@ -76,10 +151,78 @@ Page({
 
   //双向绑定输入词条数据
   addWord: function(e) {
-   //console.log(e.detail.value);
     this.data.value.push(e.detail.value);
+    this.setData({
+      end:e.detail.value
+    })
+    if(this.data.value.length&&this.data.step){
+      this.setData({
+        ifBack:true,
+        step:this.data.value.length-1
+      })
+    }
+    else if(!this.data.step){
+      this.setData({
+        ifBack: true,
+        step: this.data.value.length - 1
+      })
+    }
+    
   },
 
+  //退回上一步的操作
+  goBack:function(){
+    this.data.step--;
+    if(this.data.step>=0){
+      let changeWord = this.data.value[this.data.step];
+      this.setData({
+        end: changeWord
+      })
+    }
+    //回退后检查是否可以再回退
+    if(this.data.step<0){
+      this.setData({
+        ifBack:false,
+        end:""
+      })
+    }
+    //回退后步骤检查是否可以前进
+    if(this.data.step <this.data.value.length- 1){
+      this.setData({
+      ifGo: true,
+    })
+    }
+    else{
+      this.setData({
+      ifGo: false,
+    })
+  }
+  },
+
+  //前进一步操作
+  goHead:function(){
+    this.data.step++;
+    if(this.data.step<=this.data.value.length-1){
+      let changeWord = this.data.value[this.data.step];
+      this.setData({
+        end: changeWord,
+        ifBack:true
+      })
+    }   
+    //前进后步骤检查是否可以前进
+    if (this.data.step < this.data.value.length - 1) {
+      this.setData({
+        ifGo: true,
+      })
+    }
+    else {
+      this.setData({
+        ifGo: false,
+      })
+    }
+  },
+
+  //控制编辑版面出现
   goEdit:function(){
     this.setData({
       isEdit:true
@@ -88,6 +231,7 @@ Page({
 
   //点击换颜色后色板弹出动画
   changeColor:function(){
+    var that = this;
     var temp = this.data.ifColor?false:true;
     this.setData({
       ifColor:temp
@@ -107,6 +251,11 @@ Page({
       animation.translateY(30).translateX(-70).opacity(0).scale(1,1).step();
       this.setData({ show: animation.export() })
     }
+    let render = that.data.colorRender ? false : true;
+      this.setData({
+        colorRender: render
+      })
+
   },
 
   selectColor:function(e){
@@ -129,6 +278,8 @@ Page({
     //发送后输入框清空
       this.setData({
         end: '',
+        ifBack:false,
+        ifGo:false
       })
 
    //将新建对象存入UserData数组中
@@ -143,7 +294,9 @@ Page({
         isModify:false
       }
       obj.word = this.data.value[this.data.value.length - 1];
-      this.data.value=[];
+      this.setData({
+        value : []
+      })
       newUser.words.push(obj);
       var checkNum = 0;
       //将新增词条写入数据库
@@ -154,10 +307,12 @@ Page({
           roomNum: app.globalData.roomNum,              //所属房间
           text: obj.word,                               //词条内容
           backColor: that.data.backColor,               //词条背景颜色
-          nickName: "zenyi",//app.globalData.userInfo.nickName,   //词条作者名称
+          title: app.globalData.title,                 //词条作者名称
+          avatarUrl:app.globalData.userInfo.avatarUrl, //词条作者头像
           term: app.globalData.term,          //轮数记录
           supporter: [],                        //点赞者存放数组
-          supportNum: 0                          //存取点赞数  
+          supportNum: 0,                          //存取点赞数  
+          openid:app.globalData.selfOpenId,   //词条作者的openid
         }
       })
       //若有openId属性重复的，则只插入词条数据
@@ -176,8 +331,6 @@ Page({
       this.setData({
         upDateUser: this.data.upDateUser,
       });
-      //console.log(this.data.upDateUser);
-      //}
     }
     
   },
@@ -212,14 +365,11 @@ Page({
             upDateUser: that.data.upDateUser
           })
           var get = new Promise(function (resolve, reject) {
-            //console.log(delword);
             db.collection('words').where({
               text: delword
             }).get({
               success: function (res) {
-                //console.log(res);
                 textId = res.data[0]._id;
-                //console.log(textId);
                 resolve();
               }
             })
@@ -257,19 +407,18 @@ Page({
       res(systemInfo.windowWidth);
     })
       .then((windowWidth) => {
+        if (that.data.selectedIndex >= 0 && that.data.selectedIndex < that.data.upDateUser[0].words.length){
         if (remainWidth < 0.8 * windowWidth) {
-        this.data.upDateUser[0].words[this.data.selectedIndex].select = true;
+          that.data.upDateUser[0].words[that.data.selectedIndex].select = true;
+        }
       }
-      //console.log(selectedIndex,remainWidth, windowWidth)
       this.setData({
         upDateUser: this.data.upDateUser,
         selectedIndex:this.data.selectedIndex
       })
-      //console.log(this.data.upDateUser[0].words);
     })
   },
   EditWord:function(){
-    //console.log(this.data.selectedIndex);
     var that = this;
     return new Promise(function(res,rej){
       for (var i = 0; i < that.data.upDateUser[0].words; i++) {
@@ -294,6 +443,11 @@ Page({
       })
     }
     else {
+      wx.showToast({
+        title: '已修改',
+        duration: 500,
+        mask: true
+      })
       this.data.upDateUser[0].words[this.data.selectedIndex].word = this.data.value[this.data.value.length - 1];
     this.data.value = [];
     this.data.upDateUser[0].words[this.data.selectedIndex].isModify=false
@@ -304,32 +458,26 @@ Page({
   },
 
   getRank:function(){
-    //若第一轮则不跳转页面
-    if(app.globalData.term<2){
+    var that = this;
+    //若第一轮或上一轮没有数据则不跳转页面
+    if(app.globalData.term<2 || !this.data.rankMsg.length){
       wx.showToast({
         title: '无数据',
         duration: 1000,
         mask: true
       })
-    }else{
-    wx.navigateTo({
-      url: '../rank/rank',
-    })
+    }else{       //排行榜有数据
+      let temp = that.data.isRank? false:true;
+      that.setData({
+        isRank:temp
+      })
     }
   },
-
-  goshow:function(){
-    wx.navigateTo({
-      url: '../show/show',
-    })
-  },
-
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-    countDown(this,1);
+    countDown(this);
   },
 
   /**

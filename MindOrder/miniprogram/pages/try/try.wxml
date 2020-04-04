@@ -1,6 +1,6 @@
 <!--pages/try/try.wxml-->
 <!--开头界面 主题、倒计时等-->
-<view class='theme'><text>主题:xxxxx</text></view>
+<view class='theme'><text>主题:{{title}}</text></view>
 <view class='timerback3'></view>
 <view class='timerback2'></view>
 <view class='timerback1'></view>
@@ -13,14 +13,14 @@
     <!--进度条-->
     <view class='progresstimer'></view>
   <view style='animation-duration:{{timer}}s' class='progress'></view>
-  <!--遮罩层，方便编辑便签后回到主页面-->
+  <!--遮罩层，方便填写便签后回到主页面-->
   <view wx:if="{{isCheck}}" class='editBack' bindtap='cancelCheck'></view>
     <!--查看单个便签的滚动栏-->
     <scroll-view scroll-x="true" class='scrollText' wx:if="{{isCheck}}" bindscroll="scrollSelect">
-      <view wx:for="{{upDateUser[0].words}}" wx:for-item="words" wx:key="id" class="{{words.select?'selectItem':'scrollTextItem'}}"  style='background:{{words.backColor}}' ><input value='{{words.word}}' focus='{{words.isModify}}' bindinput="addWord"></input>
+      <view wx:for="{{upDateUser[0].words}}" wx:for-item="words" wx:key="id" class="{{words.select?'selectItem':'scrollTextItem'}}"  style='background:{{words.backColor}}' ><input id="showItem" value='{{words.word}}' focus='{{words.isModify}}' bindinput="addWord"></input>
         </view>
     </scroll-view>
-    <button wx:if="{{isCheck}}" class='newPaper' bindtap='insure'>确定修改</button>
+      <view class='insureWrap' bindtap='insure'><button wx:if="{{isCheck}}" class='newPaper'>确定修改</button></view>
     <image wx:if="{{isCheck}}" bindtap='deleteWord' id="bin" src='../../icon/bin.png'></image>
     <image wx:if="{{isCheck}}" bindtap='EditWord' id="edit" src='../../icon/edit.png'></image>
   <!--每轮标签集合可移动-->
@@ -36,26 +36,54 @@
     <image  wx:if="{{!isEdit && !isCheck}}" bindtap='goEdit' class='addPaper' src='../../icon/addPaper.png'></image>
   </view>
 </view>
-<!--编辑界面后的遮罩层,用于取消填写便签-->
+<!--填写界面后的遮罩层,用于取消填写便签-->
 <view class='editBack' wx:if="{{isEdit}}" bindtap='cancelEdit'></view>
-<!-- 整体编辑界面-->
+<!-- 整体填写便签界面-->
 <view class='edit' wx:if="{{isEdit}}">
- <!-- 中间编辑便签界面-->
+ <!-- 中间填写便签界面-->
 <view class='paperback'>
   <view bindtap='inputWord' class='paper' style='background:{{backColor}}'>
-    <input placeholder='请输入你的想法' bindinput="addWord" id='word' focus='{{isActive}}' value='{{end}}'></input>
+    <input placeholder='请输入你的想法' bindinput="addWord" id='word' focus='{{isActive}}' value='{{end}}'></input> 
   </view>
 </view>
 <!-- 下一张按钮 撤回前进按钮-->
-<button class='newPaper' bindtap='newpaper'>下一张 +</button>
-<view class='step'>
-<image id='stepItem' src='../../icon/back2.png'></image><image  id='stepItem' src='../../icon/go2.png'></image>
-</view>
+  <view class='insureWrap' bindtap='newpaper'><button class='newPaper'>下一张 +</button></view>
+  <view class='step'>
+  <image bindtap='goBack' wx:if="{{ifBack}}" id='stepItem' src='../../icon/back.png'></image>
+  <image wx:if="{{!ifBack}}" id='stepItem' src='../../icon/back2.png'></image>
+  <image bindtap='goHead' wx:if="{{ifGo}}" id='stepItem' src='../../icon/go.png'></image>
+  <image wx:if="{{!ifGo}}" id='stepItem' src='../../icon/go2.png'></image>
+  </view>
 <!--颜色板-->
-<view animation="{{show}}" class='colorbroad'>
-  <button class='coloritem' wx:for="{{color}}" id="{{item}}" style='background:{{item}}' bindtap='selectColor' ></button>
+<view disabled="{{colorRender}}" animation="{{show}}" class='colorbroad'>
+  <button class='coloritem' wx:for="{{color}}" wx:key="this" id="{{item}}" style='background:{{item}}' bindtap='selectColor' ></button>
 </view>
+
 <!-- 更换颜色按钮 键盘按钮-->
-<image src='../../icon/colorChange.png' id='color' bindtap='changeColor'></image><image src='../../icon/keyBroad.png' id='keybroad' bindtap='inputWord'>键盘</image>
+  <view id='color' bindtap='changeColor'><image src='../../icon/colorChange.png' ></image></view>
+<view id='keybroad' bindtap='inputWord'><image src='../../icon/keyBroad.png'>键盘</image></view>
 </view>
-<button bindtap='goshow'>go</button>
+
+  <!--排行榜显示-->
+<view class="rank {{isRank?'goUp':'goDown'}}">
+  <!--收回按键-->
+  <view class='getBack' bindtap='getRank'><image id="up" src='../../icon/down.png'></image></view>
+  <view wx:for="{{rankMsg}}" wx:key="this" wx:for-index="index" class="{{index<3?'MsgItemtop':'MsgItem'}}" >
+  <!--排行前三独立样式-->
+      <view class='num' wx:if="{{index < 3}}" style="background:{{rankColor[index]}}"><text id='num'>NO.{{index+1}}</text></view>
+      <view wx:if="{{index < 3}}" class='Message'>{{item.text}}</view>
+        <view wx:if="{{index < 3}}" class='goodItem'>
+            <image id='good' wx:if="{{!item.isGood}}" src='../../icon/good.png'></image>
+            <image id='good' wx:if="{{item.isGood}}" src='../../icon/gooded.png'></image>
+            <text>{{item.supportNum}}</text>
+          </view>
+    <!--排行大于三样式独立-->
+    <view class='num' wx:if="{{index > 2}}"></view>
+      <view wx:if="{{index > 2}}" class='Message'>{{item.text}}</view>
+      <view wx:if="{{index > 2}}" class='goodItem'>
+        <image id='good' wx:if="{{!item.isGood}}" src='../../icon/good.png'></image>
+        <image id='good' wx:if="{{item.isGood}}" src='../../icon/gooded.png'></image>
+        <text>{{item.supportNum}}</text>
+      </view>
+    </view>
+  </view>

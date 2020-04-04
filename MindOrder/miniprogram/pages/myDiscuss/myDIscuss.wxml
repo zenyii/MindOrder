@@ -1,8 +1,8 @@
 <!--miniprogram/pages/myDiscuss/myDIscuss.wxml-->
 <!--主题显示界面-->
 <view class='allTheme'>
-  <view class='titleItem' wx:for="{{titleMsg}}">
-      <view id='text'>主题：{{item}}</view>
+  <view class='titleItem' bindtap='goReport' wx:for="{{titleMsg}}" wx:for-index="index"  data-index="{{index}}" wx:key="">
+      <view id='text'>主题：{{item.title}}</view>
       <image id="more" src='../../icon/more.png'></image>
   </view>
 </view>

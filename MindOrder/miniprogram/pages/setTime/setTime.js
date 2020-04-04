@@ -1,69 +1,111 @@
-// pages/setTime/setTime.js
-import {countDown} from '../../utils/timer.js';
-var app = getApp();
-
+// miniprogram/pages/setTimer/setTimer.js
+const app = getApp();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    minutes:[],
-    seconds:[],
-    index1:'0',index2:'0',index3:'0',
-    hour:'0',minute:'0',second:'0'
+    timeRangeWrite: [],
+    timeRangePrepare: [],
+    timeHold: '',
+    timePrepare: '',
+    rank: 0,
+    placeHolderWri: 1,
+    placeHolderPre: 1,
+    startTime:0
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    for (var i = 0; i <=60; i++) {
-      this.data.minutes.push(i);
+    let that = this;
+    let rank = options.rank;
+    if (options.placeHolderWri) {
+      that.setData({
+        placeHolderWri: Number(options.placeHolderWri)
+      })
     }
-    for (var i = 0; i <= 60; i++) {
-      this.data.seconds.push(i);
-    }
-    this.setData({
-      minutes:this.data.minutes,
-      seconds:this.data.seconds
-    })
-  },
-
-   setMinutes(e) {
-    this.setData({
-      index2: e.detail.value
-    })
-  },
-
-  setSeconds(e) {
-    this.setData({
-      index3: e.detail.value
+    let timeRangeWrite = [];
+    let timeRangePrepare = [];
+    Array.from({ length: 58 }, (v, i) => {
+      timeRangeWrite.push(i + 1);
+      timeRangePrepare.push(i * 5);
+    });
+    that.setData({
+      rank: rank,
+      timeRangeWrite: timeRangeWrite,
+      timeRangePrepare: timeRangePrepare
     });
   },
-
-  settime(){
+  bindPickerChangeW(e) {
     this.setData({
-      minute:this.data.index2,
-      second:this.data.index3
+      timeHold: e.detail.value,
+      placeHolderWri: 0
     })
+  },
+  bindPickerChangeP(e) {
     this.setData({
-      index2:'0',
-      index3:'0'
+      timePreparing: e.detail.value,
+      placeHolderPre: 0
     })
+  },
 
-    app.globalData.minute = this.data.minute;
-    app.globalData.second = this.data.second;
+  formSubmit: function () {
+    let that = this;
+    let timeRangeWrite = that.data.timeRangeWrite;
+    let timeHold = timeRangeWrite[that.data.timeHold];
+    app.globalData.minute = `${Number(timeHold) - 1}`;
+    app.globalData.second = `60`;
+    if (that.data.rank == 0) {//初次
+      var timeRangePrepare = that.data.timeRangePrepare;
+      var timePreparing = timeRangePrepare[that.data.timePreparing];//获取时间值
+      app.onUpdate('rooms', app.globalData.roomId, 'preparingTime', timePreparing)//更新准备时间的值
+        .then(res => {
+          
+        })
+        that.startTimeTamp();
 
-    wx.navigateTo({
-      url: '../try/try',
-    })
+    }
+
+    app.onUpdate('rooms', app.globalData.roomId, 'meetingTime', timeHold)
+      .then(res => {
+        if (that.data.rank == 0) {
+          wx.redirectTo({
+            url: `../beforeDiscussTime/beforeDiscussTime?timePreparing=${timePreparing}&timeHold=${timeHold}`,
+            success: function () {
+              app.onUpdate('rooms', app.globalData.roomId, 'allset', true);
+            }
+          })
+        } else {
+          app.onUpdate('rooms', app.globalData.roomId, 'again', true)
+          wx.redirectTo({
+            url: `../try/try`,
+          })
+        }
+
+      })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
 
+  },
+  //计时开始方法
+  startTimeTamp: function () {
+    let that = this;
+    //获取当前时间戳
+    this.setData({
+      startTime: Date.parse(new Date()) / 1000
+    })
+    //保存时间戳作为房间开始时刻
+    const db = wx.cloud.database()
+    db.collection('rooms').doc(app.globalData.roomId).update({
+      data: {
+        //设置开始时间的时间戳
+        startTime: that.data.startTime
+      },
+      success: res => {
+
+      }
+    })
   },
 
   /**

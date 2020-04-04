@@ -16,6 +16,9 @@ Page({
     queryRes: null,//词条点赞者openID数组
     querywordsId: null,//点赞词条的_id
     color: ["#8AACFF", "#A6B1F0", "#9AE3F0", "#AEEDE1", "#F8DC2E"],
+    title:'',
+    timer:true,
+    windowHeight:''        //设备高度
   },
 
   /**
@@ -24,6 +27,11 @@ Page({
   onLoad: function (options) {
     wx.setNavigationBarTitle({
       title: '点赞区',
+    })
+
+    var windowHeight = wx.getSystemInfoSync().windowHeight;//获取设备高度
+    this.setData({
+      windowHeight: windowHeight
     })
 
     //修改当前页面状态
@@ -36,17 +44,17 @@ Page({
         term:app.globalData.term   //根据轮数取出数据
       }).get({
       success(res){
-        console.log(res);
         that.setData({
-          showMessage:res.data
+          showMessage:res.data,
+          title:app.globalData.title
         })
         for(let x = 0;x < that.data.showMessage.length;x++){
           that.data.showMessage[x].isLike = false
         }
-        //console.log(that.data.showMessage);
       }
     })
-    //console.log(this.data.showMessage);
+    //实时同步数据
+    this.dataQuary();
   },
 
   //点赞
@@ -57,8 +65,6 @@ Page({
     var length = this.data.showMessage[id].supporter.length;
     var roomNumber = app.globalData.roomNum;
     var that = this;
-    //console.log(that.data.showMessage[id]._id);
-
     //将点赞过的人的昵称存入supporter数组中，并处理点赞事件
     if (length) {
       for (var i = 0; i < length; i++) {
@@ -102,15 +108,11 @@ Page({
         _id: that.data.showMessage[id]._id
       }).get({
         success: res => {
-          //console.log(res);
           //获取查询信息
           that.setData({
             queryRes: res.data[0].supporter,
             querywordsId: res.data[0]._id
           })
-          //console.log('[数据库] [查询记录] 成功: ', res.data)
-          // console.log('生成的房号是: ', that.data.roomNum)
-          //console.log('test：', that.data.queryRes)
           resolve();
         }
       })
@@ -120,16 +122,12 @@ Page({
       let index = that.inarray(app.globalData.selfOpenId, that.data.queryRes)
       //如果赞过
       if (index != -1) {
-        //console.log('赞过', index)
         /*that.data.showMessage[id].isLike = false;
         that.setData({
           showMessage: that.data.showMessage,
         })*/
         //点赞中删除点赞用户
         that.data.queryRes.splice(index, 1)
-        console.log(that.data.queryRes)
-        //console.log('test2', that.data.querywordsId)
-        //console.log('test2', that.data.queryRes)
         db.collection('words').doc(that.data.querywordsId).update({
           data: {
             //自减一
@@ -139,14 +137,9 @@ Page({
             )
           }
         })
-        //console.log('点赞重复')
       }
       else {
         //没赞过
-        /*that.data.showMessage[id].isLike = true;
-        that.setData({
-          showMessage: that.data.showMessage
-        })*/
         db.collection('words').doc(that.data.querywordsId).update({
           data: {
             //自增一
@@ -154,12 +147,29 @@ Page({
             supporter: _.push(openId)
           },
           success: res => {
-            //console.log(res.data)
           }
         })
-        //console.log('点赞成功')
         //that.getRandomInt(100000, 999999)
       }
+    })
+  },
+  //排行榜排序方法
+  orderwords: function () {
+    //let temp, temp1, temp2,i,j
+    var arr = this.data.rankMsg
+    arr.sort(function (a, b) { //自定义函数排序
+      var a1 = a.supportNum;
+      var b1 = b.supportNum;
+      if (a1 < b1) {
+        return 1;
+      } else if (a1 > b1) {
+        return -1;
+      }
+      return 0;
+    }
+    )
+    this.setData({
+      rankMsg: arr
     })
   },
   inarray: function (index, array) {
@@ -172,9 +182,37 @@ Page({
     return -1
   },
   change(){
-    wx.navigateTo({
-      url: '../rank/rank',
+    wx.redirectTo({
+      url: '/pages/rank/rank',
     })
+  },
+
+  /* 同步房间数据 */
+  dataQuary: function () {
+    let that = this;
+    if(!that.data.timer) return
+    app.onQuery('rooms', { roomNum: app.globalData.roomNum },
+      { again: true })
+      .then(res => {
+        let data = res.data[0];
+        that.setData({
+          isAgain: data.again,
+        })
+        if (!data.again) {
+          setTimeout(function () {
+            //要延时执行的代码
+            that.dataQuary();
+          }, 1000) //延迟时间
+        } else {//房主已经设置开始了,传入准备时间
+          if (that.data.isAgain) {//如果是成员，接收到allset后直接跳转到准备时间页面
+          app.globalData.term++;
+            wx.redirectTo({
+              url: '/pages/try/try'
+            })
+          }
+
+        }
+      })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -201,7 +239,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    this.setData({
+      timer:false
+    })
   },
 
   /**

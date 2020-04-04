@@ -5,16 +5,16 @@
       <view class='num' wx:if="{{index < 3}}" style="background:{{rankColor[index]}}"><text id='num'>NO.{{index+1}}</text></view>
       <view wx:if="{{index < 3}}" class='Message'>{{item.text}}</view>
         <view wx:if="{{index < 3}}" class='goodItem'>
-            <image id='good' wx:if="{{false}}" src='../../icon/good.png'></image>
-            <image id='good' src='../../icon/gooded.png'></image>
+            <image id='good' wx:if="{{!item.isGood}}" src='../../icon/good.png'></image>
+            <image id='good' wx:if="{{item.isGood}}" src='../../icon/gooded.png'></image>
             <text>{{item.supportNum}}</text>
           </view>
     <!--排行大于三样式独立-->
     <view class='num' wx:if="{{index > 2}}"></view>
       <view wx:if="{{index > 2}}" class='Message'>{{item.text}}</view>
       <view wx:if="{{index > 2}}" class='goodItem'>
-        <image id='good' wx:if="{{false}}" src='../../icon/good.png'></image>
-        <image id='good' src='../../icon/gooded.png'></image>
+        <image id='good' wx:if="{{!item.isGood}}" src='../../icon/good.png'></image>
+        <image id='good' wx:if="{{item.isGood}}" src='../../icon/gooded.png'></image>
         <text>{{item.supportNum}}</text>
       </view>
   </view>

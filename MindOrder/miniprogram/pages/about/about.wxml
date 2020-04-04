@@ -1,8 +1,35 @@
 <!--miniprogram/pages/about/about.wxml-->
 <view class='banner'>
   <view class='logo'><image src='../../icon/logo.png'></image></view>
-  <view id="title">头脑智序</view>
   <view class='text'>
-    介绍：fcdsfirgvisrhedfvjbghdfkjbhvujdfzhbvujdfbzhuvhdfuvghbdfvb
+    <view id="title"><span id="green">{{'>'}}</span><text>背景</text><span  id="green">{{'<'}}</span></view>
+    <view class="content">“头脑智序”是一款头脑风暴小程序，灵感来源于我们团
+队的一次头脑风暴会议，在会议开始时，一位伙伴提出
+自己的设想，话音刚落，就被其他人第一时间否定。
+从这一现象中，我们意识到问题所在。如何在进行头脑
+风暴会议时为与会者们提供一个良好的讨论环境，让每
+个人都能够畅所欲言，不被打断。
+为此我们开发了“头脑智序”这款小程序，使用“头脑智序”
+进行头脑风暴会议，主要以头脑书写的方式进行，房主
+充当主持者，设定主题和时间，与会者在规定时间内快
+速的将自己的想法输入到小程序的便利贴中，等时间到
+时全体人员前往点赞区浏览他人创意点，对自己认可的
+创意进行点赞，最后以排行榜的形式公布结果，在这整
+个过程中，保证了每位与会者的“发言”不受打断。</view>
+
+  <view id="title"><span id="green">{{'>'}}</span><text>流程</text><span id="green">{{'<'}}</span></view>
+  <view  class="content">
+  1.设定讨论主题：我们要讨论的主题是什么？有什么要
+求？需要遵循什么条件？
+2.每个人围绕问题进行思考，在规定的时间内将创意点
+写在小程序便签中；
+3.当书写时间到时，大家进入点赞区浏览别人的创意点，
+对自己认可的创意点进行点赞；
+4.点赞环节结束后进入排行榜，系统根据点赞量从高到
+低进行排名，与会者针对点赞量较高的词条进行讨论，
+提出创意可行性、修改意见等；
+5.重复数次；
+6.确定最终提交版本，汇总、逐条讨论、投票，选出最
+终采用的内容。</view>
   </view>
 </view>

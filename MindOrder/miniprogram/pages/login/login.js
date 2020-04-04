@@ -1,6 +1,5 @@
 // pages/login.js
 const app = getApp();
-const request = require('../../requests/request');
 Page({
   data: {
     code: '',
@@ -8,51 +7,65 @@ Page({
   },
   handleLogin(res) {
     let data = res.detail;
-    //console.log(data,'data')
-    let iv = data.iv;
-    let encryptedData = data.encryptedData;
-    let code = this.data.code;
-    let rawData = data.rawData;
-    let signature = data.signature;
-    let userInfo = data.userInfo;
+    let userInfo = {};
+    userInfo.avatarUrl = data.userInfo.avatarUrl;
+    userInfo.nickName = data.userInfo.nickName;
+    app.globalData.userInfo = userInfo;//全局储存用户信息
     let that = this;
-    if (this.data.loading || !iv || !encryptedData) {
-      return
-    }
-    //console.log(this.data.code, 'code');
-    //console.log(this.data.redirect_url, 'redirect_url')
     wx.showLoading({
       title: '加载中',
     })
     this.setData({
       loading: true,
     })
-    request.request('https://fl123.xyz/api/xcx/addUser.php', { code, iv, encryptedData, rawData, signature }, 'POST', 'application/x-www-form-urlencoded')
-      .then(r => {
-        //返回自定义登录态
-        console.log(r, '添加用户数据成功');
-         wx.setStorageSync('userInfo',userInfo);
-         app.globalData.userInfo = userInfo;
+    // 调用云函数
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        let openid = res.result.openid;
+        app.globalData.selfOpenId = openid;
+        wx.setStorageSync('userInfo', userInfo);//本地缓存用户信息
+        wx.setStorageSync('selfOpenId', openid);
         wx.hideLoading();
         that.setData({
           loading: false
         });
-        
-        if (that.data.redirect_url) {
-          //console.log('重定向！')
-          wx.reLaunch({
-            url: that.data.redirect_url
-          })
-        } else {
-          //console.log('没有来源，默认index')
-          wx.reLaunch({
-            url: 'pages/index/index'///!!!!
-          })
-        }
-      }, r => {
-        console.log(r, '添加用户失败')
-        reject(r);
-      })
+        //先查询是否有此用户记录，再创建users表
+        app.onQuery('users', { openid: openid }, { nickName: true }).then(res => {
+          let data = res.data;
+          if (data.length === 0) {//如果后台没有此用户记录，则加入
+            app.onAdd('users', {
+              avatarUrl: app.globalData.userInfo.avatarUrl,
+              hisRoom: [],
+              nickName: app.globalData.userInfo.nickName,
+              star: [],
+              userInfo: {},
+              openid: app.globalData.selfOpenId
+            }).then(()=>{
+              console.log('插入用户数据成功')
+            })
+          }else{
+            console.log('用户已有数据')
+          }
+          //开始跳转页面
+          if (that.data.redirect_url) {
+            console.log('跳转开始')
+            wx.redirectTo({
+              url: that.data.redirect_url
+            })
+          } else {
+            wx.redirectTo({
+              url: 'pages/index/index'///!!!!
+            })
+            return 
+          }
+        })  
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+      }
+    })
 
   },
   onLoad: function (options) {
@@ -60,7 +73,7 @@ Page({
     this.setData({
       redirect_url: decodeURIComponent(options.redirect_url)
     })
-    wx.login({
+    wx.login({//登录并获取code
       success: function (res) {
         if (res.code) {
           that.setData({
@@ -71,52 +84,4 @@ Page({
     })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

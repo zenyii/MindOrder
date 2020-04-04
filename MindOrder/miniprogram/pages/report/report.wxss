@@ -1,0 +1,422 @@
+/* miniprogram/pages/report/report.wxss */
+
+page {
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+.header {
+    width: 100%;
+    height: 44vh;
+    background: white;
+    padding-bottom: 30px;
+    box-sizing: border-box;
+    margin-bottom: 7px;
+}
+.title{
+    position: relative;
+    left: 60px;
+    font-size: 18px;
+    display: -webkit-box;/* 必须结合的属性 ，将对象作为弹性伸缩盒子模型显示 */
+    width: 60vw;
+    overflow: hidden;
+    text-overflow: ellipsis;/* 可以用来多行文本的情况下，用省略号“...”隐藏超出范围的文本 */
+    -webkit-line-clamp:2;
+    -webkit-box-orient: vertical;/* 必须结合的属性 ，设置或检索伸缩盒对象的子元素的排列方式 */
+
+}
+.zhuti{
+    position: absolute;
+    left: 22px;
+    font-size: 18px;
+}
+
+.titleMsg {
+    width: 100%;
+    height: 23%;
+    position: relative;
+    padding: 10px 5px;
+}
+
+.titleMsg image {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    margin: 3px 2px;
+}
+
+
+.titleMsg .date {
+    font-size: 14px;
+    color: gray;
+    margin: 1px 0;
+    margin-left: 22px;
+}
+
+.titleMsg .button {
+    position: absolute;
+    /*    background: linear-gradient(to left, 30deg, #4880ff, #4ab1d5); */
+    background: linear-gradient(to right, #4880ff, #4880ff, #4880ff, #4ab1d5);
+    color: white;
+    border-radius: 5pt;
+    width: 70px;
+    height: 30px;
+    right: 25px;
+    text-align: center;
+    padding-top: 2px;
+    padding-left: 2px;
+    line-height: 27px;
+    font-size: 18px;
+    box-shadow: 2px 3px 5px -2px #6188ff;
+}
+
+.gene{
+    top: 15px;
+}
+.goIndex{
+    top:55px;
+}
+
+.iconfont {
+    font-weight: bold;
+}
+
+.display {
+    height: 77%;
+    display: flex;
+    justify-content: center;
+}
+
+.circle {
+    width: 350rpx;
+    height: 350rpx;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    font-size: 16px;
+}
+
+.text {
+    margin: 0 auto;
+}
+
+.markKing {
+    height: 15vh;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 5px;
+    margin-bottom: 3px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.avatar image {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.map {
+    display: inline-block;
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: 44px;
+    height: 44px;
+    background: no-repeat;
+    background-size: 100% 100%;
+}
+
+.tips {
+    font-size: 14px;
+    margin: 10px auto;
+    position: relative;
+}
+
+.tips .nums {
+    position: absolute;
+    right: -28px;
+    font-size: 14px;
+    color: #f6da2e;
+    bottom: 0;
+    /*  margin-left: 2px; */
+}
+
+
+.rank,.personal {
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.tipsss{
+    position: relative;
+}
+.tipsss::before{
+    content: ' 想导出此栏？请勾选。 ';
+    display: inline-block;
+    font-size: 10px;
+    background: #f6da2e;
+    border-radius: 10px;
+    position: absolute;
+    padding: 4px;
+    top: -25px;
+    left: 5px;
+}
+.tipsss::after{
+    content:'';
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-top:5px solid #f6da2e;
+    border-left: 5px solid transparent;
+    border-right:5px solid transparent;
+    left: 10px;
+    top: -5px;
+}
+
+.rank .rankHeader ,.personal .personalHeader{
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 16px;
+    transition: all .1s;
+}
+
+.outerArr {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    margin-right: 5px;
+    transform: rotate(90deg);
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/*checkbox 整体大小  */
+
+
+.checkbox,.personalCheckbox {
+    width: 40rpx;
+    height: 40rpx;
+    padding-left: 5px;
+    margin-right: 2px;
+    padding-bottom: 1px;
+    box-sizing: border-box;
+    position: relative;
+}
+.checkbox::before,.personalCheckbox::before{
+    position: absolute;
+    display: inline-block;
+    width: 180rpx;
+    left: 100%;
+    top: -4px;
+}
+
+
+.checkbox::before{
+    content: '所有排行榜';
+}
+
+.personalCheckbox::before{
+    content: '个人记录';
+}
+
+/*checkbox 选项框大小  */
+
+checkbox .wx-checkbox-input {
+    width: 40rpx;
+    height: 40rpx;
+}
+
+/*checkbox选中后样式  */
+
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+    background: white;
+}
+
+/*checkbox选中后图标样式  */
+
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+    width: 28rpx;
+    height: 28rpx;
+    line-height: 28rpx;
+    text-align: center;
+    font-size: 18px;
+    color: #4880ff;
+    font-weight: bold;
+    background: transparent;
+    transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
+checkbox.personalCB .wx-checkbox-input.wx-checkbox-input-checked::before {
+    color: #55DBBF;
+}
+
+.checkbox .title {
+    display: inline-block;
+    margin-left:0px;
+}
+
+.rankContent .innerHeader,.personalContent .innerHeader {
+    font-size: 14px;
+    line-height: 30px;
+    height: 30px;
+    background: white;
+    transition: all .1s;
+    padding-left: 18px;
+}
+
+.innerArr {
+    font-size: 12px;
+    font-weight: bolder;
+    padding: 2px;
+    padding-right: 4px;
+    transform: rotate(0deg);
+}
+
+.rankContent .innerContent ,.personalContent .innerContent{
+    font-size: 14px;
+}
+
+.rankContent .innerText,.personalContent .innerText {
+    width: 70vw;
+    line-height: 22px;
+    margin-left: 55px;
+    word-break: break-all;
+}
+
+.hide {
+    height: 0px;
+    font-size: 0px;
+    display: none;
+}
+.iconLeftRight:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(90deg);
+}
+.iconUpDown:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(180deg);
+}
+.iconDownUp:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(0deg);
+}
+.iconRightLeft:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(0deg);
+}
+
+
+
+.personalLeftRight:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(90deg);
+}
+.personalUpDown:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(180deg);
+}
+.personalDownUp:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(0deg);
+}
+.personalRightLeft:before{
+    display: inline-block;
+    transition: all 0.1s;
+    transform:rotate(0deg);
+}
+.plan{
+    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background:white;
+    padding:4px 0;
+    background:white;
+    padding-bottom: 5px;
+}
+.validPlan{
+    padding-top:1px;
+    background:#f2f2f2;
+}
+.planConten{
+    width: 70vw;
+    line-height: 21px;
+    padding: 0 4px;
+    word-break: break-all;
+}
+.exportTitle{
+    padding-left: 5px;
+}
+
+
+
+/* canvas */
+   
+  .imagePathBox{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .shengcheng{
+    width: 75vw;
+    height: 80vh;
+    z-index: 11;
+    margin: 0 auto;
+  }
+  .baocun,.cancel{
+    width: 40vw;
+    height: 45px;
+    line-height: 45px;
+    margin: 5px auto;
+    color: white;
+    font-size: 14px;
+    letter-spacing: 2px;
+    background-color: #4880ff;
+ 
+  }
+
+  .btnGroup{
+    width: 100vw;
+    height: 45px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+  button::after{
+    border: 0;
+  }
